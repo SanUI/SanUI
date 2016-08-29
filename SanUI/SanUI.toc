@@ -1,6 +1,6 @@
 ﻿## Interface: 70000
 ## Author: Sanctity of Nozdormu
-## Version: 7.0.3.0
+## Version: 7.0.3.1
 ## Title: SanUI
 ## Notes: Druid UI based on Tukui.
 ## SavedVariablesPerCharacter: SanUIdb
