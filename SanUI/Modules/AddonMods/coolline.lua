@@ -12,13 +12,14 @@ local updatedLook = false
 local function placeCoolLine(db)
 	local NumForms = GetNumShapeshiftForms()
 	CoolLine:ClearAllPoints()
-	if TukuiStanceBar and NumForms > 0 then 
-		CoolLine:SetPoint("BOTTOMLEFT",TukuiStanceBar,"BOTTOMRIGHT",spacing,spacing)
-		CoolLine:SetPoint("TOPLEFT",TukuiStanceBar,"TOPRIGHT",spacing,-spacing)
+	if TukuiStanceBar and NumForms > 0 then
+		CoolLine:SetPoint("TOPLEFT", TukuiStanceBar, "TOPRIGHT", spacing, -spacing)
+		CoolLine:SetPoint("BOTTOMRIGHT", TukuiActionBar3, "BOTTOMLEFT", -spacing, spacing)
 	else
-		CoolLine:SetPoint("TOPRIGHT",TukuiActionBar3,"TOPLEFT",-spacing,-spacing)
+		CoolLine:SetPoint("LEFT", TukuiActionBar1, "LEFT")
+		CoolLine:SetPoint("BOTTOM", TukuiActionBar3, "BOTTOM", 0, spacing)
+		CoolLine:SetPoint("TOPRIGHT", TukuiActionBar3, "TOPLEFT", -spacing, -spacing)
 	end
-	CoolLine:SetPoint("BOTTOMRIGHT",TukuiActionBar3,"BOTTOMLEFT",-spacing,spacing)
 	S.placeStanceBar()
 	db.h = CoolLine:GetHeight()
 	db.w = CoolLine:GetWidth()
