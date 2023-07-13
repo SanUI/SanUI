@@ -17,6 +17,11 @@ local normTex = C["Medias"].Blank
 --InterfaceOptionsFrameCategoriesButton11:SetScale(0.00001)
 --InterfaceOptionsFrameCategoriesButton11:SetAlpha(0)
 
+-- TODO: Replace with atlases in the next major
+local READY_CHECK_READY_TEXTURE = "Interface\\RaidFrame\\ReadyCheck-Ready"
+local READY_CHECK_NOT_READY_TEXTURE = "Interface\\RaidFrame\\ReadyCheck-NotReady"
+local READY_CHECK_WAITING_TEXTURE = "Interface\\RaidFrame\\ReadyCheck-Waiting"
+
 local utf8sub = function(string, i, dots)
 	if not string then return end
 	local bytes = #string
@@ -203,7 +208,11 @@ local function Shared(self, unit)
 	local ReadyCheck = self.Health:CreateTexture(nil, "OVERLAY")
 	ReadyCheck:SetHeight(rfsizes.readycheck)
 	ReadyCheck:SetWidth(rfsizes.readycheck)
-	ReadyCheck:SetPoint("CENTER",self.Health,"TOP") 	
+	ReadyCheck:SetPoint("CENTER",self.Health,"TOP") 
+	ReadyCheck.readyTexture = READY_CHECK_READY_TEXTURE
+	ReadyCheck.notReadyTexture = READY_CHECK_NOT_READY_TEXTURE
+	ReadyCheck.waitingTexture = READY_CHECK_WAITING_TEXTURE
+
 	self.ReadyCheckIndicator = ReadyCheck
 
 	local ResurrectIcon = self.Health:CreateTexture(nil, "HIGHLIGHT", nil, 7)
@@ -432,7 +441,7 @@ local function Shared(self, unit)
 	local ORD = oUF_NotRaidDebuffs	
 	--ORD.ShowDispelableDebuff = true
 	--ORD.FilterDispellableDebuff = true
-	--ORD.MatchBySpellName = true
+	ORD.MatchBySpellName = true
 	--ORD.SetDebuffTypeColor = RaidDebuffs.SetBorderColor
 	
 	ORD:ResetDebuffData()
