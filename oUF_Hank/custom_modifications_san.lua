@@ -222,6 +222,7 @@ sharedStyle = function(self, unit, isSingle)
 	
 	for _, spell in pairs(S["UnitFrames"].RaidBuffsTracking[S.MyClass] or {}) do
 		local icon = CreateFrame("Frame", nil, auras)
+		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
 		
 		icon.spellID = spell.spellID
@@ -343,8 +344,13 @@ sharedStyle = function(self, unit, isSingle)
 			
 		castbar.CustomTimeText = TukuiDB["UnitFrames"].CustomCastTimeText
 		castbar.CustomDelayText = TukuiDB["UnitFrames"].CustomCastDelayText
-		castbar.PostCastStart = TukuiDB["UnitFrames"].CheckCast
-		castbar.PostChannelStart = TukuiDB["UnitFrames"].CheckChannel
+		--castbar.PostCastStart = TukuiDB["UnitFrames"].CheckCast
+		castbar.PostCastStart = function(element, unit, name, rank, castid)
+			TukuiDB["UnitFrames"].CheckChannel(element, unit)
+			if (element.empowering) then
+				element:SetStatusBarColor(unpack(TukuiCF.UnitFrames.CastingColor))
+			end
+		end
 		
 		self.Castbar = castbar
 		
@@ -488,6 +494,15 @@ sharedStyle = function(self, unit, isSingle)
 				-- self.CPoints[i]:SetPoint("BOTTOM", self.CPoints[i - 1], "TOP")
 			-- end
 		-- end
+		
+		castbar.CreatePip = function(element, stage)
+			local f = CreateFrame("Frame", nil)
+			f:CreateBackdrop()
+			f:SetHeight(castbar:GetHeight())
+			f:SetWidth(1.2)
+			f.Backdrop:SetBackdropBorderColor(1,1,1)
+			return f
+		end
 	end	
 end,
 }
