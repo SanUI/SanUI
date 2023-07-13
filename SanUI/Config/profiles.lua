@@ -10,6 +10,10 @@ S["profiles"] = {
 	modes = {"SanHeal","SanChicken","SanBear", "SanCat", "SanAnduin" },
 	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
  },
+ ["Tovi"] ={ 
+	modes = {"ToviDam" },
+	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
+ },
   ["Tamdam"] = { 
 	modes = {"SanHeal","SanChicken","SanBear", "SanCat" },
 	AddonMenu = {DBM=1, Altoholic=2, Hack=3, MDT=4},
@@ -85,6 +89,7 @@ S["Modes"] = {
 		["castbar"] = "SanHeal",		--SanHeal/SanFeral puts it under the player frame, SanChicken in the middle between player and target with symbol above
 							--Pally puts it under the player frame, left of the holy power (paladins should use this)
 							--DK puts it under the player frame, under the rune display (deathknights should use this)
+							--ToviDam is like SanChicken, but the cast time text is above the GCD bar
 		["powerbar"] = "Hidden",		--Hidden hides it, SanCat shows it in cat form right in the middle of the screen below the char (only works for druids),
 							--Rogue is the same as SanFeral just without shapeshift magic
 							--SanBear/SahneUnholy put it where the first 7/8 action buttons are usually, see ["ActionButtons"] below
@@ -123,6 +128,17 @@ S["Modes"] = {
 		["coolline"] = "SanBear",
 		["ActionButtons"] = "SanBear",
 		["DBM"] = "SanBear", 
+	},
+	["ToviDam"] = {
+		["raidframes"] = "SanChicken",
+		["SimpleAuraFilter"] = "SanChicken",
+		["castbar"] = "ToviDam",
+		["powerbar"] = "Hidden",
+		["gcd"] = "SanChicken",
+		["bossbars"] = "SanChicken",
+		["coolline"] = "SanHeal",
+		["ActionButtons"] = "SanHeal",
+		["DBM"] = "SanHeal", 
 	},
 	["PickerEnh"] = {
 		["raidframes"] = "SanChicken",
