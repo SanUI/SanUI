@@ -1,5 +1,5 @@
 local addonName, addon = ...
-local S = unpack(addon)
+local S, C = unpack(addon)
 
 local Scale = S.Toolkit.Functions.Scale
 
@@ -20,6 +20,18 @@ S.switchCastbar = function(profile)
 			cb.button:SetSize(Scale(40), Scale(40))
 			cb:SetPoint("CENTER",UIParent,"CENTER",0,-265)
 			cb.button:SetPoint("TOP",cb,"BOTTOM",0,-10)
+		elseif profile == "ToviDam" then
+			cb:ClearAllPoints()
+			cb:SetWidth(288)
+			cb.button:ClearAllPoints()
+			cb.button:SetSize(Scale(40), Scale(40))
+			cb:SetPoint("CENTER",UIParent,"CENTER",0,-300)
+			cb.button:SetPoint("TOP",cb,"BOTTOM",0,-4)
+			cb.time:ClearAllPoints()
+			cb.time:SetPoint("BOTTOM", oUF_player.GCD, "TOP", 0, 4)
+			local name, height, flags = cb.time:GetFont()
+			name = name or C.UnitFrames.Font
+			cb.time:SetFont(name, 16, flags)
 		elseif profile == "Manyak" then
 			cb:ClearAllPoints()
 			cb.button:ClearAllPoints()
