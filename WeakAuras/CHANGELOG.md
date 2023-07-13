@@ -1,52 +1,26 @@
-# [5.2.1](https://github.com/WeakAuras/WeakAuras2/tree/5.2.1) (2022-11-26)
+# [5.5.3](https://github.com/WeakAuras/WeakAuras2/tree/5.5.3) (2023-05-07)
 
-[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.2.0...5.2.1)
+[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.5.2...5.5.3)
 
 ## Highlights
 
- - Dynamic Groups: Introduce options for aura order for centered
+ - Template updates for Shadow Priest
 - Bug fixes 
 
 ## Commits
 
-InfusOnWoW (20):
+InfusOnWoW (6):
 
-- Fix lua error if there's no tooltip
-- Fix background framelevel setting for AuraBar
-- Cooldown Tracking: Don't react within 2s of PLAYER_ENTERING_WORLD
-- Add an additional sanity check to custom duration return values
-- Improve error message if color animations return odd values
-- Fix Exact Spell ID for Charges Changed
-- Bump version
-- Correct LibUiDropDownMenu name in OptionalDeps
-- Use LibUIDropDownMenu for UIDropDownMenus
-- Add Evoker to CalculateGCDDuration
-- Disable snapping to pixel grids for Ticks too
-- Texture/Progress Texture: Improve atlas compatibility
-- Use C_TooltipInfo instead of a hidden tooltip on DF
-- Icon: Add some helpful text to Icon that hints at other addons
-- Dynamic Groups: Introduce options for aura order for centered
-- Make lua checkers a bit happier
-- AuraBar: Ensure that Scale does always call Reorient
-- Bug report template: Ask for verifyable steps in the Reproduction Steps
-- Don't try to reanachor frames that are dragged into a dynamic group
-- Forward arguments of PLAYER_ENTERING_WORLD to WA_DELAYERD_PEW
+- Templates Shadow Priest: Update for 10.1
+- Cast trigger: Disable various checks for non-casting trigger
+- Spell Cooldown Progress trigger: Add an option to follow overrides
+- Fix Cast trigger latency for some interactions
+- Fix issue with Smooth Progress, Min/Max clamps and overlays
+- Fix lua error in Reputatin trigger while outside world
 
-Lars Kunert (1):
+mrbuds (3):
 
-- Update "Talent Known" trigger on spec changes
-
-Stanzilla (4):
-
-- Lua LSP: Add more globals to the list
-- Lua LSP: Disable the checks that currently cause the LSP to crash
-- Add a Lua LSP config file and update some types
-- Ignore WeakAurasModelPaths and Type* files for Code Spell Checker
-
-mrbuds (4):
-
-- Cast trigger: fix empowered cache for target on target change
-- Talent load condition: fix talents for overriden spells
-- Update talents
-- Aura trigger: fix tooltip filters
+- Fix Retail talent widget offsets
+- GetUnitFrame anchor callback: safeguard against nil index error
+- Fix weakauras loading on wotlk ptr
 

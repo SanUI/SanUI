@@ -187,13 +187,22 @@ local function filterUsedProperties(indexToProperty, allDisplays, usedProperties
   return filtered;
 end
 
+--- @type number? the time at which the last sound was played, so that we don't play
+---  a sound from each setter
+local lastPlayedSoundFromSet
 local function wrapWithPlaySound(func, kit)
   return function(info, v)
     func(info, v);
     if (tonumber(v)) then
-      pcall(PlaySound, tonumber(v), "Master");
+      if lastPlayedSoundFromSet ~= GetTime() then
+        pcall(PlaySound, tonumber(v), "Master")
+        lastPlayedSoundFromSet = GetTime()
+      end
     else
-      pcall(PlaySoundFile, v, "Master");
+      if lastPlayedSoundFromSet ~= GetTime() then
+        pcall(PlaySoundFile, v, "Master")
+        lastPlayedSoundFromSet = GetTime()
+      end
     end
   end
 end
@@ -457,6 +466,19 @@ local function addControlsForChange(args, order, data, conditionVariable, totalA
         args["condition" .. i .. "value" .. j].validate = WeakAuras.ValidateNumeric;
       end
     end
+  elseif (propertyType == "string") then
+    args["condition" .. i .. "value" .. j] = {
+      type = "input",
+      width = WeakAuras.normalWidth,
+      name = blueIfNoValue(data, conditions[i].changes[j], "value", L["Text"]),
+      desc = descIfNoValue(data, conditions[i].changes[j], "value", propertyType),
+      order = order,
+      get = function()
+        return conditions[i].changes[j].value;
+      end,
+      set = setValue
+    }
+    order = order + 1;
   elseif (propertyType == "icon") then
     args["condition" .. i .. "value" .. j] = {
       type = "input",

@@ -61,13 +61,13 @@ local function GetAll(baseObject, path, property, default)
   return result
 end
 
-local function SetAll(baseObject, path, property, value, width, height)
+local function SetAll(baseObject, path, property, value, width, height, adjustSize)
   local valueFromPath = OptionsPrivate.Private.ValueFromPath
   for child in OptionsPrivate.Private.TraverseLeafsOrAura(baseObject) do
     local object = valueFromPath(child, path)
       if object then
         object[property] = value
-        if width and height then
+        if adjustSize and width and height then
           child.width = width
           child.height = height
         end
@@ -81,10 +81,10 @@ end
 local texturePicker
 
 local function ConstructTexturePicker(frame)
-  local group = AceGUI:Create("InlineGroup");
+  local group = AceGUI:Create("SimpleGroup");
   group.frame:SetParent(frame);
-  group.frame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -17, 42);
-  group.frame:SetPoint("TOPLEFT", frame, "TOPLEFT", 17, -10);
+  group.frame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -17, 46);
+  group.frame:SetPoint("TOPLEFT", frame, "TOPLEFT", 17, -50);
   group.frame:Hide();
   group.children = {};
   group.categories = {};
@@ -187,7 +187,7 @@ local function ConstructTexturePicker(frame)
     UpdateShownWidgets()
   end
 
-  local input = CreateFrame("EditBox", nil, group.frame, "InputBoxTemplate");
+  local input = CreateFrame("EditBox", nil, group.frame, "SearchBoxTemplate");
   input:SetScript("OnTextChanged", function(...)
     local status = dropdown.status or dropdown.localstatus
     texturePickerGroupSelected(nil, nil, status.selected, input:GetText())
@@ -201,14 +201,9 @@ local function ConstructTexturePicker(frame)
     local status = dropdown.status or dropdown.localstatus
     texturePickerGroupSelected(nil, nil, status.selected, input:GetText())
   end);
-  input:SetWidth(170);
+  input:SetWidth(200);
   input:SetHeight(15);
-  input:SetPoint("BOTTOMRIGHT", dropdown.frame, "TOPRIGHT", -12, -25);
-
-  local inputLabel = input:CreateFontString(nil, "OVERLAY", "GameFontNormal");
-  inputLabel:SetText(L["Search"]);
-  inputLabel:SetJustifyH("RIGHT");
-  inputLabel:SetPoint("BOTTOMLEFT", input, "TOPLEFT", 0, 5);
+  input:SetPoint("TOPRIGHT", group.frame, "TOPRIGHT", -3, -10);
 
   dropdown:SetCallback("OnGroupSelected", function(widget, event, uniquevalue)
     texturePickerGroupSelected(widget, event, uniquevalue, input:GetText())
@@ -253,14 +248,14 @@ local function ConstructTexturePicker(frame)
     wipe(group.selectedTextures)
     group.selectedTextures[texturePath] = true
 
-    SetAll(self.baseObject, self.path, self.properties.texture, texturePath, width, height)
+    SetAll(self.baseObject, self.path, self.properties.texture, texturePath, width, height, self.adjustSize)
 
     group:UpdateList();
     local status = dropdown.status or dropdown.localstatus
     dropdown.dropdown:SetText(dropdown.list[status.selected]);
   end
 
-  function group.Open(self, baseObject, path, properties, textures, SetTextureFunc)
+  function group.Open(self, baseObject, path, properties, textures, SetTextureFunc, adjustSize)
     local valueFromPath = OptionsPrivate.Private.ValueFromPath
     self.baseObject = baseObject
     self.path = path
@@ -269,6 +264,7 @@ local function ConstructTexturePicker(frame)
     self.SetTextureFunc = SetTextureFunc
     self.givenPath = {};
     self.selectedTextures = {}
+    self.adjustSize = adjustSize
 
     for child in OptionsPrivate.Private.TraverseLeafsOrAura(baseObject) do
       local object = valueFromPath(child, path)
@@ -336,7 +332,7 @@ local function ConstructTexturePicker(frame)
 
   local cancel = CreateFrame("Button", nil, group.frame, "UIPanelButtonTemplate")
   cancel:SetScript("OnClick", group.CancelClose)
-  cancel:SetPoint("BOTTOMRIGHT", -27, -23)
+  cancel:SetPoint("BOTTOMRIGHT", -20, -24)
   cancel:SetSize(100, 20)
   cancel:SetText(L["Cancel"])
 
