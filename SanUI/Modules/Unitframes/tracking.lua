@@ -621,6 +621,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[409463] = List(), -- Reinforced
 	-- Magmorax
 		[404846] = List(), -- Incinerating Maws
+		[402994] = List(), -- Molten Spittle
 	-- Echo of Neltharion
 		[404430] = List(), -- Wild Breath
 		[403049] = List(), -- Shadow Barrier
@@ -628,5 +629,6 @@ S["UnitFrames"].RaidDebuffs = {
 		[407088] = List(), -- Empowered Shadows
 		[407039] = List(), -- Empower Shadows
 	-- Scalecommander Sarkareth
-		[404403] = List() -- Desolate Blossom
+		[404403] = List(), -- Desolate Blossom
+		[404027] = List(), -- Void Bomb
 }
