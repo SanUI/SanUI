@@ -134,6 +134,8 @@ S.switchCoolLine = function(profile)
 			[GetSpellInfo(19574) or "Bestial Wrath"] = true,
 			[GetSpellInfo(217200) or "Barbed Shot"] = true,
 			[GetSpellInfo(34026) or "Kill Command"] = true,
+			[GetSpellInfo(61684) or "Dash"] = true,
+			[GetSpellInfo(49966) or "Smack"] = true,
 		}
 	else
 		block = {
