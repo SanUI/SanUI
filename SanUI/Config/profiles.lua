@@ -14,6 +14,10 @@ S["profiles"] = {
 	modes = {"ToviDam" },
 	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
  },
+  ["Dovi"] = { 
+	modes = {"DoviBM" },
+	AddonMenu = {DBM=1, Altoholic=2, Hack=3, MDT=4},
+ },
   ["Tamdam"] = { 
 	modes = {"SanHeal","SanChicken","SanBear", "SanCat" },
 	AddonMenu = {DBM=1, Altoholic=2, Hack=3, MDT=4},
@@ -173,6 +177,17 @@ S["Modes"] = {
 		["coolline"] = "SanHeal",	
 		["ActionButtons"] = "SanHeal",		
 		["DBM"] = "SanHeal",
+	},
+	["DoviBM"] = {
+		["raidframes"] = "SanChicken",
+		["SimpleAuraFilter"] = "SanChicken",
+		["castbar"] = "SanHeal",
+		["powerbar"] = "SanBear",
+		["gcd"] = "Hidden",
+		["bossbars"] = "SanChicken",
+		["coolline"] = "HedgeBM",
+		["ActionButtons"] = "SanBear",
+		["DBM"] = "HedgeBM", 
 	},
 	["JhessDisc"] = {
 		["raidframes"] = "SanHeal",
