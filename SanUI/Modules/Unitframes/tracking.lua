@@ -214,12 +214,32 @@ S["UnitFrames"].RaidDebuffs = {
 		[226512] = List(), -- Sanguine
 		[240559] = List(), -- Grievous
 		[240443] = List(), -- Bursting
-
-
+		[409492] = List(), -- Afflicted Cry
 	----------------------------------------------------------
-	---------------- Dragonflight (Season 1) -----------------
+	---------------- Dragonflight  -----------------
 	----------------------------------------------------------
-	-- Court of Stars
+	-- Dawn of the Infinite
+		[413041] = List(), -- Sheared Lifespan 1
+		[416716] = List(), -- Sheared Lifespan 2
+		[413013] = List(), -- Chronoshear
+		[413208] = List(), -- Sand Buffeted
+		[408084] = List(), -- Necrofrost
+		[415436] = List(), -- Tainted Sand
+		[413142] = List(), -- Eon Shatter
+		[409266] = List(), -- Extinction Blast 1
+		[414300] = List(), -- Extinction Blast 2
+		[401667] = List(), -- Time Stasis
+		[412027] = List(), -- Chronal Burn
+		[400681] = List(), -- Spark of Tyr
+		[404141] = List(), -- Chrono-faded
+		[407147] = List(), -- Blight Seep
+		[410497] = List(), -- Mortal Wounds
+		[418009] = List(), -- Serrated Arrows
+		[407406] = List(), -- Corrosion
+		[401420] = List(), -- Sand Stomp
+		[403912] = List(), -- Accelerating Time
+		[403910] = List(), -- Decaying Time
+	--[[ Court of Stars
 		[207278] = List(), -- Arcane Lockdown
 		[209516] = List(), -- Mana Fang
 		[209512] = List(), -- Disrupting Energy
@@ -355,10 +375,11 @@ S["UnitFrames"].RaidDebuffs = {
 		[388984] = List(), -- Vicious Ambush
 		[388544] = List(), -- Barkbreaker
 		[377008] = List(), -- Deafening Screech
+		--]]
 	----------------------------------------------------------
 	---------------- Dragonflight (Season 2) -----------------
 	----------------------------------------------------------
--- Brackenhide Hollow
+	--[[ Brackenhide Hollow
 		[385361] = List(), -- Rotting Sickness
 		[378020] = List(), -- Gash Frenzy
 		[385356] = List(), -- Ensnaring Trap
@@ -470,9 +491,6 @@ S["UnitFrames"].RaidDebuffs = {
 		[369337] = List(), -- Difficult Terrain
 		[376333] = List(), -- Temporal Zone
 		[377510] = List(), -- Stolen Time
-	----------------------------------------------------------
-	---------------- Dragonflight (Season 2) -----------------
-	----------------------------------------------------------
 	-- Freehold
 		[258323] = List(), -- Infected Wound
 		[257775] = List(), -- Plague Step
@@ -526,9 +544,149 @@ S["UnitFrames"].RaidDebuffs = {
 		[88171] = List(), -- Hurricane
 		[88182] = List(), -- Lethargic Poison
 		[87622] = List(), -- Chain Lightning
+	--]]
 	----------------------------------------------------------
 	---------------- Dragonflight (Season 3) -----------------
 	----------------------------------------------------------
+	-- Darkheart Thicket
+		[198408] = List(), -- Nightfall
+		[196376] = List(), -- Grievous Tear
+		[200182] = List(), -- Festering Rip
+		[200238] = List(), -- Feed on the Weak
+		[200289] = List(), -- Growing Paranoia
+		[204667] = List(), -- Nightmare Breath
+		[204611] = List(), -- Crushing Grip
+		[199460] = List(), -- Falling Rocks
+		[200329] = List(), -- Overwhelming Terror
+		[191326] = List(), -- Breath of Corruption
+		[204243] = List(), -- Tormenting Eye
+		[225484] = List(), -- Grievous Rip
+		[200642] = List(), -- Despair
+		[199063] = List(), -- Strangling Roots
+		[198477] = List(), -- Fixate
+		[204246] = List(), -- Tormenting Fear
+		[198904] = List(), -- Poison Spear
+		[200684] = List(), -- Nightmare Toxin
+		[200243] = List(), -- Waking Nightmare
+		[200580] = List(), -- Maddening Roar
+		[200771] = List(), -- Propelling Charge
+		[200273] = List(), -- Cowardice
+		[201365] = List(), -- Darksoul Drain
+		[201839] = List(), -- Curse of Isolation
+		[201902] = List(), -- Scorching Shot
+	-- Black Rook Hold
+		[202019] = List(), -- Shadow Bolt Volley
+		[197521] = List(), -- Blazing Trail
+		[197478] = List(), -- Dark Rush
+		[197546] = List(), -- Brutal Glaive
+		[198079] = List(), -- Hateful Gaze
+		[224188] = List(), -- Hateful Charge
+		[201733] = List(), -- Stinging Swarm
+		[194966] = List(), -- Soul Echoes
+		[198635] = List(), -- Unerring Shear
+		[225909] = List(), -- Soul Venom
+		[198501] = List(), -- Fel Vomitus
+		[198446] = List(), -- Fel Vomit
+		[200084] = List(), -- Soul Blade
+		[197821] = List(), -- Felblazed Ground
+		[203163] = List(), -- Sic Bats!
+		--[199368] = List(), -- Legacy of the Ravencrest
+		[225732] = List(), -- Strike Down
+		[199168] = List(), -- Itchy!
+		[225963] = List(), -- Bloodthirsty Leap
+		[214002] = List(), -- Raven's Dive
+		[197974] = List(), -- Bonecrushing Strike I
+		[200261] = List(), -- Bonecrushing Strike II
+		[204896] = List(), -- Drain Life
+		[199097] = List(), -- Cloud of Hypnosis
+	-- Waycrest Manor
+		[260703] = List(), -- Unstable Runic Mark
+		[261438] = List(), -- Wasting Strike
+		[261140] = List(), -- Virulent Pathogen
+		[260900] = List(), -- Soul Manipulation I
+		[260926] = List(), -- Soul Manipulation II
+		[260741] = List(), -- Jagged Nettles
+		--[268086] = List(), -- Aura of Dread
+		[264712] = List(), -- Rotten Expulsion
+		[271178] = List(), -- Ravaging Leap
+		[264040] = List(), -- Uprooted Thorns
+		[265407] = List(), -- Dinner Bell
+		[265761] = List(), -- Thorned Barrage
+		--[268125] = List(), -- Aura of Thorns
+		--[268080] = List(), -- Aura of Apathy
+		[264050] = List(), -- Infected Thorn
+		[260569] = List(), -- Wildfire
+		[263943] = List(), -- Etch
+		[264378] = List(), -- Fragment Soul
+		[267907] = List(), -- Soul Thorns
+		[264520] = List(), -- Severing Serpent
+		[264105] = List(), -- Runic Mark
+		[265881] = List(), -- Decaying Touch
+		[265882] = List(), -- Lingering Dread
+		[278456] = List(), -- Infest I
+		[278444] = List(), -- Infest II
+		[265880] = List(), -- Dread Mark
+	-- Atal'Dazar
+		[250585] = List(), -- Toxic Pool
+		[258723] = List(), -- Grotesque Pool
+		[260668] = List(), -- Transfusion I
+		[260666] = List(), -- Transfusion II
+		[255558] = List(), -- Tainted Blood
+		[250036] = List(), -- Shadowy Remains
+		[257483] = List(), -- Pile of Bones
+		[253562] = List(), -- Wildfire
+		[254959] = List(), -- Soulburn
+		[255814] = List(), -- Rending Maul
+		[255582] = List(), -- Molten Gold
+		[252687] = List(), -- Venomfang Strike
+		[255041] = List(), -- Terrifying Screech
+		[255567] = List(), -- Frenzied Charge
+		[255836] = List(), -- Transfusion Boss I
+		[255835] = List(), -- Transfusion Boss II
+		[250372] = List(), -- Lingering Nausea
+		[257407] = List(), -- Pursuit
+		[255434] = List(), -- Serrated Teeth
+		[255371] = List(), -- Terrifying Visage
+	-- Everbloom
+		[427513] = List(), -- Noxious Discharge
+		[428834] = List(), -- Verdant Eruption
+		[427510] = List(), -- Noxious Charge
+		[427863] = List(), -- Frostbolt I
+		[169840] = List(), -- Frostbolt II
+		[428084] = List(), -- Glacial Fusion
+		[426991] = List(), -- Blazing Cinders
+		[169179] = List(), -- Colossal Blow
+		[164886] = List(), -- Dreadpetal Pollen
+		[169445] = List(), -- Noxious Eruption
+		[164294] = List(), -- Unchecked Growth I
+		[164302] = List(), -- Unchecked Growth II
+		[165123] = List(), -- Venom Burst
+		[169658] = List(), -- Poisonous Claws
+		[169839] = List(), -- Pyroblast
+		[164965] = List(), -- Choking Vines
+	-- Throne of the Tides
+		[429048] = List(), -- Flame Shock
+		[427668] = List(), -- Festering Shockwave
+		[427670] = List(), -- Crushing Claw
+		[76363]  = List(), -- Wave of Corruption
+		[426660] = List(), -- Razor Jaws
+		[426727] = List(), -- Acid Barrage
+		[428404] = List(), -- Blotting Darkness
+		[428403] = List(), -- Grimy
+		[426663] = List(), -- Ravenous Pursuit
+		[426783] = List(), -- Mind Flay
+		[75992]  = List(), -- Lightning Surge
+		[428868] = List(), -- Putrid Roar
+		[428407] = List(), -- Blotting Barrage
+		[427559] = List(), -- Bubbling Ooze
+		[76516]  = List(), -- Poisoned Spear
+		[428542] = List(), -- Crushing Depths
+		[426741] = List(), -- Shellbreaker
+		[76820]  = List(), -- Hex
+		[426608] = List(), -- Null Blast
+		[426688] = List(), -- Volatile Acid
+		[428103] = List(), -- Frostbolt
+	-- unstructured
 		[412922] = List(), -- Binding Grasp
 		[412810] = List(), -- Blight Spew
 		[225962] = List(), -- Bloodthirsty Leap
@@ -536,7 +694,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[197974] = List(), -- Bonecrushing Strike
 		[419351] = List(), -- Bronze Exhalation
 		[419516] = List(), -- Chronal Eruption
-		[413013] = List(), -- Chronoshear
+		--[413013] = List(), -- Chronoshear
 		[427223] = List(), -- Cinderbolt Salvo
 		[199143] = List(), -- Cloud of Hypnosis
 		[426845] = List(), -- Cold Fusion
@@ -621,10 +779,10 @@ S["UnitFrames"].RaidDebuffs = {
 		[426688] = List(), -- Volatile Acid
 		[76363]  = List(), -- Wave of Corruption
 		[250096] = List(), -- Wracking Pain
-	--------[------] = List()-------------------------------------------
+	---------------------------------------------------------
 	---------------- Vault of the Incarnates ----------------
 	---------------------------------------------------------
-	-- Eranog
+	--[[ Eranog
 		[370648] = List(5), -- Primal Flow
 		[390715] = List(6), -- Primal Rifts
 		[370597] = List(6), -- Kill Order
@@ -675,10 +833,11 @@ S["UnitFrames"].RaidDebuffs = {
 		[395929] = List(3), -- Storm's Spite
 		--[381251] = List(3), -- Electric Lash
 		-- TODO: DF
-		---------------------------------------------------------
+	--]]
+	---------------------------------------------------------
 	------------ Aberrus, the Shadowed Crucible -------------
 	---------------------------------------------------------
-	-- Kazzara
+	--[[ Kazzara
 		[406516] = List(), -- Dread Rifts
 		[407199] = List(), -- Dread Rifts
 		[407200] = List(), -- Dread Rifts
@@ -726,4 +885,61 @@ S["UnitFrames"].RaidDebuffs = {
 	-- Scalecommander Sarkareth
 		[404403] = List(), -- Desolate Blossom
 		[404027] = List(), -- Void Bomb
+	--]]
+	---------------------------------------------------------
+	------------ Amirdrassil: The Dream's Hope --------------
+	---------------------------------------------------------
+	-- Gnarlroot
+		[421972] = List(), -- Controlled Burn
+		[424734] = List(), -- Uprooted Agony
+		[426106] = List(), -- Dreadfire Barrage
+		[425002] = List(), -- Ember-Charred I
+		[421038] = List(), -- Ember-Charred II
+	-- Igira the Cruel
+		[414367] = List(), -- Gathering Torment
+		[424065] = List(), -- Wracking Skewer I
+		[416056] = List(), -- Wracking Skever II
+		[414888] = List(), -- Blistering Spear
+	-- Volcoross
+		[419054] = List(), -- Molten Venom
+		[421207] = List(), -- Coiling Flames
+		[423494] = List(), -- Tidal Blaze
+		[423759] = List(), -- Serpent's Crucible
+	-- Council of Dreams
+		[420948] = List(), -- Barreling Charge
+		[421032] = List(), -- Captivating Finale
+		[420858] = List(), -- Poisonous Javelin
+		[418589] = List(), -- Polymorph Bomb
+		[421031] = List(6), -- Song of the Dragon
+		[426390] = List(), -- Corrosive Pollen
+	-- Larodar, Keeper of the Flame
+		[425888] = List(), -- Igniting Growth
+		[426249] = List(), -- Blazing Coalescence
+		[421594] = List(), -- Smoldering Suffocation
+		[427299] = List(), -- Flash Fire
+		[428901] = List(), -- Ashen Devastation
+	-- Nymue, Weaver of the Cycle
+		--[423195] = List(), -- Inflorescence
+		[427137] = List(), -- Threads of Life I
+		[427138] = List(), -- Threads of Life II
+		[426520] = List(), -- Weaver's Burden
+		[427722] = List(), -- Weaver's Burden
+		[428273] = List(), -- Woven Resonance
+		--[425357] = List(), -- Surging Growth
+		[420907] = List(), -- Viridian Rain
+	-- Smolderon
+		[426018] = List(), -- Seeking Inferno
+		[421455] = List(), -- Overheated
+		--[421643] = List(5), -- Emberscar's Mark
+		[421656] = List(), -- Cauterizing Wound
+		[425574] = List(), -- Lingering Burn
+	-- Tindral Sageswift, Seer of the Flame
+		[427297] = List(), -- Flame Surge
+		[424581] = List(), -- Fiery Growth
+		[424580] = List(), -- Falling Stars
+		[424578] = List(), -- Blazing Mushroom
+		[424579] = List(6), -- Suppressive Ember
+		[424495] = List(), -- Mass Entanblement
+		[424665] = List(), -- Seed of Flame
+	-- Fyrakk the Blazing
 }
