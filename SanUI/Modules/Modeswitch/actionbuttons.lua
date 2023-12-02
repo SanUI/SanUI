@@ -31,7 +31,6 @@ S.switchActionButtons = function(profile)
 				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 			end
 		end
-		
 	elseif profile == "SahneUnholy" then
 		for i = 1, 12 do
 			button = _G["ActionButton"..i]
@@ -60,6 +59,24 @@ S.switchActionButtons = function(profile)
 			else
 				local previous = _G["ActionButton"..i-1]
 				button:SetPoint("LEFT", previous, "RIGHT", C["ActionBars"].ButtonSpacing, 0)
+			end
+		end
+	elseif profile == "DoviBM" then
+		for i = 1, 12 do
+			button = _G["ActionButton"..i]
+			button:ClearAllPoints()
+			
+			if i == 1 then
+				button:SetPoint("CENTER",UIParent,-89,-100)
+			elseif 1 < i and i < 7 then
+				button:SetPoint("LEFT",_G["ActionButton"..(i-1)],"RIGHT",Spacing, 0)
+			elseif i == 7 then
+				button:SetPoint("TOPLEFT",ActionButton2,"BOTTOMLEFT",0, -Spacing)
+			elseif i == 8 then
+				button:SetPoint("TOPLEFT",ActionButton7,"BOTTOMLEFT",0, -Spacing)	
+			else
+				local xoff = (12-i)*Size + (12-i)* Spacing + Spacing/2
+				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 			end
 		end
 	else

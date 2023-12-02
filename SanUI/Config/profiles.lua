@@ -186,7 +186,7 @@ S["Modes"] = {
 		["gcd"] = "Hidden",
 		["bossbars"] = "SanChicken",
 		["coolline"] = "HedgeBM",
-		["ActionButtons"] = "SanBear",
+		["ActionButtons"] = "DoviBM",
 		["DBM"] = "HedgeBM", 
 	},
 	["JhessDisc"] = {
