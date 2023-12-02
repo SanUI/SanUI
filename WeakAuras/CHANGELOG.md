@@ -1,26 +1,23 @@
-# [5.5.3](https://github.com/WeakAuras/WeakAuras2/tree/5.5.3) (2023-05-07)
+# [5.8.6](https://github.com/WeakAuras/WeakAuras2/tree/5.8.6) (2023-11-15)
 
-[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.5.2...5.5.3)
+[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.8.5...5.8.6)
 
 ## Highlights
 
- - Template updates for Shadow Priest
-- Bug fixes 
+ - Update for Range Check hotfix
+- Bugfixes and texture updates for 10.2 
 
 ## Commits
 
-InfusOnWoW (6):
+InfusOnWoW (1):
 
-- Templates Shadow Priest: Update for 10.1
-- Cast trigger: Disable various checks for non-casting trigger
-- Spell Cooldown Progress trigger: Add an option to follow overrides
-- Fix Cast trigger latency for some interactions
-- Fix issue with Smooth Progress, Min/Max clamps and overlays
-- Fix lua error in Reputatin trigger while outside world
+- Switch to LibRangeCheck-3.0
 
-mrbuds (3):
+mrbuds (5):
 
-- Fix Retail talent widget offsets
-- GetUnitFrame anchor callback: safeguard against nil index error
-- Fix weakauras loading on wotlk ptr
+- Update model list for 10.2
+- Update texture atlas list for 10.2
+- Use LibRangeCheck-3.0
+- Dynamic Group: don't apply level to subgroups, don't do it only for top level groups
+- Dynamic Group: raise level of auras over backdrop
 
