@@ -236,14 +236,17 @@ local function CreateUnitFrame(self, unit)
 	self.Range = range
 
 	
---[=[
+
 	local auras = CreateFrame("Frame", nil, self)
-	auras:SetPoint("RIGHT", self.Health,-Scale(33), 0)
-	auras:SetSize(16, BarHeight - 4) --2 auras, size 6, dist 4
+	--auras:SetPoint("RIGHT", self.Health,-Scale(33), 0)
+	auras:SetPoint("CENTER", 0, 0)
+	--auras:SetTemplate()
+	auras:SetSize(24, self.Health:GetHeight()-4) --2 auras, size 6, dist 4
 	Name:SetPoint("RIGHT",auras,"LEFT")
 	auras.presentAlpha = 1
 	auras.missingAlpha = 0
-	auras.icons = {}
+	auras.Icons = {}
+	auras.Texts = {}
 	
 	auras.PostCreateIcon = function(self, icon)
 		if icon.icon and not icon.hideIcon then
@@ -267,54 +270,117 @@ local function CreateUnitFrame(self, unit)
 
 
 	local buffs = {
-		{164812,{"RIGHT",0,0},{1,1,1},false},	--Moonfire
-		{93402,{"RIGHT",-10,0},{235/255,152/255,38/255},false},	--Sunfire
-		{1822,{"RIGHT",0,0},{235/255,152/255,38/255},false},	--Rake
-		{1079,{"RIGHT",-10,0},{1,1,1},false},	--Rip
+	-- Rejuvenation
+	{
+		spellID = 774,
+		pos = {"TOPLEFT"},
+		color = {0.4, 0.8, 0.2},
+		anyCaster = false,
+		timers = { {2, {1, 0, 0}}, {4.5, {1, 1, 0}} },
+
+	  },
+	-- Germination
+	{
+		spellID = 155777,
+		pos = {"TOPRIGHT"},
+		color = {0.4, 0.8, 0.2},
+		anyCaster = false,
+		timers = { {2, {1, 0, 0}}, {4.5, {1, 1, 0}} }
+	  },
+	-- Wild Growth
+	{
+		spellID = 48438,
+		pos = {"BOTTOMRIGHT"},
+		color = {0, 1, 1},
+		anyCaster = false,
+		cooldownAnim = true
+	  },
+	-- Regrowth
+	{
+		spellID = 8936,
+		pos = {"BOTTOMLEFT"},
+		color = {0.4, 0.8, 0.2},
+		anyCaster = false,
+		timers = { {2, {1, 0, 0}}, {3.6, {1, 1, 0}} }
+	  },
+	}
+	
+	local bufftexts = {
+		{
+			spellID = {33763, 33778, 43421, 188550, 290754, 186371},
+			pos = {"CENTER"},
+			textsize = 10, 
+			format = "|cFF00FF00%u|r", 
+			timers = { { 2, "|cFFFF0000%.1f|r", 0.05}, { 4.5, "|cFFFFFF00%u|r", 0.3} },
+			anyCaster = false,
+		},
 	}
 
 	-- "Cornerbuffs"
-	if (buffs) then
-		for key, spell in pairs(buffs) do
-			local icon = CreateFrame("Frame", nil, auras)
+	for _, spell in pairs(buffs) do
+		local icon = CreateFrame("Frame", nil, auras)
+		spell.pos[2] = auras
+		icon:SetPoint(unpack(spell.pos))
+		
+		icon.spellID = spell.spellID
+		icon.anyCaster = spell.anyCaster
+		icon.timers = spell.timers
+		icon.cooldownAnim = spell.cooldownAnim
+		icon.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
+		icon:SetWidth(S.scale6)
+		icon:SetHeight(S.scale6)
 			
-			icon.spellID = spell[1]
-			icon.anyUnit = spell[4]
-			
-			icon.stackColors = spell[5]
-			icon.timers = spell[6]
-			icon.hideCooldown = spell[7]
-			icon.hideCount = spell[8]
-			icon.onlyShowPresent = true -- could be defined on a per-icon-basis, but not neccessary just yet
-			
-			icon:SetWidth(S.scale6)
-			icon:SetHeight(S.scale6)
-
-			if type(spell[2]) == "string" then
-				icon:SetPoint(spell[2], 0, 0)
-			elseif type(spell[2]) == "table" then
-				icon:SetPoint(unpack(spell[2]))
-			end
-
-			local tex = icon:CreateTexture(nil, "OVERLAY")
-			tex:SetAllPoints(icon)
-			tex:SetTexture(C.Medias.Blank)
-			if (spell[3]) then
-				tex:SetVertexColor(unpack(spell[3]))
-			else
-				tex:SetVertexColor(0.8, 0.8, 0.8)
-			end
-			
-			icon.extraTex = tex
-			icon.extraTexColor = spell[3]	
-			auras.icons[spell[1]] = icon
-			icon:Hide()
+		if icon.cooldownAnim then 
+			local cd = CreateFrame("Cooldown", nil, icon,"CooldownFrameTemplate")
+			cd:SetAllPoints(icon)
+			cd.noCooldownCount = icon.noCooldownCount or false -- needed for tullaCC to not show cooldown numbers
+			cd:SetReverse(true)
+			icon.cd = cd
 		end
 		
+		if spell.count then
+			icon.count = icon:CreateFontString(nil, "OVERLAY")
+			icon.count:SetFont(font1, spell.count.size, "THINOUTLINE")
+			icon.count:SetPoint("LEFT", icon, "RIGHT", 0, 0)
+			icon.count:SetTextColor(1, 1, 1)	
+		end
+		
+		local tex = icon:CreateTexture(nil, "OVERLAY")
+		tex:SetAllPoints(icon)
+		tex:SetTexture(C.Medias.Blank)
+		tex:SetVertexColor(unpack(spell.color))
+		
+		icon.tex = tex
+		icon.color = spell.color	
+		
+		auras.Icons[spell.spellID] = icon
+		icon:Hide()	
 	end
 	
-	self.NotAuraWatch = auras
-	]=]
+	for _, spell in ipairs(bufftexts) do
+		local text = auras:CreateFontString(nil, "OVERLAY")
+		text:SetFont("Fonts\\FRIZQT__.TTF", spell.textsize)--, "THINOUTLINE")
+		text:SetPoint(unpack(spell.pos))
+		
+		text.anyCaster = spell.anyCaster
+		text.format = spell.format
+		text.res = 0.3
+		text.timers = spell.timers
+		
+		if type(spell.spellID == "table") then
+			for _, id in ipairs(spell.spellID) do
+				auras.Texts[id] = text
+			end
+			text.spellIDs = spell.spellID
+		else
+			auras.Texts[spell.spellID] = text
+			text.spellID = spell.spellID
+		end
+		text:Hide()
+	end
+	
+	self.NotAuraTrack = auras
+
 end
 
 ------------------------------------------------------------------------------
