@@ -7,7 +7,7 @@ local S = unpack(addon)
 -- Modes are defined below, see "MODES HERE"
 S["profiles"] = {
  ["Tavore"] = { 
-	modes = {"SanHeal","SanChicken","SanBear", "SanCat", "SanAnduin" },
+	modes = {"SanHeal","SanChicken","SanBear", "SanCat", "SanLarodar" },
 	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
  },
  ["Tovi"] ={ 
@@ -110,7 +110,17 @@ S["Modes"] = {
 							--SahneUnholy is the same as SanBear, just for the 8 first buttons instead of 7
 		["DBM"] = "SanHeal", --DBM profile to use, if you choose one that deosn't exist, one with that name will be created
 	},
-	
+	["SanLarodar"] = {
+		["raidframes"] = "SanHeal",
+		["SimpleAuraFilter"] = "SanHeal",
+		["castbar"] = "SanHeal",
+		["powerbar"] = "Hidden",
+		["gcd"] = "SanHeal",
+		["bossbars"] = "SanChicken",
+		["coolline"] = "SanHeal",
+		["ActionButtons"] = "SanHeal",
+		["DBM"] = "SanHeal",
+	},
 	["SanChicken"] = {
 		["raidframes"] = "SanChicken",
 		["SimpleAuraFilter"] = "SanChicken",
