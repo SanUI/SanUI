@@ -918,7 +918,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[426390] = List(), -- Corrosive Pollen
 	-- Larodar, Keeper of the Flame
 		[425888] = List(), -- Igniting Growth
-		[426249] = List(), -- Blazing Coalescence
+		--[426249] = List(), -- Blazing Coalescence
 		[421594] = List(), -- Smoldering Suffocation
 		[427299] = List(), -- Flash Fire
 		[428901] = List(), -- Ashen Devastation
@@ -929,6 +929,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[426520] = List(), -- Weaver's Burden
 		[427722] = List(), -- Weaver's Burden
 		[428273] = List(), -- Woven Resonance
+		[427721] = List(), -- Weavers Burden Dot
 		--[425357] = List(), -- Surging Growth
 		[420907] = List(), -- Viridian Rain
 	-- Smolderon
