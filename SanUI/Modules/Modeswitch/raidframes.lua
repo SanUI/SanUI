@@ -125,7 +125,22 @@ dealWith40:SetScript("OnEvent", function(self)
 	end
 end)
 
+S.position_tooltip_default = function(self, parent)
+	local f = ChatFrame1Tab
+	if (f and f:IsShown()) then
+		self:ClearAllPoints()
+		self:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 0, 0)
+	else
+		self:ClearAllPoints()
+		self:SetPoint("BOTTOMRIGHT", TukuiRightDataTextBox, 0, 2)
+	end
+end
 
+S.position_tooltip = S.position_tooltip_default
+
+hooksecurefunc(S["Tooltips"], "SetTooltipDefaultAnchor", function(self, parent)
+	S.position_tooltip(self, parent)
+end)
 
 S.switchRaidFrames = function(profile)
 	local frame = SanUIRaid
@@ -139,6 +154,8 @@ S.switchRaidFrames = function(profile)
 	frame:ClearAllPoints()
 	
 	if profile == "SanHeal" then
+		S.position_tooltip = S.position_tooltip_default
+		
 		SetAttributeByProxy(frame,"columnAnchorPoint","TOP")
 		frame:SetPoint("TOP",UIParent,"CENTER",0,-170)
 		frame:SetAttribute("maxColumns", 8)
@@ -168,8 +185,19 @@ S.switchRaidFrames = function(profile)
 		dealWith40:GetScript("OnEvent")()	
 		
 	elseif profile == "SanChicken" then
+		S.position_tooltip = function(self, parent)
+			local f = SanUIRaid
+			if (f and f:IsShown()) then
+				if SanUIRaidUnitButton6 and SanUIRaidUnitButton6:IsShown() then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMLEFT", f, "BOTTOMRIGHT", 4, 0)
+				else
+					S.position_tooltip_default(self, parent)
+				end
+			end
+		end
 		SetAttributeByProxy(frame,"columnAnchorPoint","LEFT")
-		frame:SetPoint("LEFT",UIParent,"LEFT",10,-10)
+		frame:SetPoint("TOPLEFT",S.DataTexts.Panels.MinimapDataTextLeft,"BOTTOMLEFT",0,-20)
 		frame:SetAttribute("maxColumns", 1)
 		SetAttributeByProxy(frame,"unitsPerColumn", 25)
 		SetAttributeByProxy(frame,"point","TOP")
