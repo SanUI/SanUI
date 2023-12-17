@@ -293,12 +293,18 @@ local function Update(self, event, unit, isFullUpdate, updatedAuras)
 	end
 
 	if self.NotRaidDebuffs.forceShow then
-		_spellID = 5782
-		_name, _, _icon = GetSpellInfo(_spellID)
+		local _spellID = 5782
+		local _name, _, _icon = GetSpellInfo(_spellID)
+		local _spellID2 = 8921
+		local _name2, _, _icon2 = GetSpellInfo(_spellID2)
 		toShow[1] = { priority = 0, name = _name, icon = _icon, count = 5, debuffType = 'Magic', duration = 0, expiration = 60, spellID = _spellID, stackThreshold = 0 }
-		toShow[2] = { priority = 0, name = _name, icon = _icon, count = 4, debuffType = 'Disease', duration = 0, expiration = 60, spellID = _spellID, stackThreshold = 0 }
+		toShow[2] = { priority = 0, name = _name2, icon = _icon2, count = 4, debuffType = 'Disease', duration = 0, expiration = 60, spellID = _spellID2, stackThreshold = 0 }
 	end
 
+	if toShow[1].icon == toShow[2].icon then
+		toShow[2] = nil
+	end
+	
 	UpdateDebuffs(self, toShow)
 end
 
