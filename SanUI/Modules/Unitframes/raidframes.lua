@@ -339,30 +339,6 @@ local function Shared(self, unit)
 		end
 		--]]
 	end	
-
-	local atonement_icon = auras.Icons[194384]
-	if atonement_icon and not self.unit:find("pet") then
-		local b = CreateFrame("Frame", nil, auras)
-		b:SetAllPoints(atonement_icon)
-		local t = b:CreateTexture(nil, "OVERLAY")
-		t:SetAllPoints(b)
-		t:SetTexture(C.Medias.Blank)
-		t:SetVertexColor(.5,.5,.5)
-		
-		atonement_icon.Backdrop = b
-		b.tex = t
-		a_fl = atonement_icon:GetFrameLevel()
-		atonement_icon:SetFrameLevel(a_fl + 1)
-		b:SetFrameLevel(a_fl)
-		b:SetParent(self.Health)
-		
-		local pws_icon = auras.Icons[17]
-		
-		if pws_icon then
-			pws_icon:SetFrameLevel(a_fl + 2)
-		end
-	end	
-
 	
 	local turtle_icon = CreateFrame("Frame", nil, auras)	
 	turtle_icon:SetPoint("TOPRIGHT", S.scale2, S.scale2)	
