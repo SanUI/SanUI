@@ -157,7 +157,7 @@ S.switchRaidFrames = function(profile)
 		S.position_tooltip = S.position_tooltip_default
 		
 		SetAttributeByProxy(frame,"columnAnchorPoint","TOP")
-		frame:SetPoint("TOP",UIParent,"CENTER",0,-170)
+		frame:SetPoint("TOP",UIParent,"CENTER",0,-150)
 		frame:SetAttribute("maxColumns", 8)
 		SetAttributeByProxy(frame,"unitsPerColumn", 5)
 		SetAttributeByProxy(frame,"point","LEFT")

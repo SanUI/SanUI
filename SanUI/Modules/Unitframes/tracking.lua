@@ -81,6 +81,33 @@ S["UnitFrames"].RaidBuffsTracking["DRUID"] = {
   },
 }
 
+S["UnitFrames"].RaidBuffsTracking["PRIEST"] = {
+	{
+		-- Atonement
+		spellID = 194384,
+		pos = {"TOP", nil, "TOP", 0, -2 },
+		color = { 1, 1, 1},
+		anyCaster = false,
+		cooldownAnim = true,
+	},
+	{
+		-- PWS
+		spellID = 17,
+		pos = {"TOP", nil, "TOP", 8, -2 },
+		color = { 219/255, 163/255, 7/255},
+		anyCaster = false,
+		cooldownAnim = false,
+	},
+	{
+		-- Renew
+		spellID = 139,
+		pos = {"CENTER", nil, "CENTER", 0, 0 },
+		color = {0.4, 0.8, 0.2},
+		anyCaster = false,
+		timers = { {2, {1, 0, 0}}, {4.5, {1, 1, 0}} },
+	},
+}
+
 if not S["UnitFrames"].TextAuras then
 	S["UnitFrames"].TextAuras = {}
 end
