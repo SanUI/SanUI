@@ -910,17 +910,17 @@ S["UnitFrames"].RaidDebuffs = {
 		[423494] = List(), -- Tidal Blaze
 		[423759] = List(), -- Serpent's Crucible
 	-- Council of Dreams
-		[420948] = List(), -- Barreling Charge
+		--[420948] = List(), -- Barreling Charge
 		[421032] = List(), -- Captivating Finale
 		[420858] = List(), -- Poisonous Javelin
-		[418589] = List(), -- Polymorph Bomb
-		[421031] = List(6), -- Song of the Dragon
-		[426390] = List(), -- Corrosive Pollen
+		--[418589] = List(), -- Polymorph Bomb
+		--[421031] = List(6), -- Song of the Dragon
+		--[426390] = List(), -- Corrosive Pollen
 	-- Larodar, Keeper of the Flame
-		[425888] = List(), -- Igniting Growth
+		--[425888] = List(), -- Igniting Growth
 		--[426249] = List(), -- Blazing Coalescence
 		[421594] = List(), -- Smoldering Suffocation
-		[427299] = List(), -- Flash Fire
+		[427299] = List(6), -- Flash Fire
 		[428901] = List(), -- Ashen Devastation
 	-- Nymue, Weaver of the Cycle
 		--[423195] = List(), -- Inflorescence
@@ -933,8 +933,8 @@ S["UnitFrames"].RaidDebuffs = {
 		--[425357] = List(), -- Surging Growth
 		[420907] = List(), -- Viridian Rain
 	-- Smolderon
-		[426018] = List(), -- Seeking Inferno
-		[421455] = List(), -- Overheated
+		--[426018] = List(), -- Seeking Inferno
+		--[421455] = List(), -- Overheated
 		--[421643] = List(5), -- Emberscar's Mark
 		[421656] = List(), -- Cauterizing Wound
 		[425574] = List(), -- Lingering Burn
@@ -944,7 +944,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[424580] = List(), -- Falling Stars
 		[424578] = List(), -- Blazing Mushroom
 		[424579] = List(6), -- Suppressive Ember
-		[424495] = List(), -- Mass Entanblement
+		--[424495] = List(), -- Mass Entanblement
 		[424665] = List(), -- Seed of Flame
 	-- Fyrakk the Blazing
 }
