@@ -61,6 +61,8 @@ function S.misc(self,event,arg)
 			end)
 		end
 		--]]
+		
+		addon.saf.placeDebuffFrame()
 
 	end
 		

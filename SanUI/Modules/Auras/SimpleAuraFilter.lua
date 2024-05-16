@@ -16,10 +16,19 @@ saf.hookedBuffFrame = false
 saf.placeBuffFrame = function() 
 	BuffFrame:ClearAllPoints()
 	BuffFrame:SetPoint("TOPRIGHT",UIParent,"TOPRIGHT",0,-5)
-	DebuffFrame:ClearAllPoints()
-	DebuffFrame:SetPoint("TOPRIGHT", BuffFrame, "BOTTOMRIGHT", -5, -5)
 end
 
+saf.placedDebuffFrame = false
+
+saf.placeDebuffFrame = function()
+	if saf.placedDebuffFrame then
+		saf.placedDebuffFrame = false
+	else
+		saf.placedDebuffFrame = true
+		DebuffFrame:ClearAllPoints()
+		DebuffFrame:SetPoint("TOPRIGHT", BuffFrame, "BOTTOMRIGHT", -5, -5)
+	end
+end
 
 saf.hookBuffFrame = function()
 	if not saf.hookedBuffFrame then
@@ -29,7 +38,7 @@ saf.hookBuffFrame = function()
 		hooksecurefunc("UIParent_UpdateTopFramePositions",saf.placeBuffFrame)
 		hooksecurefunc(BuffFrame, "UpdateAuraContainerAnchor", saf.placeBuffFrame)
 		
-		hooksecurefunc(DebuffFrame, "SetPoint", saf.placeBuffFrame)
+		hooksecurefunc(DebuffFrame, "SetPoint", saf.placeDebuffFrame)
 	end
 end
 
