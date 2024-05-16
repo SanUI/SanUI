@@ -327,6 +327,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[110125] = List(), -- Shattered Resolve
 		[397797] = List(), -- Corrupted Vortex
 		[396007] = List(), -- Vicious Peck (Songbird Queen)
+		]]
 	-- Ruby Life Pools
 		[392406] = List(), -- Thunderclap
 		[372820] = List(), -- Scorched Earth
@@ -405,11 +406,11 @@ S["UnitFrames"].RaidDebuffs = {
 		[388984] = List(), -- Vicious Ambush
 		[388544] = List(), -- Barkbreaker
 		[377008] = List(), -- Deafening Screech
-		--]]
+		--
 	----------------------------------------------------------
 	---------------- Dragonflight (Season 2) -----------------
 	----------------------------------------------------------
-	--[[ Brackenhide Hollow
+	-- Brackenhide Hollow
 		[385361] = List(), -- Rotting Sickness
 		[378020] = List(), -- Gash Frenzy
 		[385356] = List(), -- Ensnaring Trap
@@ -521,7 +522,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[369337] = List(), -- Difficult Terrain
 		[376333] = List(), -- Temporal Zone
 		[377510] = List(), -- Stolen Time
-	-- Freehold
+	--[[ Freehold
 		[258323] = List(), -- Infected Wound
 		[257775] = List(), -- Plague Step
 		[257908] = List(), -- Oiled Blade
@@ -645,7 +646,7 @@ S["UnitFrames"].RaidDebuffs = {
 		--[268125] = List(), -- Aura of Thorns
 		--[268080] = List(), -- Aura of Apathy
 		[264050] = List(), -- Infected Thorn
-		[260569] = List(), -- Wildfire
+		--[260569] = List(), -- Wildfire
 		[263943] = List(), -- Etch
 		[264378] = List(), -- Fragment Soul
 		[267907] = List(), -- Soul Thorns
@@ -664,7 +665,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[255558] = List(), -- Tainted Blood
 		[250036] = List(), -- Shadowy Remains
 		[257483] = List(), -- Pile of Bones
-		[253562] = List(), -- Wildfire
+		--[253562] = List(), -- Wildfire
 		[254959] = List(), -- Soulburn
 		[255814] = List(), -- Rending Maul
 		[255582] = List(), -- Molten Gold
@@ -812,7 +813,7 @@ S["UnitFrames"].RaidDebuffs = {
 	---------------------------------------------------------
 	---------------- Vault of the Incarnates ----------------
 	---------------------------------------------------------
-	--[[ Eranog
+	-- Eranog
 		[370648] = List(5), -- Primal Flow
 		[390715] = List(6), -- Primal Rifts
 		[370597] = List(6), -- Kill Order
@@ -863,11 +864,10 @@ S["UnitFrames"].RaidDebuffs = {
 		[395929] = List(3), -- Storm's Spite
 		--[381251] = List(3), -- Electric Lash
 		-- TODO: DF
-	--]]
 	---------------------------------------------------------
 	------------ Aberrus, the Shadowed Crucible -------------
 	---------------------------------------------------------
-	--[[ Kazzara
+	--Kazzara
 		[406516] = List(), -- Dread Rifts
 		[407199] = List(), -- Dread Rifts
 		[407200] = List(), -- Dread Rifts
@@ -915,7 +915,7 @@ S["UnitFrames"].RaidDebuffs = {
 	-- Scalecommander Sarkareth
 		[404403] = List(), -- Desolate Blossom
 		[404027] = List(), -- Void Bomb
-	--]]
+
 	---------------------------------------------------------
 	------------ Amirdrassil: The Dream's Hope --------------
 	---------------------------------------------------------
@@ -974,4 +974,5 @@ S["UnitFrames"].RaidDebuffs = {
 		--[424495] = List(), -- Mass Entanblement
 		[424665] = List(), -- Seed of Flame
 	-- Fyrakk the Blazing
+		[430045] = List(), -- Corruption
 }
