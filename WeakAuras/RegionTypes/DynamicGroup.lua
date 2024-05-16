@@ -1,7 +1,10 @@
 if not WeakAuras.IsLibsOK() then return end
---- @type string, Private
-local AddonName, Private = ...
+---@type string
+local AddonName = ...
+---@class Private
+local Private = select(2, ...)
 
+---@class WeakAuras
 local WeakAuras = WeakAuras
 local L = WeakAuras.L
 local SharedMedia = LibStub("LibSharedMedia-3.0")
@@ -43,6 +46,8 @@ local default = {
   rowSpace = 1,
   columnSpace = 1
 }
+
+Private.regionPrototype.AddAlphaToDefault(default);
 
 local controlPointFunctions = {
   ["SetAnchorPoint"] = function(self, point, relativeFrame, relativePoint, offsetX, offsetY)
