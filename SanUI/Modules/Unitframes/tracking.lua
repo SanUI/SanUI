@@ -862,6 +862,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[396037] = List(3), -- Surging Blast
 		[390911] = List(3), -- Lingering Charge
 		[395929] = List(3), -- Storm's Spite
+		[397382] = List(3), -- Shattering Shroud
 		--[381251] = List(3), -- Electric Lash
 		-- TODO: DF
 	---------------------------------------------------------
