@@ -1,5 +1,5 @@
 local addonName, addon = ...
-local S = unpack(addon)
+local S, C = unpack(addon)
 
 local Scale = S.Toolkit.Functions.Scale
 
@@ -54,4 +54,4 @@ for i = -10, 12 do
 	sizes.scales[i] = Scale(i)
 end
 
-S.sizes = sizes
+C.sizes = sizes

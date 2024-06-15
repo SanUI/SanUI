@@ -6,8 +6,8 @@ local S,C,L = unpack(addon)
 local oUF = addon.oUF
 
 local Scale = S.Toolkit.Functions.Scale
-local scales = S.sizes.scales
-local rfsizes = S.sizes.raidframes
+local scales = C.sizes.scales
+local rfsizes = C.sizes.raidframes
 
 local font2 = C["Medias"].UnitFrameFont
 local font1 = C["Medias"].Font

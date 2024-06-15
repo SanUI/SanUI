@@ -2,8 +2,8 @@ local addonName, addon = ...
 local S,C = unpack(addon)
 
 local Scale = S.Toolkit.Functions.Scale
-local height = S.sizes.raidframes.height
-local smallheight = S.sizes.raidframes.smallheight
+local height = C.sizes.raidframes.height
+local smallheight = C.sizes.raidframes.smallheight
 --local RaidButtonSize = 28
 
 local function changeAuras(frame,auras)
