@@ -129,7 +129,7 @@ local updateThreat = function(self, event, unit)
 end
 
 local function Shared(self, unit)
-	self:SetFrameStrata("MEDIUM")
+	--self:SetFrameStrata("MEDIUM")
 	self.colors = S.UnitColor
 	self:RegisterForClicks("AnyUp")
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
