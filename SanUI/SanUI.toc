@@ -10,6 +10,7 @@
 Core\init.lua
 Config\profiles.lua
 Config\sizes.lua
+Config\colors.lua
 
 Libs\LibDispel.lua
 Libs\oUF_NotAuraTrack.lua

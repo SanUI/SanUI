@@ -124,7 +124,7 @@ oUF_Hank_hooks.ButtonStyleTuk = {
 PostCreateIcon = function(icons, icon)
 	
 	if(icons.__owner.unit == "player" or icons.__owner.unit == "target" ) then
-		icon:CreateBackdrop()
+		S.CreateBackdrop(icon)
 		
 		icon.remaining = TukuiDB.SetFontString(icon, font1,11, "THINOUTLINE")
 		icon.remaining:SetPoint("CENTER", Scale(1), 0)
@@ -159,7 +159,7 @@ OnEnterAura = function(self, icon)
 	
 	if(self.unit == "player" or self.unit == "target") then
 		
-		self.HighlightAura:CreateBackdrop()
+		S.CreateBackdrop(self.HighlightAura)
 		self.HighlightAura:SetFrameLevel(6) -- cd on icon seems to have frame level 5
 		
 		self.HighlightAura.icon.remaining = TukuiDB.SetFontString(icon, TukuiCF["Medias"].Font, 11, "THINOUTLINE")
@@ -216,7 +216,7 @@ sharedStyle = function(self, unit, isSingle)
 	auras:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, S.scale1)
 	auras:SetScale(1/cfg.FocusFrameScale)
 	auras:SetSize(36, 14)
-	auras:CreateBackdrop()
+	S.CreateBackdrop(auras)
 	auras.Icons = {}
 	auras.Texts = {}
 	
@@ -359,7 +359,7 @@ sharedStyle = function(self, unit, isSingle)
 			local castBarBG = CreateFrame("Frame",nil,castbar)
 			castBarBG:SetPoint("TOPLEFT",castbar,"TOPLEFT",-Scale(2),Scale(2))
 			castBarBG:SetPoint("BOTTOMRIGHT",castbar,"BOTTOMRIGHT",Scale(2),-Scale(2))
-			castBarBG:CreateBackdrop()
+			S.CreateBackdrop(castBarBG)
 			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
 			castbar:SetFrameLevel(6)
 			castBarBG:SetFrameLevel(5)
@@ -425,7 +425,7 @@ sharedStyle = function(self, unit, isSingle)
 				castbar.button:SetSize(Scale(18), Scale(18))
 			end
 			
-			castbar.button:CreateBackdrop()
+			S.CreateBackdrop(castbar.button)
 
 			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
 			castbar.icon:SetPoint("TOPLEFT", castbar.button, Scale(2), Scale(-2))
@@ -471,7 +471,7 @@ sharedStyle = function(self, unit, isSingle)
 			local gcdcastborder = CreateFrame("Frame", nil, self.GCD)
 			gcdcastborder:SetSize(Scale(1), Scale(1))
 			gcdcastborder:SetPoint("CENTER", health, "CENTER", 0, 0)
-			gcdcastborder:CreateBackdrop("Transparent")
+			S.CreateBackdrop(gcdcastborder, "Transparent")
 			gcdcastborder:ClearAllPoints()
 			gcdcastborder:SetPoint("TOPLEFT", self.GCD, -Scale(2), Scale(2))
 			gcdcastborder:SetPoint("BOTTOMRIGHT", self.GCD, Scale(2), Scale(-2))
@@ -499,7 +499,7 @@ sharedStyle = function(self, unit, isSingle)
 		
 		castbar.CreatePip = function(element, stage)
 			local f = CreateFrame("Frame", nil)
-			f:CreateBackdrop()
+			S.CreateBackdrop(f)
 			f:SetHeight(castbar:GetHeight())
 			f:SetWidth(1.2)
 			f.Backdrop:SetBackdropBorderColor(1,1,1)
@@ -640,7 +640,7 @@ oUF_Hank_hooks.customPowerBar = {
 		power:SetMinMaxValues(0,UnitPowerMax(unit))
 		
 		local powerPanel = CreateFrame("Frame", "MyPowerPanel", power)
-		powerPanel:CreateBackdrop()
+		S.CreateBackdrop(powerPanel)
 		powerPanel:SetFrameStrata("MEDIUM")
 		powerPanel:SetFrameLevel(power:GetFrameLevel()-1)
 		powerPanel:SetPoint("TOPLEFT",Scale(-2), Scale(2))

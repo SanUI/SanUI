@@ -6,7 +6,7 @@ local Scale = S.Toolkit.Functions.Scale
 local button  = CreateFrame("Frame", "RaidUtilitiesButton", UIParent)
 button:SetSize(S.scale10, S.scale10)
 button:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), Scale(28))
-button:CreateBackdrop()
+S.CreateBackdrop(button)
 button:SetFrameStrata("MEDIUM")
 --button:SetParent(Tukui_PetBattleFrameHider)
 
@@ -59,7 +59,7 @@ local Minimap = S.Maps.Minimap
 local function Enable()
 	-- markbarbackground
 	local markbarbg = CreateFrame("Frame", "markbarbg", UIParent)
-	markbarbg:CreateBackdrop()
+	S.CreateBackdrop(markbarbg)
 	markbarbg:SetHeight((19*6) + (2*7))
 	markbarbg:SetWidth(Minimap:GetWidth() +4)
 	markbarbg:SetPoint("TOPLEFT", Minimap, "TOPRIGHT", Scale(17),0)
@@ -77,7 +77,7 @@ local function Enable()
 		local b = CreateFrame("Button", name, parent, "SecureActionButtonTemplate")
 		b:SetWidth(Scale(w))
 		b:SetHeight(Scale(h))
-		b:CreateBackdrop()
+		S.CreateBackdrop(b)
 		b.Backdrop:SetBackdropBorderColor(unpack(C.General.BackdropColor))
 
 		local btext=b:CreateFontString(nil, "OVERLAY")

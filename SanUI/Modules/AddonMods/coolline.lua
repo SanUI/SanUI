@@ -55,7 +55,7 @@ function S.modCoolLine(event)
 
 	
 	if not CoolLine.Backdrop then
-		CoolLine:CreateBackdrop()
+		S.CreateBackdrop(CoolLine)
 	end
 	
 	db.h = buttonsize

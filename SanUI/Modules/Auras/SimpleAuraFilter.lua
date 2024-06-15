@@ -83,7 +83,7 @@ saf.hookButtons = function()
 	for _, button in ipairs(BuffFrame.auraFrames) do
 		if not button.clickHooked then
 			button:HookScript("OnClick", saf.rightClickHook)
-			button:CreateBackdrop()
+			S.CreateBackdrop(button)
 			local flevel = button:GetFrameLevel()
 			flevel = (flevel > 1 and flevel-1) or 1
 			button.Backdrop:SetFrameLevel(flevel)

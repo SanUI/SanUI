@@ -9,7 +9,7 @@ function S.weakAurasDialog(new_version, old_version)
 	local main = CreateFrame("Frame", nil, UIParent)
 	main:SetPoint("CENTER")
 	main:SetSize(500,200)
-	main:CreateBackdrop()
+	S.CreateBackdrop(main)
 	
 	local text1 = main:CreateFontString(nil, "OVERLAY")
 	text1:SetFont(C.Medias.Font, 12)

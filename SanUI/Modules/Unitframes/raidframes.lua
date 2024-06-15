@@ -415,7 +415,7 @@ local function Shared(self, unit)
 		--HighlightTarget has + 3, we want to be above that
 		rd:SetFrameLevel(health:GetFrameLevel() + 4)
 		
-		rd:CreateBackdrop()
+		S.CreateBackdrop(rd)
 		
 		rd.icon = rd:CreateTexture(nil, "OVERLAY")
 		rd.icon:SetTexCoord(.1,.9,.1,.9)
