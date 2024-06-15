@@ -11,7 +11,7 @@ S["profiles"] = {
 	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
  },
  ["Tovi"] ={ 
-	modes = {"ToviDam" },
+	modes = {"ToviDam", "ToviAug" },
 	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
  },
   ["Dovi"] = { 
@@ -120,6 +120,18 @@ S["Modes"] = {
 		["coolline"] = "SanHeal",
 		["ActionButtons"] = "SanHeal",
 		["DBM"] = "SanHeal",
+	},
+	["ToviAug"] = {
+		["raidframes"] = "SanChicken",
+		["SimpleAuraFilter"] = "ToviAug",
+		["castbar"] = "ToviAug",
+		["powerbar"] = "Hidden",
+		["gcd"] = "ToviAug",
+		["bossbars"] = "SanHeal",
+		["coolline"] = "SanHeal",
+		["ActionButtons"] = "ToviAug",
+		["DBM"] = "SanHeal",
+		["namedframes"] = "ToviAug",
 	},
 	["SanChicken"] = {
 		["raidframes"] = "SanChicken",

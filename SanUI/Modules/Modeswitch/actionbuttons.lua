@@ -79,6 +79,30 @@ S.switchActionButtons = function(profile)
 				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 			end
 		end
+	elseif profile == "ToviAug" then
+		for i=1, 12 do
+		  local b = _G["MultiBarBottomLeftButton"..i]
+		  local c = _G["ActionButton"..13-i]
+		  b:ClearAllPoints()
+		  c:ClearAllPoints()
+
+		  -- Seems contrieved, but was the only way I really could align the buttons
+		  -- and ActionBar1 properly
+		  if i == 1 then
+			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
+			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
+		  else
+			local xoff = (i-1)*Size + (i-1)* Spacing + Spacing/2
+			local eightwidth = 8 * Size + 7 * Spacing
+			if i >= 5 then
+				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
+				c:SetPoint("RIGHT", UIParent, "CENTER", -xoff + eightwidth + Spacing , -150)
+			else
+				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
+				c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
+			end
+		  end
+		end
 	else
 		for i=1, 12 do
 		  local b = _G["MultiBarBottomLeftButton"..i]

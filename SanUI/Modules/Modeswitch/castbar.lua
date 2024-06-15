@@ -32,6 +32,18 @@ S.switchCastbar = function(profile)
 			local name, height, flags = cb.time:GetFont()
 			name = name or C.UnitFrames.Font
 			cb.time:SetFont(name, 16, flags)
+		elseif profile == "ToviAug" then
+			cb:ClearAllPoints()
+			cb:SetWidth(288)
+			cb.button:ClearAllPoints()
+			cb.button:SetSize(Scale(40), Scale(40))
+			cb:SetPoint("CENTER",UIParent,"CENTER",0,-208)
+			cb.button:SetPoint("TOP",cb,"BOTTOM",0,-6)
+			cb.time:ClearAllPoints()
+			cb.time:SetPoint("BOTTOM", cb, "TOP", 0, 4)
+			local name, height, flags = cb.time:GetFont()
+			name = name or C.UnitFrames.Font
+			cb.time:SetFont(name, 16, flags)
 		elseif profile == "Manyak" then
 			cb:ClearAllPoints()
 			cb.button:ClearAllPoints()
