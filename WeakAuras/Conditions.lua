@@ -45,7 +45,7 @@ local function formatValueForAssignment(vType, value, pathToCustomFunction, path
     return value and tostring(value) or "false";
   elseif(vType == "number") then
     return value and tostring(value) or "0";
-  elseif (vType == "list") then
+  elseif (vType == "list" or vType == "textureLSM") then
     if type(value) == "string" then
       return string.format("%s", Private.QuotedString(value))
     elseif type(value) == "number" then
@@ -124,13 +124,14 @@ local function formatValueForAssignment(vType, value, pathToCustomFunction, path
     end
   elseif(vType == "sound") then
     if (value and type(value) == "table") then
-      return string.format("{ sound = %s, sound_channel = %s, sound_path = %s, sound_kit_id = %s, sound_type = %s, %s}",
+      return string.format("{ sound = %s, sound_channel = %s, sound_path = %s, sound_kit_id = %s, sound_type = %s, %s, %s}",
         Private.QuotedString(tostring(value.sound or "")),
         Private.QuotedString(tostring(value.sound_channel or "")),
         Private.QuotedString(tostring(value.sound_path or "")),
         Private.QuotedString(tostring(value.sound_kit_id or "")),
         Private.QuotedString(tostring(value.sound_type or "")),
-        value.sound_repeat and "sound_repeat = " .. tostring(value.sound_repeat) or "nil");
+        value.sound_repeat and "sound_repeat = " .. tostring(value.sound_repeat) or "nil",
+        value.sound_fade and "sound_fade = " .. tostring(value.sound_fade) or "nil");
     end
   elseif(vType == "customcode") then
     return string.format("%s", pathToCustomFunction);
@@ -166,7 +167,7 @@ local function formatValueForAssignment(vType, value, pathToCustomFunction, path
 end
 
 local function formatValueForCall(type, property)
-  if type == "bool" or type == "number" or type == "list" or type == "icon" or type == "string" or type == "texture"
+  if type == "bool" or type == "number" or type == "list" or type == "icon" or type == "string" or type == "texture" or type == "textureLSM"
     or type == "progressSource"
   then
     return "propertyChanges['" .. property .. "']";
