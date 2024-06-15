@@ -10,6 +10,9 @@ if not _G.oUF_NotRaidDebuffs then
 	_G.oUF_NotRaidDebuffs = addon
 end
 
+local libDispel = SanUI[1].libDispel
+local bleedList = libDispel:GetBleedList()
+
 local abs, max = math.abs, math.max
 local format, floor, next = format, floor, next
 local type, pairs, wipe = type, pairs, wipe
@@ -31,6 +34,7 @@ local DispelPriority = {
 	Curse   = 53,
 	Disease = 52,
 	Poison  = 51,
+	Bleed = 50
 }
 
 local blackList = {
@@ -80,7 +84,7 @@ end
 function addon:GetDispelColor()
 	return DispelColor
 end
-
+--[[
 local DispelList = {
 	PALADIN = { Poison = true, Disease = true },
 	PRIEST = { Magic = true, Disease = true },
@@ -93,6 +97,7 @@ local DispelList = {
 }
 
 local playerClass = select(2, UnitClass('player'))
+
 local DispelFilter = DispelList[playerClass] or {}
 addon.DispelFilter = DispelFilter
 
@@ -105,6 +110,7 @@ local function CheckTalentTree(tree)
 end
 
 local SingeMagic = 89808
+
 
 local function CheckPetSpells()
 	return IsSpellKnownOrOverridesKnown(SingeMagic, true)
@@ -130,6 +136,7 @@ local function CheckDispel(_, event, arg1)
 		end
 	end
 end
+--]]
 
 local function formatTime(s)
 	if s > 60 then
@@ -261,10 +268,14 @@ local function Update(self, event, unit, isFullUpdate, updatedAuras)
 	local data = debuffData(unit, index)
 	
 	while data.name do
-		if not blackList[data.spellID] then	
+
+		if not blackList[data.spellID] then
+				if bleedList[data.spellID] then	
+					data.debuffType = 'Bleed'
+				end
 			if shouldShowDispellable and data.debuffType then
 				--Make Dispel buffs on top of Boss Debuffs
-				if DispelFilter[data.debuffType] then
+				if libDispel:IsDispellableByMe(data.debuffType) then--DispelFilter[data.debuffType] then
 					data.priority = DispelPriority[data.debuffType]
 				else
 					data.debuffType = nil
@@ -329,7 +340,7 @@ local function Disable(self)
 		self.NotRaidDebuffs:Hide()
 	end
 end
-
+--[[
 local frame = CreateFrame('Frame')
 frame:SetScript('OnEvent', CheckDispel)
 frame:RegisterEvent('UNIT_PET', CheckDispel)
@@ -337,5 +348,6 @@ frame:RegisterEvent('UNIT_PET', CheckDispel)
 frame:RegisterEvent('PLAYER_TALENT_UPDATE')
 frame:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED')
 frame:RegisterEvent('CHARACTER_POINTS_CHANGED')
+--]]
 
 oUF:AddElement('NotRaidDebuffs', Update, Enable, Disable)

@@ -11,6 +11,7 @@ Core\init.lua
 Config\profiles.lua
 Config\sizes.lua
 
+Libs\LibDispel.lua
 Libs\oUF_NotAuraTrack.lua
 Libs\oUF_TextAuras.lua
 Libs\oUF_ShadowTouched.lua

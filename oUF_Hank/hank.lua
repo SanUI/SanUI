@@ -3,6 +3,11 @@ local cfg = oUF_Hank_config
 
 local oUF = Tukui.oUF
 
+local libDispel = SanUI[1].libDispel
+local canDispel = function(dispellType)
+	libDispel:IsDispellableByMe(dispellType)
+end
+
 local Scale = Tukui[1].Toolkit.Functions.Scale
 
 -- GLOBALS: oUF_player, oUF_pet, oUF_target, oUF_focus
@@ -125,7 +130,7 @@ fntSmall:SetTextColor(unpack(cfg.colors.text))
 fntSmall:SetShadowColor(unpack(cfg.colors.textShadow))
 fntSmall:SetShadowOffset(Scale(1), -Scale(1))
 
-local canDispel = oUF_NotRaidDebuffs.DispelFilter
+--local canDispel = oUF_NotRaidDebuffs.DispelFilter
 
 -- Functions -------------------------------------
 
@@ -356,7 +361,7 @@ oUF_Hank.PostUpdateButton = function(icons, icon, unit, data, index)
 		-- Sticky aura: petDebuffs
 		icon.Icon:SetVertexColor(unpack(cfg.AuraStickyColor))
 		icon.Icon:SetDesaturated(false)
-	elseif filter == "HARMFUL" and (not can_attack) and canDispel[dtype] and stickyauras.curableDebuffs then
+	elseif filter == "HARMFUL" and (not can_attack) and canDispel(dtype) and stickyauras.curableDebuffs then
 		-- Sticky aura: curableDebuffs
 		icon.Icon:SetVertexColor(DebuffTypeColor[dtype].r, DebuffTypeColor[dtype].g, DebuffTypeColor[dtype].b)
 		icon.Icon:SetDesaturated(false)
@@ -396,7 +401,7 @@ oUF_Hank.FilterAura = function(icons, unit, data)
 	elseif filter == "HARMFUL" and can_attack and caster == "pet" and stickyauras.petDebuffs then
 		-- Sticky aura: petDebuffs
 		return true
-	elseif filter == "HARMFUL" and (not can_attack) and canDispel[dtype] and stickyauras.curableDebuffs then
+	elseif filter == "HARMFUL" and (not can_attack) and canDispel(dtype) and stickyauras.curableDebuffs then
 		-- Sticky aura: curableDebuffs
 		return true
 	-- Usage of UnitIsUnit: Call from within focus frame will return "target" as caster if focus is targeted (player > target > focus)
