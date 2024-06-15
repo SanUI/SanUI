@@ -386,10 +386,12 @@ sharedStyle = function(self, unit, isSingle)
 		end		
 
 		--Castbar time string
+		castbar.time = castbar:CreateFontString(nil, "OVERLAY")
+		--castbar.time:SetFontObject(font2)
 		if(unit ~= "focus") then
-			castbar.time = TukuiDB.SetFontString(castbar, font2, 12, "OUTLINE")
+			castbar.time:SetFont(font2, 12, "OUTLINE")
 		else
-			castbar.time = TukuiDB.SetFontString(castbar, font2, 16, "OUTLINE")
+			castbar.time:SetFont(font2, 16, "OUTLINE")
 		end
 		castbar.time:SetPoint("RIGHT", castbar, "RIGHT", Scale(-4), 0)
 		castbar.time:SetTextColor(0.84, 0.75, 0.65)
