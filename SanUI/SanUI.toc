@@ -23,6 +23,7 @@ Modules\Auras\optionspanel.lua
 Modules\Unitframes\tracking.lua
 Modules\Unitframes\raidframes.lua
 Modules\Unitframes\bossframes.lua
+Modules\Unitframes\namedframes.lua
 
 Modules\AddonMods\blizzard.lua
 Modules\AddonMods\tukui.lua
@@ -41,6 +42,7 @@ Modules\Modeswitch\gcd.lua
 Modules\Modeswitch\classpower.lua
 Modules\Modeswitch\powerbar.lua
 Modules\Modeswitch\raidframes.lua
+Modules\Modeswitch\namedframes.lua
 Modules\Modeswitch\main.lua
 
 Modules\Misc\raidutilities.lua

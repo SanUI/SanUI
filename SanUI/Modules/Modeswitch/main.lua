@@ -76,6 +76,9 @@ S.switch2Mode = function(mode)
 	if S["Modes"][mode]["DBM"] and IsAddOnLoaded("DBM-Core") then 
 		DBM:ApplyProfile(S["Modes"][mode]["DBM"])
 	end
+	if S["Modes"][mode]["namedframes"] then	
+		S.switchNamedFrames(S["Modes"][mode]["namedframes"])
+	end
 	
 	SanUIdb["Mode"] = mode
 end
