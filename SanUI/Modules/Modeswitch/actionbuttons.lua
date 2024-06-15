@@ -103,13 +103,22 @@ S.switchActionButtons = function(profile)
 			end
 		  end
 		end
-	else
+	
+	else 
 		for i=1, 12 do
 		  local b = _G["MultiBarBottomLeftButton"..i]
-		  local c = _G["ActionButton"..13-i]
+		  local c = _G["DominosActionButton"..13-i]
 		  b:ClearAllPoints()
 		  c:ClearAllPoints()
-
+		  b:SetSize(32,32)
+		  c:SetSize(32,32)
+		  c.icon:SetSize(32,32)
+		  --b.Backdrop:SetSize(32, 32)
+		  --c.Backdrop:SetSize(32, 32)
+		  --S.CreateBackdrop(b)
+		  S.CreateBackdrop(c)
+		  print("running")
+		  
 		  -- Seems contrieved, but was the only way I really could align the buttons
 		  -- and ActionBar1 properly
 		  if i == 1 then
