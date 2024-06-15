@@ -110,8 +110,8 @@ oUF_Hank.classResources = {
 		inactive = {'Interface\\PlayerFrame\\MonkNoPower'},
 		active = {'Interface\\PlayerFrame\\MonkLightPower'},
 		size = {20, 20},
-		max = 5,
-		offset = - 85,
+		max = 6,
+		offset = - 102,
 	},
 }
 
