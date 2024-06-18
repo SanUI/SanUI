@@ -117,7 +117,6 @@ S.switchActionButtons = function(profile)
 		  --c.Backdrop:SetSize(32, 32)
 		  --S.CreateBackdrop(b)
 		  S.CreateBackdrop(c)
-		  print("running")
 		  
 		  -- Seems contrieved, but was the only way I really could align the buttons
 		  -- and ActionBar1 properly
