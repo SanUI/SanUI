@@ -9,7 +9,6 @@ local S,C = unpack(addon)
 local sanui_version = GetAddOnMetadata(addonName, "Version")
 
 local f = CreateFrame("frame")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:RegisterEvent("ADDON_LOADED")
 
 local sharedMedia = LibStub("LibSharedMedia-3.0")
@@ -69,6 +68,7 @@ function S.misc(self,event,arg)
 	end
 		
 	if(event == "ADDON_LOADED") then
+		f:RegisterEvent("PLAYER_ENTERING_WORLD")
 		local name = arg
 		
 		if name == "SanUI" then 			

@@ -4,6 +4,11 @@ local S,C = unpack(addon)
 S.hookActionBar1 = function() end
 local Size = C.ActionBars.NormalButtonSize
 local Spacing = C.ActionBars.ButtonSpacing
+local Scale = S.Toolkit.Functions.Scale
+local bnames = {
+	main = "DominosActionButton",
+	second = "MultiBarBottomLeftActionButton",
+}
 
 S.switchActionButtons = function(profile)
 
@@ -105,26 +110,27 @@ S.switchActionButtons = function(profile)
 		end
 	
 	else 
+		local size = Scale(C.sizes.actionbuttons)
 		for i=1, 12 do
-		  local b = _G["MultiBarBottomLeftButton"..i]
-		  local c = _G["DominosActionButton"..13-i]
+		  local b = _G[bnames.second .. i]
+		  local c = _G[bnames.main .. 13-i]
 		  b:ClearAllPoints()
 		  c:ClearAllPoints()
-		  b:SetSize(32,32)
-		  c:SetSize(32,32)
-		  c.icon:SetSize(32,32)
+		  c:SetSize(size, size)
+		  b:SetSize(size, size)
 		  --b.Backdrop:SetSize(32, 32)
 		  --c.Backdrop:SetSize(32, 32)
 		  --S.CreateBackdrop(b)
-		  S.CreateBackdrop(c)
+		  --S.CreateBackdrop(c)
+		  
 		  
 		  -- Seems contrieved, but was the only way I really could align the buttons
 		  -- and ActionBar1 properly
 		  if i == 1 then
-			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
-			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
+			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing, 3 + Spacing)
+			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing, 3 + Spacing)
 		  else
-			local xoff = (i-1)*Size + (i-1)* Spacing + Spacing/2
+			local xoff = (i-1)*Size + i * Spacing
 			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
 			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 		  end
@@ -137,16 +143,11 @@ S.switchActionButtons = function(profile)
 
 end
 
--- Tukui rearranges the buttons on each PLAYER_ENTERING_WORLD
--- so we get the function and hook this switch function
-hooksecurefunc(S["ActionBars"],"Enable",function()
-	if not (S.ActionBars and S.ActionBars.Bars and S["ActionBars"].Bars.Bar1) then
-		print("No ActionBar1! Can't hook OnEvent!")
-	else
-		S["ActionBars"].Bars.Bar1:HookScript("OnEvent",function(self, event, unit, ...)
-			--if event == "PLAYER_ENTERING_WORLD" then
-				S.hookActionBar1()
-			--end
-		end)
-	end
+hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD",	
+	function()
+		if S["Modes"][SanUIdb["Mode"]]["ActionButtons"] then
+			S.switchActionButtons(S["Modes"][SanUIdb["Mode"]]["ActionButtons"])
+		else
+			print("No ActionButtons profile for mode "..SanUIdb["Mode"].."! Can't Switch!")
+		end
 end)
