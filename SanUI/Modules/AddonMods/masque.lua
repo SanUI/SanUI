@@ -4,11 +4,11 @@
 local addonName, addon = ...
 local S, C = unpack(addon)
 
-
+local Scale = S.Toolkit.Functions.Scale
 local Masque = LibStub("Masque", true)
 if not Masque then return end
 
-local size = C.sizes.actionbuttons + 2
+local size = Scale(C.sizes.actionbuttons)
 
 Masque:AddSkin("SanUI", {
 	Author = "Tuovi-Mal'Ganis",
@@ -22,8 +22,8 @@ Masque:AddSkin("SanUI", {
 		Texture = [[Interface\AddOns\SanUI\Medias\Textures\No_Backdrop]],
 	},
 	Icon = {
-		Width = C.sizes.actionbuttons,
-		Height = C.sizes.actionbuttons,
+		Width = size, --Scale(C.sizes.actionbuttons - 2),
+		Height = size, --Scale(C.sizes.actionbuttons - 2),
 		TexCoords = {0.07,0.93,0.07,0.93},
 	},
 	Flash = {
@@ -88,30 +88,35 @@ Masque:AddSkin("SanUI", {
 	Name = {
 		Width = size,
 		Height = 10,
-		OffsetY = 2,
+		OffsetY = -2,
 	},
 	Count = {
 		Width = size,
 		Height = 10,
 		OffsetX = -2,
-		OffsetY = 2,
+		OffsetY = 0,
 		FontSize = 13,
 	},
 	HotKey = {
 		Width = size,
 		Height = 16,
-		OffsetX = -2,
-		OffsetY = -2,
+		OffsetX = 0,
+		OffsetY = 0,
+		Point = "TOPRIGHT",
+		RelPoint = "TOPRIGHT",
+		JustifyH = "RIGHT",
+		JustifyV = "TOP",
 	},
 	AutoCast = {
 		Width = size,
 		Height = size,
 		OffsetX = 1,
 		OffsetY = -1,
+		
 	},
 }, true)
 
-local addons = { "Dominos", "WeakAuras" }
+local addons = { "Dominos" }
 
 
 S.skinByMasque = function()
