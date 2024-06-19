@@ -2,8 +2,13 @@ local addonName, addon = ...
 local S,C = unpack(addon)
 
 local Scale = S.Toolkit.Functions.Scale
-local spacing = C["ActionBars"].ButtonSpacing
-local buttonsize = C["ActionBars"].NormalButtonSize
+local panels = S.panels
+local ab1 = panels.actionbarpanel1
+
+local spacing = C.sizes.actionbuttonspacing
+local buttonsize = C.sizes.actionbuttons
+
+
 
 -- executed  PLAYER_ENTERING_WORLD in Misc.lua
 --Putting it above the middle action bar
@@ -19,7 +24,7 @@ local function placeCoolLine(db)
 		bg:SetPoint("TOPLEFT", TukuiStanceBar, "TOPRIGHT", spacing, -spacing)
 		bg:SetPoint("BOTTOMRIGHT", TukuiActionBar3, "BOTTOMLEFT", -spacing, spacing)
 	else
-		bg:SetPoint("LEFT", TukuiActionBar1, "LEFT")
+		bg:SetPoint("LEFT", ab1, "LEFT")
 		bg:SetPoint("BOTTOM", TukuiActionBar3, "BOTTOM", 0, spacing)
 		bg:SetPoint("TOPRIGHT", TukuiActionBar3, "TOPLEFT", -spacing, -spacing)
 	end

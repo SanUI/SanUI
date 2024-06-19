@@ -85,3 +85,18 @@ S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, Border
 	
 	f.Backdrop = backdrop
 end
+
+S.Kill = function(f)
+	if (f.UnregisterAllEvents) then
+		f:UnregisterAllEvents()
+		f:SetParent(S.panels.Hider)
+	else
+		f.Show = f.Hide
+	end
+	
+	if f.SetTexture then
+		f:SetTexture(nil)
+	end
+
+	f:Hide()
+end

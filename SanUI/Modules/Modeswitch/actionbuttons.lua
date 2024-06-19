@@ -1,14 +1,32 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-S.hookActionBar1 = function() end
-local Size = C.ActionBars.NormalButtonSize
-local Spacing = C.ActionBars.ButtonSpacing
 local Scale = S.Toolkit.Functions.Scale
 local bnames = {
 	main = "DominosActionButton",
 	second = "MultiBarBottomLeftActionButton",
 }
+local absize = C.sizes.actionbuttons
+local abspacing = C.sizes.actionbuttonspacing
+local Size = absize
+local Spacing = abspacing
+local uiscale = UIParent:GetScale()
+
+S.styleActionButton = function(button)
+	S.Kill(button.IconMask)
+	S.Kill(button.SlotBackground)
+	S.Kill(button.NormalTexture)
+	local size = Scale(absize)
+	button:SetSize(size, size)
+	S.CreateBackdrop(button, "Transparent")
+	button.HighlightTexture:SetAllPoints()
+	button.CheckedTexture:SetAllPoints()
+	button.PushedTexture:ClearAllPoints()
+	button.PushedTexture:SetAllPoints(button)
+	button.cooldown:SetAllPoints()
+	button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	button.styled = true
+end
 
 S.switchActionButtons = function(profile)
 
@@ -110,14 +128,18 @@ S.switchActionButtons = function(profile)
 		end
 	
 	else 
-		local size = Scale(C.sizes.actionbuttons)
 		for i=1, 12 do
 		  local b = _G[bnames.second .. i]
 		  local c = _G[bnames.main .. 13-i]
 		  b:ClearAllPoints()
 		  c:ClearAllPoints()
-		  c:SetSize(size, size)
-		  b:SetSize(size, size)
+		  
+		  if not b.styled then
+			S.styleActionButton(b)
+		  end
+		  if not c.styled then
+			S.styleActionButton(c)
+		  end
 		  --b.Backdrop:SetSize(32, 32)
 		  --c.Backdrop:SetSize(32, 32)
 		  --S.CreateBackdrop(b)
@@ -127,20 +149,15 @@ S.switchActionButtons = function(profile)
 		  -- Seems contrieved, but was the only way I really could align the buttons
 		  -- and ActionBar1 properly
 		  if i == 1 then
-			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing, 3 + Spacing)
-			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing, 3 + Spacing)
+			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
+			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
 		  else
-			local xoff = (i-1)*Size + i * Spacing
+			local xoff = (i-1)*Size + i * Spacing - Spacing / 2
 			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
 			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 		  end
 		end
 	end	
-	
-	S.hookActionBar1 = function()
-		S.switchActionButtons(profile)
-	end
-
 end
 
 hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD",	
