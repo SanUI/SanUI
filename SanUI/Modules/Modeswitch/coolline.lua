@@ -159,4 +159,6 @@ S.switchCoolLine = function(profile)
 	for key, value in pairs(block) do
 		db.block[key] = value
 	end
+	
+	CoolLine:updatelook()
 end

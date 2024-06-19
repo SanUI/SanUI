@@ -60,17 +60,17 @@ S.switch2Mode = function(mode)
 	else
 		print("Either you didn't set the bossbars profile for mode "..mode.." or oUF_BossBars is not loaded. Either way, cannot load BossBars profile!")
 	end
+		
+	if S["Modes"][mode]["ActionButtons"] then
+		S.switchActionButtons(S["Modes"][mode]["ActionButtons"])
+	else
+		print("No ActionButtons profile for mode "..mode.."! Can't Switch!")
+	end
 	
 	if S["Modes"][mode]["coolline"] and IsAddOnLoaded("CoolLine") then
 		S.switchCoolLine(S["Modes"][mode]["coolline"])
 	else
 		print("Either you didn't set the cooline profile for mode ".. mode .." or CoolLine is not loaded. Either way, cannot load CoolLine profile!")
-	end
-	
-	if S["Modes"][mode]["ActionButtons"] then
-		S.switchActionButtons(S["Modes"][mode]["ActionButtons"])
-	else
-		print("No ActionButtons profile for mode "..mode.."! Can't Switch!")
 	end
 	
 	if S["Modes"][mode]["DBM"] and IsAddOnLoaded("DBM-Core") then 

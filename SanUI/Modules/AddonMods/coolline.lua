@@ -16,22 +16,32 @@ local buttonsize = C.sizes.actionbuttons
 local updatedLook = false
 
 local function placeCoolLine(db)
-	local NumForms = GetNumShapeshiftForms()
-	
 	local bg = CoolLine.Backdrop
 	bg:ClearAllPoints()
-	if TukuiStanceBar and NumForms > 0 then
-		bg:SetPoint("TOPLEFT", TukuiStanceBar, "TOPRIGHT", spacing, -spacing)
-		bg:SetPoint("BOTTOMRIGHT", TukuiActionBar3, "BOTTOMLEFT", -spacing, spacing)
+	
+	local stancebuttonname = "DominosStanceButton"
+	
+	local laststancebutton = _G[stancebuttonname.."1"]
+	local i = 2
+	while _G[stancebuttonname..i] do
+		if _G[stancebuttonname..i]:IsShown() then
+			laststancebutton =  _G[stancebuttonname..i]
+		end
+		i = i + 1
+	end
+	
+	if laststancebutton then
+		bg:SetPoint("TOPLEFT", laststancebutton, "TOPRIGHT", spacing, 0)
+		bg:SetPoint("BOTTOMRIGHT", "MultiBarBottomRightActionButton1", "BOTTOMLEFT", -spacing, 0)
 	else
 		bg:SetPoint("LEFT", ab1, "LEFT")
-		bg:SetPoint("BOTTOM", TukuiActionBar3, "BOTTOM", 0, spacing)
-		bg:SetPoint("TOPRIGHT", TukuiActionBar3, "TOPLEFT", -spacing, -spacing)
+		bg:SetPoint("BOTTOM", "MultiBarBottomRightActionButton1", "BOTTOM", 0, spacing)
+		bg:SetPoint("TOPRIGHT", "MultiBarBottomRightActionButton1", "TOPLEFT", -spacing, -spacing)
 	end
 	
 	CoolLine:ClearAllPoints()
-	CoolLine:SetPoint("TOPRIGHT", bg, -buttonsize/2, 0)
-	CoolLine:SetPoint("BOTTOMLEFT", bg, buttonsize/2, 0)
+	CoolLine:SetPoint("TOPRIGHT", bg, -spacing/2, 0)
+	CoolLine:SetPoint("BOTTOMLEFT", bg, spacing/2, 0)
 	
 	S.placeStanceBar()
 	
@@ -46,9 +56,14 @@ local function placeCoolLine(db)
 	end
 end
 
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_TALENT_UPDATE")
+
+f:SetScript("OnEvent", function(event)
+	S.modCoolLine(event)
+end)
 
 function S.modCoolLine(event)
-	local TukuiStanceBar = S["ActionBars"].Bars.Stance
 	local db
 
 	CoolLineDB = CoolLineDB or { }
@@ -60,7 +75,7 @@ function S.modCoolLine(event)
 
 	
 	if not CoolLine.Backdrop then
-		S.CreateBackdrop(CoolLine)
+		S.CreateBackdrop(CoolLine, "Transparent")
 	end
 	
 	db.h = buttonsize
@@ -71,8 +86,9 @@ function S.modCoolLine(event)
 	db.bgcolor.a = 0
 	db.iconplus = 0
 	
-	if S.ActionBars and S.ActionBars.Bars and S["ActionBars"].Bars.Bar1 then
+	if ab1 and not ab1.coollinehooked then
 		hooksecurefunc(CoolLine, "updatelook", function() placeCoolLine(db) end)
+		ab1.coollinehooked = true
 	end
 	
 	CoolLine.updatelook()	
@@ -83,17 +99,16 @@ function S.modCoolLine(event)
 		end
 	end
 	
-	CoolLine:SetParent(Tukui_PetBattleFrameHider)
+	CoolLine:SetParent(S.panels.PetBattleHider)
 end
 
 function S.placeStanceBar()
-	local TukuiStanceBar = S["ActionBars"].Bars.Stance
-	if TukuiStanceBar then
-		TukuiStanceBar:ClearAllPoints()
-		TukuiStanceBar:SetPoint("BOTTOMLEFT",TukuiActionBar1,"TOPLEFT",0,Scale(2))
+	if DominosFrameclass then
+		DominosFrameclass:ClearAllPoints()
+		DominosFrameclass:SetPoint("BOTTOMLEFT",ab1,"TOPLEFT",0,Scale(2))
 		return 1
 	else
-		print("No TukuiStanceBar or no CoolLine.Backdrop, can't place it!")
+		print("No DominosFrameclass or no CoolLine.Backdrop, can't place it!")
 		return 0
 	end
 end

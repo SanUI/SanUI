@@ -5,7 +5,10 @@ local Scale = S.Toolkit.Functions.Scale
 local bnames = {
 	main = "DominosActionButton",
 	second = "MultiBarBottomLeftActionButton",
+	right_of_coolline = "MultiBarBottomRightActionButton",
+	stance = "DominosStanceButton",
 }
+
 local absize = C.sizes.actionbuttons
 local abspacing = C.sizes.actionbuttonspacing
 local Size = absize
@@ -17,12 +20,35 @@ S.styleActionButton = function(button)
 	S.Kill(button.SlotBackground)
 	S.Kill(button.NormalTexture)
 	local size = Scale(absize)
+	
 	button:SetSize(size, size)
 	S.CreateBackdrop(button, "Transparent")
-	button.HighlightTexture:SetAllPoints()
-	button.CheckedTexture:SetAllPoints()
-	button.PushedTexture:ClearAllPoints()
-	button.PushedTexture:SetAllPoints(button)
+	
+	-- Highlight Texture
+	S.Kill(button.HighlightTexture)
+	local Highlight = button:CreateTexture()
+	Highlight:SetColorTexture(1, 1, 1, 0.3)
+	Highlight:SetInside()
+	button:SetHighlightTexture(Highlight)
+	button.HighlightTexture = Highlight
+	
+	-- Pushed Texture
+	S.Kill(button.PushedTexture)
+	local Pushed = button:CreateTexture()
+	Pushed:SetColorTexture(0.9, 0.8, 0.1, 0.3)
+	Pushed:SetInside()
+	button.PushedTexture = Pushed
+	button:SetPushedTexture(Pushed)
+
+	-- Checked Texture
+	S.Kill(button.CheckedTexture)
+	local Checked = button:CreateTexture()
+	Checked:SetColorTexture(0, 1, 0, 0.3)
+	Checked:SetInside()
+	button.CheckedTexture = Checked
+	button:SetCheckedTexture(Checked)
+
+
 	button.cooldown:SetAllPoints()
 	button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	button.styled = true
@@ -140,14 +166,7 @@ S.switchActionButtons = function(profile)
 		  if not c.styled then
 			S.styleActionButton(c)
 		  end
-		  --b.Backdrop:SetSize(32, 32)
-		  --c.Backdrop:SetSize(32, 32)
-		  --S.CreateBackdrop(b)
-		  --S.CreateBackdrop(c)
 		  
-		  
-		  -- Seems contrieved, but was the only way I really could align the buttons
-		  -- and ActionBar1 properly
 		  if i == 1 then
 			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
 			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
@@ -157,14 +176,43 @@ S.switchActionButtons = function(profile)
 			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 		  end
 		end
+		
+		DominosFrame5:SetNumButtons(8)
+		-- same as buttons below, plus half the panel height plus have a spacing
+		local yoff = 3 + Spacing + S.panels.actionbarpanel1:GetHeight()-- + Spacing/2 
+		for i = 1, 8 do
+			local b = _G[bnames.right_of_coolline .. i]
+			b:ClearAllPoints()
+			if not b.styled then
+				S.styleActionButton(b)
+			end
+			
+			local xoff = (i+4-1)*Size + (i+3) * Spacing + Spacing / 2
+			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
+		end
+		
+		
+		for i = 1,5 do
+			local b = _G[bnames.stance .. i]
+			
+			if b then
+				b:ClearAllPoints()
+				if not b.styled then
+					S.styleActionButton(b)
+				end
+				
+				xoff = (i-12-1)*Size + (i-13) * Spacing + Spacing / 2
+				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
+			end
+		end
+		
 	end	
 end
-
-hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD",	
-	function()
-		if S["Modes"][SanUIdb["Mode"]]["ActionButtons"] then
-			S.switchActionButtons(S["Modes"][SanUIdb["Mode"]]["ActionButtons"])
-		else
-			print("No ActionButtons profile for mode "..SanUIdb["Mode"].."! Can't Switch!")
-		end
-end)
+local hookfun = function()
+	if S["Modes"][SanUIdb["Mode"]]["ActionButtons"] then
+		S.switchActionButtons(S["Modes"][SanUIdb["Mode"]]["ActionButtons"])
+	else
+		print("No ActionButtons profile for mode "..SanUIdb["Mode"].."! Can't Switch!")
+	end
+end
+hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD", hookfun)
