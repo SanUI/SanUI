@@ -1,7 +1,7 @@
 local addonName, addon = ...
-local S,C,L = unpack(addon)
+local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 local absize = C.sizes.actionbuttons
 local abspacing = C.sizes.actionbuttonspacing
@@ -34,22 +34,20 @@ actionbarright:SetWidth(Scale(absize + (abspacing * 2)))
 actionbarright:SetFrameStrata("BACKGROUND")
 panels.actionbarright = actionbarright
 
-local bottomlefttextbox = CreateFrame("Frame", nil, UIParent)
-bottomlefttextbox:SetSize(350, 23)
-bottomlefttextbox:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 34, 20)
-S.CreateBackdrop(bottomlefttextbox)
-bottomlefttextbox:SetFrameStrata("BACKGROUND")
-bottomlefttextbox:SetFrameLevel(2)
-bottomlefttextbox:SetPoint("BOTTOMLEFT",UIParent,5,Scale(3))
-panels.bottomlefttextbox = bottomlefttextbox
+local bottomrighttextbox = CreateFrame("Frame", nil, UIParent)
+bottomrighttextbox:SetSize(350, 23)
+S.CreateBackdrop(bottomrighttextbox)
+bottomrighttextbox:SetFrameStrata("BACKGROUND")
+bottomrighttextbox:SetFrameLevel(2)
+bottomrighttextbox:SetPoint("BOTTOMLEFT",UIParent,5,Scale(3))
+panels.bottomrighttextbox = bottomrighttextbox
 
 local bottomlefttextbox = CreateFrame("Frame", nil, UIParent)
 bottomlefttextbox:SetSize(350, 23)
-bottomlefttextbox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -34, 20)
 S.CreateBackdrop(bottomlefttextbox)
 bottomlefttextbox:SetFrameStrata("BACKGROUND")
 bottomlefttextbox:SetFrameLevel(2)
-bottomrighttextbox:SetPoint("BOTTOMRIGHT",UIParent,-5,Scale(3))
-panels.bottomrighttextbox = bottomrighttextbox
+bottomlefttextbox:SetPoint("BOTTOMRIGHT",UIParent,-5,Scale(3))
+panels.bottomlefttextbox = bottomlefttextbox
  
 S.panels = panels

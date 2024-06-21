@@ -61,8 +61,9 @@ local MINIMUM_COOLDOWN_DURATION                             = 2499
 
 local SetValue, updatelook, createfs, ShowOptions, RuneCheck
 
-local Scale = Tukui[1].Toolkit.Functions.Scale
+local Scale = SanUI[1].Scale
 local scale1 = Scale(1)
+local Scale150 = Scale(150)
 
 local function SetValueH(this, v, just)
     this:SetPoint(just or "CENTER", CoolLine, "LEFT", Scale(v), 0)
@@ -438,12 +439,12 @@ local function OnUpdate(this, a1, ctime, dofl)
                 frame:SetHeight(size)
                 SetupIcon(frame, section * remain, 0, true, dofl)
 				frame:ClearAllPoints()
-				frame:SetPoint("CENTER",UIParent,"CENTER",-Scale(150),0)
+				frame:SetPoint("CENTER",UIParent,"CENTER",-Scale150,0)
 				frame:SetAlpha(1-2*remain)
             elseif remain > -1 then
                 SetupIcon(frame, 0, 0, true, dofl)
                 frame:SetAlpha(1 + remain/2)  -- fades
-				frame:SetPoint("CENTER",UIParent,"CENTER",-Scale(150),0)
+				frame:SetPoint("CENTER",UIParent,"CENTER",-Scale150,0)
             else
                 throt    = (throt < 0.2 and throt) or 0.2
                 isactive = true

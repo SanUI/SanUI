@@ -1,12 +1,12 @@
 local addonName, addon = ...
 local S, C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 local function scale_entries(t, fac)
 	for k, v in pairs(t) do
 		if type(v) == "number" then
-			t[k] = Scale(fac * v)
+			t[k] = S.Scale(fac * v)
 		elseif type(v) == "table" then
 			scale_entries(v, fac)
 		end

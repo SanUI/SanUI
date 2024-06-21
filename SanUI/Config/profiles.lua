@@ -1,5 +1,5 @@
 local addonName, addon = ...
-local S = unpack(addon)
+local S = addon[1]
 
 -- This is the list of profiles you can choose from the menu
 -- If there's only 1, it's loaded automatically and you dont get anything in the menu
