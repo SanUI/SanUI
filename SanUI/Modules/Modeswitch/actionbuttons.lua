@@ -3,10 +3,11 @@ local S,C = unpack(addon)
 
 local Scale = S.Toolkit.Functions.Scale
 local bnames = {
-	main = "DominosActionButton",
-	second = "MultiBarBottomLeftActionButton",
+	main1 = "DominosActionButton",
+	main2 = "MultiBarBottomLeftActionButton",
 	right_of_coolline = "MultiBarBottomRightActionButton",
 	stance = "DominosStanceButton",
+	right = "MultiBarLeftActionButton"
 }
 
 local absize = C.sizes.actionbuttons
@@ -19,9 +20,9 @@ S.styleActionButton = function(button)
 	S.Kill(button.IconMask)
 	S.Kill(button.SlotBackground)
 	S.Kill(button.NormalTexture)
-	local size = Scale(absize)
+	S.Kill(button.Border)
 	
-	button:SetSize(size, size)
+	button:SetSize(absize, absize)
 	S.CreateBackdrop(button, "Transparent")
 	
 	-- Highlight Texture
@@ -155,8 +156,8 @@ S.switchActionButtons = function(profile)
 	
 	else 
 		for i=1, 12 do
-		  local b = _G[bnames.second .. i]
-		  local c = _G[bnames.main .. 13-i]
+		  local b = _G[bnames.main2 .. i]
+		  local c = _G[bnames.main1 .. 13-i]
 		  b:ClearAllPoints()
 		  c:ClearAllPoints()
 		  
@@ -204,6 +205,17 @@ S.switchActionButtons = function(profile)
 				xoff = (i-12-1)*Size + (i-13) * Spacing + Spacing / 2
 				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
 			end
+		end
+		
+		local barright = S.panels.actionbarright
+		for i = 1,12 do
+			local b = _G[bnames.right .. i]
+			b:ClearAllPoints()
+			if not b.styled then
+				S.styleActionButton(b)
+			end
+			
+			b:SetPoint("TOP", barright, "TOP", 0, - i * abspacing - (i-1)*absize)
 		end
 		
 	end	
