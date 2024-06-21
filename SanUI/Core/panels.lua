@@ -34,4 +34,22 @@ actionbarright:SetWidth(Scale(absize + (abspacing * 2)))
 actionbarright:SetFrameStrata("BACKGROUND")
 panels.actionbarright = actionbarright
 
+local bottomlefttextbox = CreateFrame("Frame", nil, UIParent)
+bottomlefttextbox:SetSize(350, 23)
+bottomlefttextbox:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 34, 20)
+S.CreateBackdrop(bottomlefttextbox)
+bottomlefttextbox:SetFrameStrata("BACKGROUND")
+bottomlefttextbox:SetFrameLevel(2)
+bottomlefttextbox:SetPoint("BOTTOMLEFT",UIParent,5,Scale(3))
+panels.bottomlefttextbox = bottomlefttextbox
+
+local bottomlefttextbox = CreateFrame("Frame", nil, UIParent)
+bottomlefttextbox:SetSize(350, 23)
+bottomlefttextbox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -34, 20)
+S.CreateBackdrop(bottomlefttextbox)
+bottomlefttextbox:SetFrameStrata("BACKGROUND")
+bottomlefttextbox:SetFrameLevel(2)
+bottomrighttextbox:SetPoint("BOTTOMRIGHT",UIParent,-5,Scale(3))
+panels.bottomrighttextbox = bottomrighttextbox
+ 
 S.panels = panels
