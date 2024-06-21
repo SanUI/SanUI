@@ -56,13 +56,6 @@ local function placeCoolLine(db)
 	end
 end
 
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_TALENT_UPDATE")
-
-f:SetScript("OnEvent", function(event)
-	S.modCoolLine(event)
-end)
-
 function S.modCoolLine(event)
 	local db
 

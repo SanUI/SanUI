@@ -15,8 +15,9 @@ local sharedMedia = LibStub("LibSharedMedia-3.0")
 sharedMedia:Register(sharedMedia.MediaType.STATUSBAR, "Tukui_Blank_Texture", [[Interface\AddOns\Tukui\Medias\Textures\Others\Blank]])
 
 function S.misc(self,event,arg)
-	if (event == "PLAYER_ENTERING_WORLD") then
+	if (event == "PLAYER_ENTERING_WORLD") then		
 		addon.saf.placeBuffFrame()
+		addon.saf.placeDebuffFrame()
 		addon.saf.hookBuffFrame()
 		
 		if WorldStateAlwaysUpFrame then
@@ -25,9 +26,6 @@ function S.misc(self,event,arg)
 		end
 		
 		S.disableBlizzard()
-		
-		--addon.saf:hookups()
-		--S.Auras:Enable()
 	
 		S.modCoolLine(event)
 			
@@ -37,8 +35,8 @@ function S.misc(self,event,arg)
 		-- need to do those things only once
 		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		
-		-- seems we can't register before pew, will error out on
-		-- PLAYER_TALENT_UPDATE
+		-- Do this here so we don't get notified when talents are first available,
+		-- since most of our stuff isn't by then
 		f:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		f:RegisterEvent("PLAYER_TALENT_UPDATE")
 		
@@ -51,18 +49,6 @@ function S.misc(self,event,arg)
 		if tukui_installed and not wa_asked then
 			S.weakAurasDialog(sanui_version, SanUIdb.addedWeakAuras)
 		end
-		--[[
-		UIParent:UnregisterEvent("TALKINGHEAD_REQUESTED")
-		
-		if TalkingHeadFrame_PlayCurrent and type(TalkingHeadFrame_PlayCurrent) == "function" then
-			hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
-				TalkingHeadFrame:Hide()
-			end)
-		end
-		--]]
-		
-		addon.saf.placeDebuffFrame()
-
 	end
 		
 	if(event == "ADDON_LOADED") then
@@ -93,6 +79,10 @@ function S.misc(self,event,arg)
 			-- just start empty, switch2Mode will take care of it
 			addon.saf.filters = { }
 		end	
+	end
+	
+	if(event == "PLAYER_TALENT_UPDATE" or event == "ACTIVE_TALENT_GROUP_CHANGED") then
+		S.modCoolLine(event)
 	end
 	
 end
