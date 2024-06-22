@@ -1,12 +1,10 @@
 ﻿local cfg = oUF_Hank_config
 local oUF_Hank = {}
 oUF_Hank_hooks = {}
-local oUF = Tukui.oUF
+local oUF = SanUI.oUF
+local S, C = unpack(SanUI)
 
 local _, ns = ...
-
-ns._Objects = {}
-ns._Headers = {}
 
 local TukuiDB, TukuiCF = unpack(Tukui)
 local db = TukuiCF["UnitFrames"]
@@ -17,9 +15,9 @@ local glowTex = TukuiCF["Medias"].Glow
 local bubbleTex = TukuiCF["Medias"].Bubble
 local playerClass = select(2, UnitClass("player"))
 
-local Scale = TukuiDB.Toolkit.Functions.Scale
+local Scale = S.Scale
 
-local S, C, L = unpack(SanUI)
+
 -- local backdrop = {
 	-- bgFile = TukuiCF["Medias"].Blank,
 	-- insets = {top = -TukuiDB.Mult, left = -TukuiDB.Mult, bottom = -TukuiDB.Mult, right = -TukuiDB.Mult},

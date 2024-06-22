@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --]]
 local addonName, addon = ...
-local S,C,L = unpack(addon) 
+local S,C = unpack(addon) 
 
 --local MAJOR, MINOR = "LibDispel-1.0", 9
 --assert(LibStub, MAJOR.." requires LibStub")

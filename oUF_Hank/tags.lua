@@ -1,4 +1,4 @@
-﻿local oUF = Tukui.oUF
+﻿local oUF = SanUI.oUF
 local cfg = oUF_Hank_config
 
 -- Shorten health and power numbers

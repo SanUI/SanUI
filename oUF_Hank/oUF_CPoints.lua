@@ -2,7 +2,7 @@
 -- distributed with SanUI per express permission of Tukz. For support, visit https://www.wowinterface.com/downloads/info18562-SanUI.html.
 
 local _, ns = ...
-local oUF = Tukui.oUF
+local oUF = SanUI.oUF
 assert(oUF, "oUF_CPoints cannot find an instance of oUF. If your oUF is embedded into a layout, it may not be embedded properly.")
 
 local GetComboPoints = GetComboPoints

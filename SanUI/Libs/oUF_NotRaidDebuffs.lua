@@ -1,14 +1,11 @@
 local _, ns = ...
-local oUF = SanUI.oUF
+local oUF = ns.oUF
 
 local _G = _G
 local addon = {}
 
 ns.oUF_NotRaidDebuffs = addon
 _G.oUF_NotRaidDebuffs = ns.oUF_NotRaidDebuffs
-if not _G.oUF_NotRaidDebuffs then
-	_G.oUF_NotRaidDebuffs = addon
-end
 
 local libDispel = SanUI[1].libDispel
 local bleedList = libDispel:GetBleedList()

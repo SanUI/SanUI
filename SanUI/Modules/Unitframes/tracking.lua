@@ -2,7 +2,7 @@ local addonName, addon = ...
 local S,C,L = unpack(addon) 
 local oUF = addon.oUF
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 if not S["UnitFrames"].RaidBuffsTracking then
 	S["UnitFrames"].RaidBuffsTracking = {}

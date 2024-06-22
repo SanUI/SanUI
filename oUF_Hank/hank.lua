@@ -1,14 +1,15 @@
 local oUF_Hank = {}
 local cfg = oUF_Hank_config
 
-local oUF = Tukui.oUF
+local S, C = unpack(SanUI)
+local oUF = SanUI.oUF --Tukui.oUF
 
-local libDispel = SanUI[1].libDispel
+local libDispel = S.libDispel
 local canDispel = function(dispellType)
 	libDispel:IsDispellableByMe(dispellType)
 end
 
-local Scale = Tukui[1].Toolkit.Functions.Scale
+local Scale = S.Scale
 
 -- GLOBALS: oUF_player, oUF_pet, oUF_target, oUF_focus
 -- GLOBALS: _G, MIRRORTIMER_NUMTIMERS, SPELL_POWER_HOLY_POWER, MAX_TOTEMS, MAX_COMBO_POINTS, DebuffTypeColor, SPEC_WARLOCK_DEMONOLOGY

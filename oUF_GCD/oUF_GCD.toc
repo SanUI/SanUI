@@ -3,6 +3,6 @@
 ## Notes: Hungtar's oUF Global Cooldown Bar
 ## Author: Hungtar
 ## Version: 0.0.2
-## Dependencies: Tukui
+## Dependencies: Tukui, SanUI
 
 oUF_GCD.lua
