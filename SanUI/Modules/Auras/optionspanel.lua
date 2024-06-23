@@ -8,7 +8,7 @@ panel.parent = addonName
 
 saf.optionspanel = panel
 
-local font = C.Medias.Font
+local font = C.medias.fonts.Font
 
 local buffs_selected = {}
 

@@ -24,6 +24,14 @@ SanUI = addon -- Allow other addons to use SanUI
 
 local S = addon[1]
 local C = addon[2]
+--[=[
+local LSM = LibStub("LibSharedMedia-3.0")
+local MediaType_BACKGROUND = LSM.MediaType.BACKGROUND
+local MediaType_BORDER = LSM.MediaType.BORDER
+local MediaType_FONT = LSM.MediaType.FONT
+local MediaType_STATUSBAR = LSM.MediaType.STATUSBAR
+LSM:Register(MediaType_STATUSBAR, "AAA1", [[Interface\Addons\SanUI\Medias\Textures\Flash.tga]])
+--]=]
 
 
 S.Kill = function(f)

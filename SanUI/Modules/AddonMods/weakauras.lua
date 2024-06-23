@@ -1,7 +1,7 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 --local GetSpellName = function(id) return select(1,GetSpellInfo(id)) end
 		
@@ -12,7 +12,7 @@ function S.weakAurasDialog(new_version, old_version)
 	S.CreateBackdrop(main)
 	
 	local text1 = main:CreateFontString(nil, "OVERLAY")
-	text1:SetFont(C.Medias.Font, 12)
+	text1:SetFont(C.medias.fonts.Font, 12)
 	text1:SetJustifyH("LEFT")
 	text1:SetShadowColor(0, 0, 0)
 	text1:SetShadowOffset(1, 1)
@@ -35,7 +35,7 @@ function S.weakAurasDialog(new_version, old_version)
 	main.LeftButton:CreateShadow()
 	
 	local text2 = main.LeftButton:CreateFontString(nil, "OVERLAY")
-	text2:SetFont(C.Medias.Font, 12)
+	text2:SetFont(C.medias.fonts.Font, 12)
 	text2:SetJustifyH("LEFT")
 	text2:SetShadowColor(0, 0, 0)
 	text2:SetShadowOffset(1, 1)
@@ -57,7 +57,7 @@ function S.weakAurasDialog(new_version, old_version)
 	main.RightButton:CreateShadow()
 	
 	local text3 = main.RightButton:CreateFontString(nil, "OVERLAY")
-	text3:SetFont(C.Medias.Font, 12)
+	text3:SetFont(C.medias.fonts.Font, 12)
 	text3:SetJustifyH("LEFT")
 	text3:SetShadowColor(0, 0, 0)
 	text3:SetShadowOffset(1, 1)

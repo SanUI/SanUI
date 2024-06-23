@@ -5,11 +5,14 @@ local addonName, addon = ...
 local S,C = unpack(addon)
 local oUF = addon.oUF
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 local ALTERNATE_POWER_INDEX = ALTERNATE_POWER_INDEX
 
-local BAR_TEXTURE = C["Medias"].Blank
-local TEXT_FONT = C["Medias"].Font
+--local BAR_TEXTURE = C["Medias"].Blank
+local BAR_TEXTURE =  C["medias"].textures.StatusbarNormal
+local normTex = C["medias"].textures.StatusbarNormal
+local blankTex = normTex -- C["Medias"].Blank
+local TEXT_FONT = C["medias"].Font
 local fontcolor = {0.9, 0.9, 0.9, 1}
 local fontSize = 12
 local bordercolor = {0.3, 0.3, 0.3, 1}
@@ -82,7 +85,7 @@ local function CreateUnitFrame(self, unit)
 	self.Backdrop:SetBackdropColor(unpack(barbgcolor))
 	
 	-- highlight
-	local glowBorder = {edgeFile = C["Medias"].Blank, edgeSize = S.scale1}
+	local glowBorder = {edgeFile = blankTex, edgeSize = S.scale1}
 	local HighlightTarget = CreateFrame("Frame", nil, self, "BackdropTemplate")
 	HighlightTarget:SetAllPoints()
 	HighlightTarget:SetBackdrop(glowBorder)
@@ -389,7 +392,7 @@ oUF:RegisterStyle("oUF_BossBars", CreateUnitFrame)
 
 oUF:SetActiveStyle("oUF_BossBars")
 
-local boss1 = oUF:Spawn("boss1", "oUF_Boss1")
+local boss1 = oUF:Spawn("player", "oUF_Boss1")
 boss1:SetPoint("TOPRIGHT",UIParent,"TOP",-5,-5)
 
 local boss2 = oUF:Spawn("boss2", "oUF_Boss2")

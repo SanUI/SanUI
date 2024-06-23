@@ -4,6 +4,10 @@ local oUF = addon.oUF
 
 local Scale = S.Scale
 
+if not S.UnitFrames then
+	S.UnitFrames = {}
+end
+
 if not S["UnitFrames"].RaidBuffsTracking then
 	S["UnitFrames"].RaidBuffsTracking = {}
 end

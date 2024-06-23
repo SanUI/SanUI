@@ -1,7 +1,7 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 local button  = CreateFrame("Frame", "RaidUtilitiesButton", UIParent)
 button:SetSize(S.scale10, S.scale10)
@@ -11,7 +11,7 @@ button:SetFrameStrata("MEDIUM")
 --button:SetParent(Tukui_PetBattleFrameHider)
 
 local Text = button:CreateFontString(nil, "OVERLAY")
-Text:SetFont(C.Medias.Font, 10)
+Text:SetFont(C.medias.fonts.Font, 10)
 Text:SetText("r")
 Text:SetJustifyH("CENTER")
 Text:SetJustifyV("MIDDLE")
@@ -78,10 +78,10 @@ local function Enable()
 		b:SetWidth(Scale(w))
 		b:SetHeight(Scale(h))
 		S.CreateBackdrop(b)
-		b.Backdrop:SetBackdropBorderColor(unpack(C.General.BackdropColor))
+		b.Backdrop:SetBackdropBorderColor(unpack(C.colors.BackdropColor))
 
 		local btext=b:CreateFontString(nil, "OVERLAY")
-		btext:SetFont(C["Medias"].Font, 11, nil)
+		btext:SetFont(C["Medias"].fonts.Font, 11, nil)
 
 		btext:SetText(txt)
 		btext:SetTextColor(1, 1, 1)
@@ -99,7 +99,7 @@ local function Enable()
 		b:SetScript("OnLeave", function(self)
 			GameTooltip:Hide()
 		btext:SetTextColor(1, 1, 1)
-		b.Backdrop:SetBackdropBorderColor(unpack(C.General.BackdropColor))
+		b.Backdrop:SetBackdropBorderColor(unpack(C.colors.BackdropColor))
 		end)
 		
 		b:SetAttribute("type1", "macro")

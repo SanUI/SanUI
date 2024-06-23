@@ -8,7 +8,7 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 local SanUIButtonOrder = {Grid=1, DBM=2, Altoholic=3, Hack=4}
 
@@ -50,7 +50,7 @@ local AnchorSide = true
 
 -- Set font
 --local font = C["media"].uffont --local font = S["media"].uffont
-local font = C["Medias"].Font
+local font = C["medias"].fonts.Font
 local fontsize = 12
 
 -------------------------------------------------------------------

@@ -2,13 +2,14 @@ local addonName, addon = ...
 local S,C,L = unpack(addon) 
 local oUF = addon.oUF
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 local scales = C.sizes.scales
 local rfsizes = C.sizes.namedframes
 
-local font2 = C["Medias"].UnitFrameFont
-local font1 = C["Medias"].Font
-local normTex = C["Medias"].Blank
+--local font2 = C["Medias"].UnitFrameFont
+local font1 = C["medias"].fonts.Font
+local font2 = font1
+local normTex = C["medias"].textures.StatusbarNormal
 
 local evobuffs = {
 	{

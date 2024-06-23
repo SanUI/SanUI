@@ -1,7 +1,7 @@
 local addonName, addon = ...
 local S = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 S.switchGCD =  function (profile)
 

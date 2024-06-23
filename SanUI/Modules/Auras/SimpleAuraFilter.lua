@@ -1,10 +1,9 @@
 local addonName, addon = ...
-local S,C,L = unpack(addon)
+local S,C = unpack(addon)
 
-local BUFFS_PER_ROW = C.Auras.BuffsPerRow
 local button_size = 30
 local offset = 5
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 local scale2 = Scale(2)
 local floor = math.floor
 

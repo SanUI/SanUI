@@ -1,7 +1,7 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 local panels = S.panels
 local ab1 = panels.actionbarpanel1
 
@@ -106,4 +106,4 @@ function S.placeStanceBar()
 	end
 end
 
-S.AddOnCommands["placestancebar"] = S.placeStanceBar
+--S.AddOnCommands["placestancebar"] = S.placeStanceBar

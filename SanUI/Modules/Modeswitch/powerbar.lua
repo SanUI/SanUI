@@ -1,7 +1,7 @@
 local addonName, addon = ...
 local S, C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 S.switchPowerbar = function(profile)
 

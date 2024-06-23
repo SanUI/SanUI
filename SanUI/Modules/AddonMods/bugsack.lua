@@ -3,7 +3,7 @@ if not IsAddOnLoaded("BugSack") then return end
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 
 local button  = CreateFrame("Frame", "BugSackButton", UIParent)
 button:SetSize(S.scale10, S.scale10)
@@ -14,7 +14,7 @@ button:SetFrameStrata("MEDIUM")
 
 
 local Text = button:CreateFontString(nil, "OVERLAY")
-Text:SetFont(C.Medias.Font, 10)
+Text:SetFont(C.medias.fonts.Font, 10)
 Text:SetText("b")
 Text:SetJustifyH("CENTER")
 Text:SetJustifyV("MIDDLE")
@@ -38,4 +38,4 @@ button:SetScript("OnMouseDown", function(self,clicked)
 	end
 end)
 
-button:SkinButton()
+--button:SkinButton()

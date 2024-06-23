@@ -1,7 +1,7 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 local height = C.sizes.raidframes.height
 local smallheight = C.sizes.raidframes.smallheight
 --local RaidButtonSize = 28

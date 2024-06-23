@@ -5,13 +5,15 @@ local addonName, addon = ...
 local S,C,L = unpack(addon) 
 local oUF = addon.oUF
 
-local Scale = S.Toolkit.Functions.Scale
+local Scale = S.Scale
 local scales = C.sizes.scales
 local rfsizes = C.sizes.raidframes
 
-local font2 = C["Medias"].UnitFrameFont
-local font1 = C["Medias"].Font
-local normTex = C["Medias"].Blank
+--local font2 = C["Medias"].UnitFrameFont
+local font1 = C["medias"].fonts.Font
+local font2 = font1
+local normTex = C["medias"].textures.StatusbarNormal
+local blankTex = normTex -- C["Medias"].Blank
 
 -- disable blizzard party and raid frames
 --InterfaceOptionsFrameCategoriesButton11:SetScale(0.00001)
@@ -166,7 +168,7 @@ local function Shared(self, unit)
 	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", updateThreat)
 	
 	-- highlight
-	local glowBorder = {edgeFile = C["Medias"].Blank, edgeSize = 1}
+	local glowBorder = {edgeFile = blankTex, edgeSize = 1}
 	local HighlightTarget = CreateFrame("Frame", nil, self.Health, "BackdropTemplate")
 
 	HighlightTarget:SetFrameLevel(self.Health:GetFrameLevel() + 3)
@@ -193,7 +195,7 @@ local function Shared(self, unit)
 	
 	local Dead = HighlightTarget:CreateFontString(nil, "OVERLAY")
 	Dead:SetPoint("TOPRIGHT",HighlightTarget,"TOPRIGHT",0,0) -- -S.scale1,0)
-	Dead:SetFont(C["Medias"].Font, 11)
+	Dead:SetFont(font1, 11)
 	self:Tag(Dead, "[status]")
 	self.Dead = Dead
 	
@@ -564,14 +566,10 @@ oUF:Factory(function(self)
 
 		if inInstance and instanceType == "raid" then
 			SanUIRaid:SetAttribute("groupFilter", filter)
-			if C.UnitFrames.showraidpets then
-				SanUIRaidPets:SetAttribute("groupFilter", filter)
-			end
+			SanUIRaidPets:SetAttribute("groupFilter", filter)
 		else
 			SanUIRaid:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
-			if C.UnitFrames.ShowPets then
-				SanUIRaidPets:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
-			end
+			SanUIRaidPets:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
 		end
 	end)
 end)
