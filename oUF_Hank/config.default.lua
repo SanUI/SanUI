@@ -1,4 +1,4 @@
-local oUF = Tukui.oUF
+local oUF = SanUI.oUF
 
 oUF_Hank_config = {
 

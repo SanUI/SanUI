@@ -29,7 +29,7 @@ S.styleActionButton = function(button)
 	S.Kill(button.HighlightTexture)
 	local Highlight = button:CreateTexture()
 	Highlight:SetColorTexture(1, 1, 1, 0.3)
-	Highlight:SetInside()
+	--Highlight:SetInside()
 	button:SetHighlightTexture(Highlight)
 	button.HighlightTexture = Highlight
 	
@@ -37,7 +37,7 @@ S.styleActionButton = function(button)
 	S.Kill(button.PushedTexture)
 	local Pushed = button:CreateTexture()
 	Pushed:SetColorTexture(0.9, 0.8, 0.1, 0.3)
-	Pushed:SetInside()
+	--Pushed:SetInside()
 	button.PushedTexture = Pushed
 	button:SetPushedTexture(Pushed)
 
@@ -45,10 +45,9 @@ S.styleActionButton = function(button)
 	S.Kill(button.CheckedTexture)
 	local Checked = button:CreateTexture()
 	Checked:SetColorTexture(0, 1, 0, 0.3)
-	Checked:SetInside()
+	--Checked:SetInside()
 	button.CheckedTexture = Checked
 	button:SetCheckedTexture(Checked)
-
 
 	button.cooldown:SetAllPoints()
 	button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)

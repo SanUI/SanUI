@@ -138,7 +138,8 @@ end
 
 S.position_tooltip = S.position_tooltip_default
 
-hooksecurefunc(S["Tooltips"], "SetTooltipDefaultAnchor", function(self, parent)
+--hooksecurefunc(S["Tooltips"], "SetTooltipDefaultAnchor", function(self, parent)
+hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 	S.position_tooltip(self, parent)
 end)
 

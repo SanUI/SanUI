@@ -231,7 +231,7 @@ local function Shared(self, unit)
 	SummonIndicator:SetDrawLayer("OVERLAY", 7)
 	self.SummonIndicator = SummonIndicator
 	
-	local range = {insideAlpha = 1, outsideAlpha = C["Raid"].RangeAlpha}
+	local range = {insideAlpha = 1, outsideAlpha = C.colors.RangeAlpha}
 	range.PostUpdate = function(self, object, inRange, checkedRange, connected)
 		if not connected then 
 			object:SetAlpha(self.outsideAlpha)
@@ -450,7 +450,7 @@ local function Shared(self, unit)
 	ORD:RegisterDebuffs(raiddebuffs)
 	
 	if not ORD.RegisteredSanUI then
-		S["UnitFrames"].Debuffs.PvE.spells = raiddebuffs
+		--S["UnitFrames"].Debuffs.PvE.spells = raiddebuffs
 		ORD:ResetDebuffData()
 		ORD:RegisterDebuffs(raiddebuffs)
 		ORD.RegisteredSanUI = true
@@ -526,10 +526,12 @@ oUF:Factory(function(self)
 	raid:SetParent(Tukui_PetBattleFrameHider)
 	raid:ClearAllPoints()
 	raid:SetPoint("CENTER",UIParent,0,-195)
+	raid:SetScale(UIParent:GetScale())
 
 	local pet = oUF:SpawnHeader(GetPetFrameAttributes())
 	pet:SetParent(Tukui_PetBattleFrameHider)
 	pet:SetPoint(pa1, raid, pa2, Scale(px), Scale(py))
+	pet:SetScale(UIParent:GetScale())
 	
 	-- Max number of group according to Instance max players
 	local ten = "1,2"

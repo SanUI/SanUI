@@ -44,14 +44,14 @@ button:SetScript("OnMouseDown", function(self,clicked)
 	end
 end)
 
-button:SkinButton()
-
+--button:SkinButton()
+S.CreateBackdrop(button)
 ---------------------------------------------------------------
 -- The following code has been taken from
 -- Tukui Markbar version 1.14 - Battle for Azeroth - 02-01-2019
 -- and been slightly modified for SanUI
 ---------------------------------------------------------------
-local Minimap = S.Maps.Minimap
+local Minimap = Minimap --S.Maps.Minimap
 
 ---------------------------------------------------------------
 -- Tukui MarkBar Background Panel
@@ -252,4 +252,5 @@ local function Enable()
 	wbclear:SetPoint("TOP", rcbutton, "BOTTOM", 0, -S.scale2)
 	wbclear:SetAttribute("macrotext1", "/cwm all")
 end
-hooksecurefunc(Minimap, "Enable", Enable)
+--hooksecurefunc(Minimap, "Enable", Enable)
+print("Remember to enable raidutilities.lua")

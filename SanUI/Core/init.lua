@@ -61,7 +61,9 @@ local Scale = function(size)
 	-- end
 	return Value
 end
+
 S.Scale = Scale
+
 
 addon[1].scale1 = Scale(1)
 addon[1].scale2 = Scale(2)

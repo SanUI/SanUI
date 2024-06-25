@@ -12,10 +12,10 @@ local ALTERNATE_POWER_INDEX = ALTERNATE_POWER_INDEX
 local BAR_TEXTURE =  C["medias"].textures.StatusbarNormal
 local normTex = C["medias"].textures.StatusbarNormal
 local blankTex = normTex -- C["Medias"].Blank
-local TEXT_FONT = C["medias"].Font
+local TEXT_FONT = C["medias"].fonts.Font
 local fontcolor = {0.9, 0.9, 0.9, 1}
 local fontSize = 12
-local bordercolor = {0.3, 0.3, 0.3, 1}
+local bordercolor = C.colors.BorderColor
 local barcolor = { 0.1, 0.1, 0.1, 1}
 local barbgcolor = { 29/255, 63/255, 72/255, 1 }
 
@@ -90,7 +90,7 @@ local function CreateUnitFrame(self, unit)
 	HighlightTarget:SetAllPoints()
 	HighlightTarget:SetBackdrop(glowBorder)
 	HighlightTarget:SetFrameLevel(self:GetFrameLevel() + 1)
-	HighlightTarget:SetBackdropBorderColor(unpack(C.General.BorderColor))
+	HighlightTarget:SetBackdropBorderColor(unpack(bordercolor))
 	
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", function(self,event,unit)
 			if UnitIsUnit("target", self.unit) then
@@ -235,7 +235,7 @@ local function CreateUnitFrame(self, unit)
 	RaidIcon.SetTexture = S.dummy -- idk why but RaidIcon:GetTexture() is returning nil in oUF, resetting icons to default ... stop it!
 	self.RaidTargetIndicator = RaidIcon
 	
-	local range = {insideAlpha = 1, outsideAlpha = C["Raid"].RangeAlpha}
+	local range = {insideAlpha = 1, outsideAlpha = C.colors.RangeAlpha}
 	self.Range = range
 
 	
@@ -350,7 +350,7 @@ local function CreateUnitFrame(self, unit)
 		
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
-		tex:SetTexture(C.Medias.Blank)
+		tex:SetTexture(C.medias.textures.Blank)
 		tex:SetVertexColor(unpack(spell.color))
 		
 		icon.tex = tex

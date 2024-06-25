@@ -9,7 +9,8 @@ local fonts = {
 medias.fonts = fonts
 
 local textures = {
-	StatusbarNormal = [[Interface\Addons\SanUI\Medias\Textures\Flash.tga]]
+	StatusbarNormal = [[Interface\Addons\SanUI\Medias\Textures\Flash.tga]],
+	Blank = [[Interface\Addons\SanUI\Medias\Textures\No_Backdrop.tga]],
 }
 medias.textures = textures
 

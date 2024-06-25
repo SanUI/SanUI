@@ -41,12 +41,13 @@ function S.misc(self,event,arg)
 		f:RegisterEvent("PLAYER_TALENT_UPDATE")
 		
 		--this should be last, it might induce a reloadui
-		local tukui_installed = TukuiDatabase.Variables[S.MyRealm][S.MyName].Installation.Done
+		--local tukui_installed = TukuiDatabase.Variables[S.MyRealm][S.MyName].Installation.Done
 		SanUIdb.addedWeakAuras = (type(SanUIdb.addedWeakAuras) == "string" and SanUIdb.addedWeakAuras) or "None"
 		--local wa_installed = SanUIdb.addedWeakAuras and SanUIdb.addedWeakAuras == sanui_version
 		local wa_asked = SanUIdb.askedWeakAuras and SanUIdb.askedWeakAuras == sanui_version
 
-		if tukui_installed and not wa_asked then
+		--if tukui_installed and not wa_asked then
+		if not wa_asked then
 			S.weakAurasDialog(sanui_version, SanUIdb.addedWeakAuras)
 		end
 	end

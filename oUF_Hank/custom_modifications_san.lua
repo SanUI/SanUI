@@ -6,23 +6,20 @@ local S, C = unpack(SanUI)
 
 local _, ns = ...
 
-local TukuiDB, TukuiCF = unpack(Tukui)
-local db = TukuiCF["UnitFrames"]
-local font1 = TukuiCF["Medias"].Font
-local font2 = TukuiCF["Medias"].UnitFrameFont
-local Normal = TukuiCF["Medias"].Blank
-local glowTex = TukuiCF["Medias"].Glow
-local bubbleTex = TukuiCF["Medias"].Bubble
-local playerClass = select(2, UnitClass("player"))
+local font1 = C.medias.fonts.Font
+--local font2 = C["Medias"].UnitFrameFont
+local font2 = font1
+local Normal = C.medias.textures.Blank
+local playerClass = S.MyClass
 
 local Scale = S.Scale
 
 
 -- local backdrop = {
-	-- bgFile = TukuiCF["Medias"].Blank,
-	-- insets = {top = -TukuiDB.Mult, left = -TukuiDB.Mult, bottom = -TukuiDB.Mult, right = -TukuiDB.Mult},
+	-- bgFile = C["Medias"].Blank,
+	-- insets = {top = -S.Mult, left = -S.Mult, bottom = -S.Mult, right = -S.Mult},
 -- }
-TukuiDB.SetFontString = function(parent, fontName, fontHeight, fontStyle)
+S.SetFontString = function(parent, fontName, fontHeight, fontStyle)
 	local fs = parent:CreateFontString(nil, "OVERLAY")
 	fs:SetFont(fontName, fontHeight, fontStyle)
 	fs:SetJustifyH("LEFT")
@@ -124,7 +121,7 @@ PostCreateIcon = function(icons, icon)
 	if(icons.__owner.unit == "player" or icons.__owner.unit == "target" ) then
 		S.CreateBackdrop(icon)
 		
-		icon.remaining = TukuiDB.SetFontString(icon, font1,11, "THINOUTLINE")
+		icon.remaining = S.SetFontString(icon, font1,11, "THINOUTLINE")
 		icon.remaining:SetPoint("CENTER", Scale(1), 0)
 		
 		icon.Cooldown.noOCC = true		 	-- hide OmniCC CDs
@@ -138,7 +135,7 @@ PostCreateIcon = function(icons, icon)
 		
 		icon.Count:SetPoint("BOTTOMRIGHT", Scale(3), 0) --Scale(1.5))
 		icon.Count:SetJustifyH("RIGHT")
-		icon.Count:SetFont(TukuiCF["Medias"].Font, 9, "THICKOUTLINE")
+		icon.Count:SetFont(C["Medias"].Font, 9, "THICKOUTLINE")
 		icon.Count:SetTextColor(0.84, 0.75, 0.65)
 		
 		icon.overlayFrame = CreateFrame("frame", nil, icon, nil)
@@ -160,7 +157,7 @@ OnEnterAura = function(self, icon)
 		S.CreateBackdrop(self.HighlightAura)
 		self.HighlightAura:SetFrameLevel(6) -- cd on icon seems to have frame level 5
 		
-		self.HighlightAura.icon.remaining = TukuiDB.SetFontString(icon, TukuiCF["Medias"].Font, 11, "THINOUTLINE")
+		self.HighlightAura.icon.remaining = S.SetFontString(icon, C["Medias"].Font, 11, "THINOUTLINE")
 		self.HighlightAura.icon.remaining:SetPoint("CENTER", Scale(1), 0)
 		
 		self.HighlightAura.icon:SetPoint("TOPLEFT", Scale(2), Scale(-2))
@@ -173,7 +170,7 @@ OnEnterAura = function(self, icon)
 		
 		icon.Count:SetPoint("BOTTOMRIGHT", self.HighlightAura, Scale(3), 0) --Scale(1.5))
 		icon.Count:SetJustifyH("RIGHT")
-		icon.Count:SetFont(TukuiCF["Medias"].Font, 9*cfg.AuraMagnification, "THICKOUTLINE")
+		icon.Count:SetFont(C["Medias"].Font, 9*cfg.AuraMagnification, "THICKOUTLINE")
 	end
 end,
 
@@ -181,7 +178,7 @@ OnLeaveAura = function(self)
 	if self.HighlightAura.oldicon then
 		self.HighlightAura.oldicon.Count:SetPoint("BOTTOMRIGHT",self.HighlightAura.oldicon, Scale(3), 0) --Scale(1.5))
 		self.HighlightAura.oldicon.Count:SetJustifyH("RIGHT")
-		self.HighlightAura.oldicon.Count:SetFont(TukuiCF["Medias"].Font, 9, "THICKOUTLINE")
+		self.HighlightAura.oldicon.Count:SetFont(C["Medias"].Font, 9, "THICKOUTLINE")
 	end
 end,
 }
@@ -340,13 +337,13 @@ sharedStyle = function(self, unit, isSingle)
 		
 		castbar.place()
 			
-		castbar.CustomTimeText = TukuiDB["UnitFrames"].CustomCastTimeText
-		castbar.CustomDelayText = TukuiDB["UnitFrames"].CustomCastDelayText
-		--castbar.PostCastStart = TukuiDB["UnitFrames"].CheckCast
+		castbar.CustomTimeText = S["UnitFrames"].CustomCastTimeText
+		castbar.CustomDelayText = S["UnitFrames"].CustomCastDelayText
+		--castbar.PostCastStart = S["UnitFrames"].CheckCast
 		castbar.PostCastStart = function(element, unit, name, rank, castid)
-			TukuiDB["UnitFrames"].CheckChannel(element, unit)
+			S["UnitFrames"].CheckChannel(element, unit)
 			if (element.empowering) then
-				element:SetStatusBarColor(unpack(TukuiCF.UnitFrames.CastingColor))
+				element:SetStatusBarColor(unpack(C.UnitFrames.CastingColor))
 			end
 		end
 		
@@ -366,7 +363,7 @@ sharedStyle = function(self, unit, isSingle)
 			local castBarBG = CreateFrame("Frame",nil,castbar)
 			castBarBG:SetAllPoints(castbar)
 			--castBarBG:SetBackdrop({
-			--		  bgFile = TukuiCF.Medias.Normal 
+			--		  bgFile = C.Medias.Normal 
 			--		  })
 			--castBarBG:SetBackdropColor(.1,.1,.1)
 			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
@@ -376,7 +373,7 @@ sharedStyle = function(self, unit, isSingle)
 		end	
 		
 		--Castbar latency texture
-		if unit == "player" and TukuiCF["UnitFrames"].cblatency == true then
+		if unit == "player" then
 			castbar.safezone = castbar:CreateTexture(nil, "ARTWORK")
 			castbar.safezone:SetTexture(Normal)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
@@ -400,9 +397,9 @@ sharedStyle = function(self, unit, isSingle)
 
 		--Castbar text string
 		if(unit ~= "focus") then
-			castbar.Text = TukuiDB.SetFontString(castbar,font2, 12,"OUTLINE")
+			castbar.Text = S.SetFontString(castbar,font2, 12,"OUTLINE")
 		else
-			castbar.Text = TukuiDB.SetFontString(castbar,font2, 16,"OUTLINE")
+			castbar.Text = S.SetFontString(castbar,font2, 16,"OUTLINE")
 		end
 		castbar.Text:SetJustifyV("MIDDLE")
 		castbar.Text:SetShadowOffset(.8,-.8)
@@ -412,36 +409,34 @@ sharedStyle = function(self, unit, isSingle)
 		castbar.Text:SetHeight(castbar:GetHeight()*0.9)
 		
 		--Icon for Castbar	
-		if db.CastBarIcon == true then
-			castbar.button = CreateFrame("Frame", nil, castbar)
-				
-			if (unit == "player") then
-				castbar.button:SetSize(Scale(28), Scale(28))
-			elseif (unit == "target") then
-				castbar.button:SetSize(Scale(19), Scale(19))
-			else
-				castbar.button:SetSize(Scale(18), Scale(18))
-			end
+		castbar.button = CreateFrame("Frame", nil, castbar)
 			
-			S.CreateBackdrop(castbar.button)
-
-			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-			castbar.icon:SetPoint("TOPLEFT", castbar.button, Scale(2), Scale(-2))
-			castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, Scale(-2), Scale(2))
-			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
-			
-			if unit == "player" or unit:find("boss") then
-				castbar.button:SetPoint("TOPRIGHT",self.Castbar.bg,"TOPLEFT",-Scale(2),0)
-			elseif unit == "target" then
-				castbar.button:SetPoint("LEFT",self.Castbar.bg,"RIGHT",Scale(2),0)
-			end					
-			
-			self.Castbar.Icon = castbar.icon
+		if (unit == "player") then
+			castbar.button:SetSize(Scale(28), Scale(28))
+		elseif (unit == "target") then
+			castbar.button:SetSize(Scale(19), Scale(19))
+		else
+			castbar.button:SetSize(Scale(18), Scale(18))
 		end
 		
+		S.CreateBackdrop(castbar.button)
+
+		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+		castbar.icon:SetPoint("TOPLEFT", castbar.button, Scale(2), Scale(-2))
+		castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, Scale(-2), Scale(2))
+		castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+		
+		if unit == "player" or unit:find("boss") then
+			castbar.button:SetPoint("TOPRIGHT",self.Castbar.bg,"TOPLEFT",-Scale(2),0)
+		elseif unit == "target" then
+			castbar.button:SetPoint("LEFT",self.Castbar.bg,"RIGHT",Scale(2),0)
+		end					
+		
+			self.Castbar.Icon = castbar.icon
+		
 		--cast bar latency on player
-		if unit == "player" and db.CastBarLatency == true then
-			castbar.safezone = castbar:CreateTexture(nil, "ARTWORK")
+		if unit == "player" then
+			castbar.safezone =	 castbar:CreateTexture(nil, "ARTWORK")
 			castbar.safezone:SetTexture(Normal)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 			castbar.SafeZone = castbar.safezone

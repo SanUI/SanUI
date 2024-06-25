@@ -9,6 +9,7 @@ local addonName, addon = ...
 local S,C = unpack(addon)
 
 local Scale = S.Scale
+local font = C.medias.fonts.Font
 
 local SanUIButtonOrder = {Grid=1, DBM=2, Altoholic=3, Hack=4}
 
@@ -113,7 +114,7 @@ else
 end
 
 local Text = MenuOpen:CreateFontString(nil, "OVERLAY")
-Text:SetFont(C.Medias.Font, 10)
+Text:SetFont(font, 10)
 Text:SetText("a")
 Text:SetJustifyH("CENTER")
 Text:SetJustifyV("MIDDLE")
@@ -142,8 +143,8 @@ Menu:Hide()
 Menu:SetFrameStrata("MEDIUM") --BACKGROUND")
 Menu:EnableMouse(true)
 
-MenuOpen:SkinButton()
-
+--MenuOpen:SkinButton()
+S.CreateBackdrop(MenuOpen)
 local function MenuMouseDown()
 	if Menu:IsShown() then
 		MenuOpen:SetFrameStrata("MEDIUM")
@@ -204,7 +205,8 @@ local function CreateButton(f, o) --(Frame,ButtonOrderName)
 		f:EnableMouse(true)
 	end
 
-  f:SkinButton()
+  S.CreateBackdrop(f)
+  --f:SkinButton()
 end
 
 -----World State Button-----
