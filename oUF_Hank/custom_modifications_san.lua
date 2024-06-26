@@ -9,8 +9,7 @@ local _, ns = ...
 local font1 = C.medias.fonts.Font
 --local font2 = C["Medias"].UnitFrameFont
 local font2 = font1
-local Normal = C.medias.textures.Blank
-local blankTex = C.medias.textures.Blank
+local normTex = C.medias.textures.StatusbarNormal
 local playerClass = S.MyClass
 
 local Scale = S.Scale
@@ -239,7 +238,7 @@ sharedStyle = function(self, unit, isSingle)
 		
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
-		tex:SetTexture(blankTex)
+		tex:SetTexture(normTex)
 		tex:SetVertexColor(unpack(spell.color))
 		
 		icon.tex = tex
@@ -312,7 +311,8 @@ sharedStyle = function(self, unit, isSingle)
 	
 		--Construct castbar
 		local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-		castbar:SetStatusBarTexture(Normal)
+		castbar:SetStatusBarTexture(normTex)
+		castbar:SetStatusBarColor(unpack(C.colors.CastingColor))
 			
 		castbar.place = function(args)
 			if (unit == "player" or unit:find("boss")) then
@@ -356,6 +356,7 @@ sharedStyle = function(self, unit, isSingle)
 			castBarBG:SetPoint("TOPLEFT",castbar,"TOPLEFT",-Scale(2),Scale(2))
 			castBarBG:SetPoint("BOTTOMRIGHT",castbar,"BOTTOMRIGHT",Scale(2),-Scale(2))
 			S.CreateBackdrop(castBarBG)
+			castBarBG.SetBackdropColor(C.colors.Castbarbg)
 			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
 			castbar:SetFrameLevel(6)
 			castBarBG:SetFrameLevel(5)
@@ -376,7 +377,7 @@ sharedStyle = function(self, unit, isSingle)
 		--Castbar latency texture
 		if unit == "player" then
 			castbar.safezone = castbar:CreateTexture(nil, "ARTWORK")
-			castbar.safezone:SetTexture(Normal)
+			castbar.safezone:SetTexture(normTex)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 			castbar.SafeZone = castbar.safezone
 		end		
@@ -438,7 +439,7 @@ sharedStyle = function(self, unit, isSingle)
 		--cast bar latency on player
 		if unit == "player" then
 			castbar.safezone =	 castbar:CreateTexture(nil, "ARTWORK")
-			castbar.safezone:SetTexture(Normal)
+			castbar.safezone:SetTexture(normTex)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 			castbar.SafeZone = castbar.safezone
 		end
@@ -459,7 +460,7 @@ sharedStyle = function(self, unit, isSingle)
 			self.GCD:SetWidth(Scale(150))
 			self.GCD:SetPoint('TOPLEFT',castbar, 'BOTTOMLEFT', 0, -Scale(4))
 			self.GCD:SetPoint('TOPRIGHT',castbar, 'BOTTOMRIGHT', 0, -Scale(4))
-			self.GCD:SetStatusBarTexture(Normal)
+			self.GCD:SetStatusBarTexture(normTex)
 			self.GCD:SetStatusBarColor(0.8,0.8,0.8)
 			
 			local gcdcastborder = CreateFrame("Frame", nil, self.GCD)
@@ -630,7 +631,7 @@ oUF_Hank_hooks.customPowerBar = {
 		power:SetPoint("BOTTOMRIGHT", self.health[4], "BOTTOMLEFT", 351, 33) ---160, -200
 		power:SetFrameStrata("MEDIUM")
 		power:SetFrameLevel(13)
-		power:SetStatusBarTexture(Normal)
+		power:SetStatusBarTexture(normTex)
 		power:SetMinMaxValues(0,UnitPowerMax(unit))
 		
 		local powerPanel = CreateFrame("Frame", "MyPowerPanel", power)

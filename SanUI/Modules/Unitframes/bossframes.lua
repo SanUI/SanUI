@@ -9,15 +9,14 @@ local Scale = S.Scale
 local ALTERNATE_POWER_INDEX = ALTERNATE_POWER_INDEX
 
 --local BAR_TEXTURE = C["Medias"].Blank
-local BAR_TEXTURE =  C["medias"].textures.StatusbarNormal
+local BAR_TEXTURE =  C["medias"].textures.Flat
 local normTex = C["medias"].textures.StatusbarNormal
-local blankTex = normTex -- C["Medias"].Blank
 local TEXT_FONT = C["medias"].fonts.Font
 local fontcolor = {0.9, 0.9, 0.9, 1}
 local fontSize = 12
 local bordercolor = C.colors.BorderColor
 local barcolor = { 0.1, 0.1, 0.1, 1}
-local barbgcolor = { 29/255, 63/255, 72/255, 1 }
+local barbgcolor = C.colors.Castbarbg
 
 local function valShort(value)
 	if(value >= 1e6) then
@@ -85,7 +84,7 @@ local function CreateUnitFrame(self, unit)
 	self.Backdrop:SetBackdropColor(unpack(barbgcolor))
 	
 	-- highlight
-	local glowBorder = {edgeFile = blankTex, edgeSize = S.scale1}
+	local glowBorder = {edgeFile = normTex, edgeSize = S.scale1}
 	local HighlightTarget = CreateFrame("Frame", nil, self, "BackdropTemplate")
 	HighlightTarget:SetAllPoints()
 	HighlightTarget:SetBackdrop(glowBorder)
@@ -350,7 +349,7 @@ local function CreateUnitFrame(self, unit)
 		
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
-		tex:SetTexture(C.medias.textures.Blank)
+		tex:SetTexture(normTex)
 		tex:SetVertexColor(unpack(spell.color))
 		
 		icon.tex = tex

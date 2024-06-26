@@ -13,7 +13,6 @@ local rfsizes = C.sizes.raidframes
 local font1 = C["medias"].fonts.Font
 local font2 = font1
 local normTex = C["medias"].textures.StatusbarNormal
-local blankTex = C.medias.textures.Blank --normTex -- C["Medias"].Blank
 
 -- disable blizzard party and raid frames
 --InterfaceOptionsFrameCategoriesButton11:SetScale(0.00001)
@@ -114,13 +113,13 @@ local updateThreat = function(self, event, unit)
 	
 	if threat and threat > 1 then
 		self.Health:SetStatusBarColor(.4, .2, .2)
-		self.Health.SetBackdropColor({.2, 0, 0})
+		self.SetBackdropColor({.2, 0, 0})
 
 		local fontName, fontHeight, fontFlags = self.Name:GetFont()
 		self.Name:SetFont(fontName,fontHeight,"OUTLINE")
 	else
 
-		self.Health.SetBackdropColor({0, 0, 0, 1})
+		self.SetBackdropColor({0, 0, 0, 1})
 		self.Health:SetStatusBarColor(unpack(C.colors.Healthbar))
 
 		local fontName, fontHeight, fontFlags = self.Name:GetFont()
@@ -137,20 +136,18 @@ local function Shared(self, unit)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 
 	local health = CreateFrame("StatusBar", nil, self)
-	health:SetAllPoints()
+	--health:SetAllPoints()
+	health:SetPoint("TOPLEFT",S.scale1,-S.scale1)
+	health:SetPoint("BOTTOMRIGHT",-S.scale1,S.scale1)
 
 	health:SetStatusBarTexture(normTex)
 	health:SetFrameLevel(8)
 	health:SetStatusBarColor(unpack(C.colors.Healthbar))
 	health:SetOrientation("VERTICAL")
-	S.CreateBackdrop(health)
-	health.SetBackdropColor(C.colors.Healthbarbackdrop)
-	self.Health = health
+	S.CreateBackdrop(self)
 	
-	local backdrop = health.Backdrop
-	backdrop:ClearAllPoints()
-	backdrop:SetPoint("TOPLEFT", 2, 0)
-	backdrop:SetPoint("BOTTOMRIGHT", -2, 0)
+	self.SetBackdropColor(C.colors.Healthbarbackdrop)
+	self.Health = health
 	
 	health.colorDisconnected = false
 	health.colorClass = false
@@ -169,9 +166,9 @@ local function Shared(self, unit)
 	
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", function(self,event,unit)
 			if UnitIsUnit("target", self.unit) then
-				health.SetBackdropBorderColor({1,1,1})
+				self.SetBackdropBorderColor({1,1,1})
 			else
-				health.SetBackdropBorderColor(C.colors.BorderColor)
+				self.SetBackdropBorderColor(C.colors.BorderColor)
 			end
 		end)
 	
@@ -196,7 +193,7 @@ local function Shared(self, unit)
 	self.RaidTargetIndicator  = RaidIcon
 	RaidIcon:Hide() -- not sure if necessary, seems so from MOTHER's rooms
 
-	local ReadyCheck = self.Health:CreateTexture(nil, "OVERLAY")
+	local ReadyCheck = health:CreateTexture(nil, "OVERLAY")
 	ReadyCheck:SetHeight(rfsizes.readycheck)
 	ReadyCheck:SetWidth(rfsizes.readycheck)
 	ReadyCheck:SetPoint("CENTER",self.Health,"TOP") 
@@ -206,14 +203,14 @@ local function Shared(self, unit)
 
 	self.ReadyCheckIndicator = ReadyCheck
 
-	local ResurrectIcon = self.Health:CreateTexture(nil, "HIGHLIGHT", nil, 7)
+	local ResurrectIcon = health:CreateTexture(nil, "HIGHLIGHT", nil, 7)
 	ResurrectIcon:SetSize(rfsizes.resurrecticon, rfsizes.resurrecticon)
 	--ResurrectIcon:SetPoint("CENTER")
 	ResurrectIcon:SetPoint("BOTTOMRIGHT",self.Health,"BOTTOMRIGHT",scales[4],-scales[4])
 	ResurrectIcon:SetDrawLayer("OVERLAY", 7)
 	self.ResurrectIndicator = ResurrectIcon
 	
-	local SummonIndicator = self.Health:CreateTexture(nil, "HIGHLIGHT", nil, 7)
+	local SummonIndicator = health:CreateTexture(nil, "HIGHLIGHT", nil, 7)
 	SummonIndicator:SetSize(rfsizes.summonindicator, rfsizes.summonindicator)
 	SummonIndicator:SetPoint("BOTTOMRIGHT",self.Health,"BOTTOMRIGHT",scales[4],-scales[4])
 	SummonIndicator:SetDrawLayer("OVERLAY", 7)
@@ -228,7 +225,7 @@ local function Shared(self, unit)
 	end
 	self.Range = range
 	
-	local mhpb = CreateFrame("StatusBar", nil, self.Health)
+	local mhpb = CreateFrame("StatusBar", nil, health)
 	mhpb:SetOrientation("VERTICAL")
 	mhpb:SetPoint("BOTTOM", self.Health:GetStatusBarTexture(), "TOP", 0, 0)
 	mhpb:SetWidth(rfsizes.width)
@@ -236,7 +233,7 @@ local function Shared(self, unit)
 	mhpb:SetStatusBarTexture(normTex)
 	mhpb:SetStatusBarColor(0, 0.5, 0.15, 1)
 
-	local ohpb = CreateFrame("StatusBar", nil, self.Health)
+	local ohpb = CreateFrame("StatusBar", nil, health)
 	ohpb:SetOrientation("VERTICAL")
 	ohpb:SetPoint("BOTTOM", self.Health:GetStatusBarTexture(), "TOP", 0, 0)
 	ohpb:SetWidth(rfsizes.width)
@@ -244,7 +241,7 @@ local function Shared(self, unit)
 	ohpb:SetStatusBarTexture(normTex)
 	ohpb:SetStatusBarColor(0, 0.5, 0, 1)
 	
-	local absb = CreateFrame("StatusBar", nil, self.Health)
+	local absb = CreateFrame("StatusBar", nil, health)
 	absb:SetOrientation("VERTICAL")
 	absb:SetPoint("BOTTOM", self.Health:GetStatusBarTexture(), "TOP", 0, 0)
 	absb:SetWidth(rfsizes.width)
@@ -262,8 +259,8 @@ local function Shared(self, unit)
 	self.Name:SetParent(absb)
 	
 	local auras = CreateFrame("Frame", nil, self)
-	auras:SetPoint("TOPLEFT", self.Health, scales[2], -scales[2])
-	auras:SetPoint("BOTTOMRIGHT", self.Health, -scales[2], scales[2])
+	auras:SetPoint("TOPLEFT", health, scales[2], -scales[2])
+	auras:SetPoint("BOTTOMRIGHT", health, -scales[2], scales[2])
 	auras:SetFrameLevel(self.Health:GetFrameLevel()+2)
 	auras.Icons = {}
 	auras.Texts = {}
