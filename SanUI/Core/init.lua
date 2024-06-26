@@ -13,17 +13,20 @@ addon[2] = (Tukui and Tukui[2]) or {} -- C, config
 addon[3] = (Tukui and Tukui[3]) or {} -- C, config
 addon[4] = (Tukui and Tukui[4]) or {} -- C, config
 
+local S = addon[1]
+local C = addon[2]
+
 -- additional stuff
-addon[1].myname = UnitName("player")
-addon[1].MyName = UnitName("player")
+S.myname = UnitName("player")
+S.MyName = UnitName("player")
+S.MyClass = UnitClass("player")
 				
 addon.oUF = Tukui and Tukui.oUF
 
 SanUI = addon -- Allow other addons to use SanUI
 
 
-local S = addon[1]
-local C = addon[2]
+
 --[=[
 local LSM = LibStub("LibSharedMedia-3.0")
 local MediaType_BACKGROUND = LSM.MediaType.BACKGROUND
@@ -128,4 +131,13 @@ S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, Border
 	borderleft:SetColorTexture(r, g, b)
 	
 	f.Backdrop = backdrop
+	f.SetBackdropBorderColor = function(t)
+		bordertop:SetColorTexture(t[1], t[2], t[3])
+		borderright:SetColorTexture(t[1], t[2], t[3])
+		borderbottom:SetColorTexture(t[1], t[2], t[3])
+		borderleft:SetColorTexture(t[1], t[2], t[3])
+	end
+	f.SetBackdropColor = function(t)
+		backdrop:SetBackdropColor(t[1], t[2], t[3], t[4] or bgalpha)
+	end
 end

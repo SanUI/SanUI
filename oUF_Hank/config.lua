@@ -2,6 +2,7 @@
 
 oUF_Hank_config_changes = {
 FocusFrameScale = 0.7,
+FrameScale = 0.75,
 FrameMargin = {200, 195},
 FocusFrameMargin = {415, 450},
 

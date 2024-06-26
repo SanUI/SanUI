@@ -13,7 +13,7 @@ local rfsizes = C.sizes.raidframes
 local font1 = C["medias"].fonts.Font
 local font2 = font1
 local normTex = C["medias"].textures.StatusbarNormal
-local blankTex = normTex -- C["Medias"].Blank
+local blankTex = C.medias.textures.Blank --normTex -- C["Medias"].Blank
 
 -- disable blizzard party and raid frames
 --InterfaceOptionsFrameCategoriesButton11:SetScale(0.00001)
@@ -113,16 +113,15 @@ local updateThreat = function(self, event, unit)
 	local threat = UnitThreatSituation(unit)
 	
 	if threat and threat > 1 then
-		self.Health.bg:SetVertexColor(120/255,12/255,12/255)
-		self.Health.bg:SetColorTexture(.8,.8,.8)
-		self.Health:SetStatusBarColor(.3,.3,.3,.7)
+		self.Health:SetStatusBarColor(.4, .2, .2)
+		self.Health.SetBackdropColor({.2, 0, 0})
 
 		local fontName, fontHeight, fontFlags = self.Name:GetFont()
 		self.Name:SetFont(fontName,fontHeight,"OUTLINE")
 	else
-		self.Health.bg:SetColorTexture(.3,.3,.3)
-		self.Health.bg:SetVertexColor(0,0,0,1)
-		self.Health:SetStatusBarColor(.2,.2,.2,1)
+
+		self.Health.SetBackdropColor({0, 0, 0, 1})
+		self.Health:SetStatusBarColor(unpack(C.colors.Healthbar))
 
 		local fontName, fontHeight, fontFlags = self.Name:GetFont()
 		self.Name:SetFont(fontName,fontHeight,"")
@@ -131,26 +130,27 @@ local updateThreat = function(self, event, unit)
 end
 
 local function Shared(self, unit)
-	--self:SetFrameStrata("MEDIUM")
+	self:SetAlpha(0.5)
 	self.colors = S.UnitColor
 	self:RegisterForClicks("AnyUp")
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
-	
+
 	local health = CreateFrame("StatusBar", nil, self)
-	health:SetPoint("TOPLEFT")
-	health:SetPoint("TOPRIGHT")
-	health:SetHeight(rfsizes.height)
+	health:SetAllPoints()
+
 	health:SetStatusBarTexture(normTex)
 	health:SetFrameLevel(8)
-	health:SetStatusBarColor(131/255, 148/255, 150/255, 1)
+	health:SetStatusBarColor(unpack(C.colors.Healthbar))
 	health:SetOrientation("VERTICAL")
+	S.CreateBackdrop(health)
+	health.SetBackdropColor(C.colors.Healthbarbackdrop)
 	self.Health = health
-
-	health.bg = health:CreateTexture(nil, "BORDER")
-	health.bg:SetAllPoints()
-	health.bg:SetVertexColor(0,43/255,54/255,1)
-	health.bg:SetTexture(normTex)
+	
+	local backdrop = health.Backdrop
+	backdrop:ClearAllPoints()
+	backdrop:SetPoint("TOPLEFT", 2, 0)
+	backdrop:SetPoint("BOTTOMRIGHT", -2, 0)
 	
 	health.colorDisconnected = false
 	health.colorClass = false
@@ -167,39 +167,27 @@ local function Shared(self, unit)
 	self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", updateThreat)
 	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", updateThreat)
 	
-	-- highlight
-	local glowBorder = {edgeFile = blankTex, edgeSize = 1}
-	local HighlightTarget = CreateFrame("Frame", nil, self.Health, "BackdropTemplate")
-
-	HighlightTarget:SetFrameLevel(self.Health:GetFrameLevel() + 3)
-	HighlightTarget:SetAllPoints()
-	HighlightTarget:SetBackdrop(glowBorder)
-	HighlightTarget.origColor = {0,0,0,1}
-	HighlightTarget:SetBackdropBorderColor(unpack(HighlightTarget.origColor))
-	
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", function(self,event,unit)
 			if UnitIsUnit("target", self.unit) then
-				self.HighlightTarget:SetBackdropBorderColor(1,1,1)
+				health.SetBackdropBorderColor({1,1,1})
 			else
-				self.HighlightTarget:SetBackdropBorderColor(unpack(HighlightTarget.origColor))
+				health.SetBackdropBorderColor(C.colors.BorderColor)
 			end
 		end)
-		
-	self.HighlightTarget = HighlightTarget
 	
-	local name = HighlightTarget:CreateFontString(nil, "OVERLAY")
-	name:SetPoint("BOTTOMRIGHT", HighlightTarget,"BOTTOMRIGHT", -scales[2],scales[2]) -- -1, 1)
+	local name = health:CreateFontString(nil, "OVERLAY")
+	name:SetPoint("BOTTOMRIGHT", health,"BOTTOMRIGHT", -3,2) -- -1, 1)
 	name:SetFont(font1, rfsizes.name)
 	self:Tag(name, "[getnamecolor][nameshort]")
 	self.Name = name
 	
-	local Dead = HighlightTarget:CreateFontString(nil, "OVERLAY")
-	Dead:SetPoint("TOPRIGHT",HighlightTarget,"TOPRIGHT",0,0) -- -S.scale1,0)
+	local Dead = health:CreateFontString(nil, "OVERLAY")
+	Dead:SetPoint("TOPRIGHT",health,"TOPRIGHT",-3,0)
 	Dead:SetFont(font1, 11)
 	self:Tag(Dead, "[status]")
 	self.Dead = Dead
 	
-	local RaidIcon = HighlightTarget:CreateTexture(nil, "OVERLAY")
+	local RaidIcon = health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetHeight(rfsizes.raidicon)
 	RaidIcon:SetWidth(rfsizes.raidicon)
 	RaidIcon:SetPoint("CENTER", self, "TOP",-scales[12],-scales[2])
@@ -309,7 +297,7 @@ local function Shared(self, unit)
 		
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
-		tex:SetTexture(C.Medias.Blank)
+		tex:SetTexture(normTex)
 		tex:SetVertexColor(unpack(spell.color))
 		
 		icon.tex = tex
@@ -326,7 +314,7 @@ local function Shared(self, unit)
 		b:SetAllPoints(rej_icon)
 		local t = b:CreateTexture(nil, "OVERLAY")
 		t:SetAllPoints(b)
-		t:SetTexture(C.Medias.Blank)
+		t:SetTexture(normTex)
 		t:SetVertexColor(.5,.5,.5)
 		
 		rej_icon.Backdrop = b

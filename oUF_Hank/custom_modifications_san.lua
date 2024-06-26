@@ -10,6 +10,7 @@ local font1 = C.medias.fonts.Font
 --local font2 = C["Medias"].UnitFrameFont
 local font2 = font1
 local Normal = C.medias.textures.Blank
+local blankTex = C.medias.textures.Blank
 local playerClass = S.MyClass
 
 local Scale = S.Scale
@@ -238,7 +239,7 @@ sharedStyle = function(self, unit, isSingle)
 		
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
-		tex:SetTexture(C.Medias.Blank)
+		tex:SetTexture(blankTex)
 		tex:SetVertexColor(unpack(spell.color))
 		
 		icon.tex = tex
@@ -341,9 +342,9 @@ sharedStyle = function(self, unit, isSingle)
 		castbar.CustomDelayText = S["UnitFrames"].CustomCastDelayText
 		--castbar.PostCastStart = S["UnitFrames"].CheckCast
 		castbar.PostCastStart = function(element, unit, name, rank, castid)
-			S["UnitFrames"].CheckChannel(element, unit)
+			--S["UnitFrames"].CheckChannel(element, unit)
 			if (element.empowering) then
-				element:SetStatusBarColor(unpack(C.UnitFrames.CastingColor))
+				element:SetStatusBarColor(unpack(C.colors.CastingColor))
 			end
 		end
 		

@@ -1,6 +1,5 @@
 local addonName, addon = ...
-local S,C,L = unpack(addon) 
-local oUF = addon.oUF
+local S,C = unpack(addon) 
 
 local Scale = S.Scale
 
@@ -21,7 +20,7 @@ end
 -- .timers Array (table indexed by integers) of timers. A timer is a table of the form { time, { r, g, b} }, where the icon texture 
 --         is colored by SetVertexColor(r, g, b) if the remaining duration of the buff is <time. The first one matching wins.
 -- .count Table { size } where size is fontsize
-S["UnitFrames"].RaidBuffsTracking["DRUID"] = {
+S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   -- Rejuvenation
 	{
     spellID = 774,
@@ -85,7 +84,7 @@ S["UnitFrames"].RaidBuffsTracking["DRUID"] = {
   },
 }
 
-S["UnitFrames"].RaidBuffsTracking["PRIEST"] = {
+S["UnitFrames"].RaidBuffsTracking["Priest"] = {
 	{
 		-- Atonement
 		spellID = 194384,
@@ -116,10 +115,10 @@ if not S["UnitFrames"].TextAuras then
 	S["UnitFrames"].TextAuras = {}
 end
 
-S["UnitFrames"].TextAuras["DRUID"] = S["UnitFrames"].TextAuras["DRUID"] or {}
+S["UnitFrames"].TextAuras["Druid"] = S["UnitFrames"].TextAuras["Druid"] or {}
 
 table.insert(
-	S["UnitFrames"].TextAuras["DRUID"],
+	S["UnitFrames"].TextAuras["Druid"],
 	{
 		spellID = {33763, 33778, 43421, 188550, 290754, 186371},
 		pos = {"TOP",0,1},
