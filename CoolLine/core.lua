@@ -2,7 +2,7 @@ local ORANGEY, LIGHTRED             = '|cffFF4500', '|cffff6060'
 local build_toc_version             = select(4, GetBuildInfo())
 -- version numbering is X.XX.XX shorten in param 4 as XXXXX
 local SUPPORTED_RETAIL_VERSION      = 90000
-local MAX_SUPPORTED_RETAIL_VERSION  = 90200
+local MAX_SUPPORTED_RETAIL_VERSION  = 100207
 local MAX_SUPPORTED_CLASSIC_VERSION = 19999
 local IS_RETAIL_RELEASE             = (SUPPORTED_RETAIL_VERSION <= build_toc_version and build_toc_version <= MAX_SUPPORTED_RETAIL_VERSION)
 local IS_CLASSIC                    = (build_toc_version <= MAX_SUPPORTED_CLASSIC_VERSION)

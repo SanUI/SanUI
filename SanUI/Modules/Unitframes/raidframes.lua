@@ -173,13 +173,13 @@ local function Shared(self, unit)
 		end)
 	
 	local name = health:CreateFontString(nil, "OVERLAY")
-	name:SetPoint("BOTTOMRIGHT", health,"BOTTOMRIGHT", -3,2) -- -1, 1)
+	name:SetPoint("BOTTOMRIGHT", health,"BOTTOMRIGHT", -1, 0)
 	name:SetFont(font1, rfsizes.name)
 	self:Tag(name, "[getnamecolor][nameshort]")
 	self.Name = name
 	
 	local Dead = health:CreateFontString(nil, "OVERLAY")
-	Dead:SetPoint("TOPRIGHT",health,"TOPRIGHT",-3,0)
+	Dead:SetPoint("TOPRIGHT",health,"TOPRIGHT",-1,0)
 	Dead:SetFont(font1, 11)
 	self:Tag(Dead, "[status]")
 	self.Dead = Dead

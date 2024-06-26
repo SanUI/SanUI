@@ -89,7 +89,7 @@ sharedStyle = function(self, unit, isSingle)
 	end
 
 end,
-
+--[[
 PreSetPosition = function(buffs, max)
 	local unit = buffs:GetParent().unit
 	
@@ -112,10 +112,11 @@ PreSetPosition = function(buffs, max)
 		end
 	end
 end,
+--]]
 }
 
 oUF_Hank_hooks.ButtonStyleTuk = {
-
+--[[
 PostCreateIcon = function(icons, icon)
 	
 	if(icons.__owner.unit == "player" or icons.__owner.unit == "target" ) then
@@ -149,6 +150,7 @@ PostCreateIcon = function(icons, icon)
 		icon.remaining:SetParent(icon.overlayFrame)
 	end
 end,
+--]]
 
 OnEnterAura = function(self, icon)
 	
@@ -157,7 +159,7 @@ OnEnterAura = function(self, icon)
 		S.CreateBackdrop(self.HighlightAura)
 		self.HighlightAura:SetFrameLevel(6) -- cd on icon seems to have frame level 5
 		
-		self.HighlightAura.icon.remaining = S.SetFontString(icon, C["Medias"].Font, 11, "THINOUTLINE")
+		self.HighlightAura.icon.remaining = S.SetFontString(icon, font1, 11, "THINOUTLINE")
 		self.HighlightAura.icon.remaining:SetPoint("CENTER", Scale(1), 0)
 		
 		self.HighlightAura.icon:SetPoint("TOPLEFT", Scale(2), Scale(-2))
@@ -170,7 +172,7 @@ OnEnterAura = function(self, icon)
 		
 		icon.Count:SetPoint("BOTTOMRIGHT", self.HighlightAura, Scale(3), 0) --Scale(1.5))
 		icon.Count:SetJustifyH("RIGHT")
-		icon.Count:SetFont(C["Medias"].Font, 9*cfg.AuraMagnification, "THICKOUTLINE")
+		icon.Count:SetFont(font1, 9*cfg.AuraMagnification, "THICKOUTLINE")
 	end
 end,
 
@@ -178,7 +180,7 @@ OnLeaveAura = function(self)
 	if self.HighlightAura.oldicon then
 		self.HighlightAura.oldicon.Count:SetPoint("BOTTOMRIGHT",self.HighlightAura.oldicon, Scale(3), 0) --Scale(1.5))
 		self.HighlightAura.oldicon.Count:SetJustifyH("RIGHT")
-		self.HighlightAura.oldicon.Count:SetFont(C["Medias"].Font, 9, "THICKOUTLINE")
+		self.HighlightAura.oldicon.Count:SetFont(font1, 9, "THICKOUTLINE")
 	end
 end,
 }
