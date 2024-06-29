@@ -17,6 +17,7 @@ end
 local sizes = {
 	actionbuttons = 32,
 	actionbuttonspacing = 4,
+	minimap = 160,
 	scales = {
 	},
 	raidframes = {

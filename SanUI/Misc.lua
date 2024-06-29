@@ -28,6 +28,8 @@ function S.misc(self,event,arg)
 		S.disableBlizzard()
 	
 		S.modCoolLine(event)
+		
+		S.modMinimap()
 			
 		-- Most important call here
 		S.switch2Mode(SanUIdb["Mode"])
