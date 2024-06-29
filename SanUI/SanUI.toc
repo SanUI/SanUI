@@ -8,6 +8,9 @@
 ## RequiredDeps: tullaCC, WeakAuras
 ## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos
 Core\init.lua
+
+Libs\ouF\oUF.xml
+
 Config\profiles.lua
 Config\sizes.lua
 Config\colors.lua
@@ -15,7 +18,6 @@ Config\medias.lua
 Core\panels.lua
 
 Libs\LibDispel.lua
-Libs\ouF\oUF.xml
 Libs\oUF_NotAuraTrack.lua
 Libs\oUF_TextAuras.lua
 Libs\oUF_ShadowTouched.lua

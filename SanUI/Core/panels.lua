@@ -13,7 +13,8 @@ Hider:Hide()
 
 panels.Hider = Hider
 --provided by oUF
-panels.PetBattleHider = PetBattleFrameHider
+local PetBattleHider = SanUI_PetBattleFrameHider
+panels.PetBattleHider = PetBattleHider
 
 local actionbarpanel1 = CreateFrame("Frame", nil, PetBattleHider)
 S.CreateBackdrop(actionbarpanel1)
