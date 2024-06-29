@@ -25,6 +25,12 @@ S.styleActionButton = function(button)
 	button:SetSize(absize, absize)
 	S.CreateBackdrop(button, "Transparent")
 	
+	-- This works better for me...
+	local br = button.Backdrop.BorderRight
+	br:ClearAllPoints()
+	br:SetPoint("TOPRIGHT", button.Backdrop, "TOPRIGHT", S.scale1, 0)
+	br:SetPoint("BOTTOMRIGHT", button.Backdrop, "BOTTOMRIGHT", S.scale1, 0)
+	
 	-- Highlight Texture
 	S.Kill(button.HighlightTexture)
 	local Highlight = button:CreateTexture()
@@ -218,6 +224,9 @@ S.switchActionButtons = function(profile)
 			b:ClearAllPoints()
 			if not b.styled then
 				S.styleActionButton(b)
+				-- Whyever we need this...
+				b.HotKey:ClearAllPoints()
+				b.HotKey:SetPoint("TOPRIGHT", b, "TOPRIGHT", -S.scale1, -S.scale4)
 			end
 			
 			b:SetPoint("TOP", barright, "TOP", 0, - i * abspacing - (i-1)*absize)
