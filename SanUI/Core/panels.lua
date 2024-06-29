@@ -9,14 +9,11 @@ local abspacing = C.sizes.actionbuttonspacing
 local panels = {}
 
 local Hider = CreateFrame("Frame", nil, UIParent)
-local PetBattleHider = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
 Hider:Hide()
-PetBattleHider:SetAllPoints()
-PetBattleHider:SetFrameStrata("LOW")
-RegisterStateDriver(PetBattleHider, "visibility", "[petbattle] hide; show")
 
 panels.Hider = Hider
-panels.PetBattleHider = PetBattleHider
+--provided by oUF
+panels.PetBattleHider = PetBattleFrameHider
 
 local actionbarpanel1 = CreateFrame("Frame", nil, PetBattleHider)
 S.CreateBackdrop(actionbarpanel1)
