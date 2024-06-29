@@ -4,7 +4,10 @@ local S, C = unpack(addon)
 local medias = {}
 
 local fonts = {
-	Font = [[Interface\AddOns\WeakAuras\Media\Fonts\FiraSans-Medium.ttf]]
+	Font = [[Interface\AddOns\WeakAuras\Media\Fonts\FiraSans-Medium.ttf]],
+	sharednames = {
+		Font = "Fira Sans Medium",
+	}
 }
 medias.fonts = fonts
 

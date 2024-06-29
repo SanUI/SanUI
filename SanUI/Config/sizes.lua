@@ -18,6 +18,8 @@ local sizes = {
 	actionbuttons = 32,
 	actionbuttonspacing = 4,
 	minimap = 160,
+	minimappanelsheight = 19,
+	datatextfontsize = 12,
 	scales = {
 	},
 	raidframes = {

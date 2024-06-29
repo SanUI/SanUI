@@ -6,7 +6,7 @@
 ## SavedVariablesPerCharacter: SanUIdb
 ## SavedVariables: SanUIGlobaldb
 ## RequiredDeps: tullaCC, WeakAuras
-## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos
+## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos, BasicMinimap
 Core\init.lua
 
 Libs\ouF\oUF.xml
@@ -25,6 +25,8 @@ Libs\oUF_NotRaidDebuffs.lua
 
 Modules\Auras\SimpleAuraFilter.lua
 Modules\Auras\optionspanel.lua
+
+Modules\DataTexts\lootspec.lua
 
 Modules\Unitframes\tracking.lua
 Modules\Unitframes\raidframes.lua
