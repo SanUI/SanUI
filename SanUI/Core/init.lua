@@ -118,8 +118,8 @@ S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, Border
 
 	local borderright = backdrop:CreateTexture(nil, "BORDER", nil, 1)
 	borderright:SetSize(BorderSize, BorderSize)
-	borderright:SetPoint("TOPRIGHT", backdrop, "TOPRIGHT", 0, 0)
-	borderright:SetPoint("BOTTOMRIGHT", backdrop, "BOTTOMRIGHT", 0, 0)
+	borderright:SetPoint("TOPRIGHT", f, "TOPRIGHT", S.scale1, 0)
+	borderright:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", S.scale1, 0)
 	borderright:SetSnapToPixelGrid(false)
 	borderright:SetTexelSnappingBias(0)
 	backdrop.BorderRight = borderright
