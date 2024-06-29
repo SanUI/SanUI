@@ -52,6 +52,12 @@ S.styleActionButton = function(button)
 	button.cooldown:SetAllPoints()
 	button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	button.styled = true
+	
+	button.Count:ClearAllPoints()
+	button.Count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -S.scale1, S.scale1)
+	
+	button.HotKey:ClearAllPoints()
+	button.HotKey:SetPoint("TOPRIGHT", button, "TOPRIGHT", -S.scale1, -S.scale2)
 end
 
 S.switchActionButtons = function(profile)
