@@ -27,6 +27,7 @@ Modules\Auras\SimpleAuraFilter.lua
 Modules\Auras\optionspanel.lua
 
 Modules\DataTexts\lootspec.lua
+Modules\DataTexts\durability.lua
 
 Modules\Unitframes\tracking.lua
 Modules\Unitframes\raidframes.lua

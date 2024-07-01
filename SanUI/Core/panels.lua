@@ -32,21 +32,21 @@ actionbarright:SetWidth(Scale(absize + (abspacing * 2)))
 actionbarright:SetFrameStrata("BACKGROUND")
 panels.actionbarright = actionbarright
 
-local bottomrighttextbox = CreateFrame("Frame", nil, UIParent)
-bottomrighttextbox:SetSize(350, 23)
-S.CreateBackdrop(bottomrighttextbox)
-bottomrighttextbox:SetFrameStrata("BACKGROUND")
-bottomrighttextbox:SetFrameLevel(2)
-bottomrighttextbox:SetPoint("BOTTOMLEFT",UIParent,5,Scale(3))
-panels.bottomrighttextbox = bottomrighttextbox
-
 local bottomlefttextbox = CreateFrame("Frame", nil, UIParent)
 bottomlefttextbox:SetSize(350, 23)
 S.CreateBackdrop(bottomlefttextbox)
 bottomlefttextbox:SetFrameStrata("BACKGROUND")
 bottomlefttextbox:SetFrameLevel(2)
-bottomlefttextbox:SetPoint("BOTTOMRIGHT",UIParent,-5,Scale(3))
+bottomlefttextbox:SetPoint("BOTTOMLEFT",UIParent,5,Scale(3))
 panels.bottomlefttextbox = bottomlefttextbox
+
+local bottomrighttextbox = CreateFrame("Frame", nil, UIParent)
+bottomrighttextbox:SetSize(350, 23)
+S.CreateBackdrop(bottomrighttextbox)
+bottomrighttextbox:SetFrameStrata("BACKGROUND")
+bottomrighttextbox:SetFrameLevel(2)
+bottomrighttextbox:SetPoint("BOTTOMRIGHT",UIParent,-5,Scale(3))
+panels.bottomrighttextbox = bottomrighttextbox
 
 local minimap = {}
 local minimapsize = C.sizes.minimap

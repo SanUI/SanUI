@@ -2,7 +2,6 @@ local addonName, addon = ...
 local S,C = unpack(addon)
 
 local format = format
-local Class = S.MyClass
 
 local lootSpecName
 local currentSpecName

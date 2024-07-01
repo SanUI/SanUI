@@ -40,6 +40,8 @@ function S.misc(self,event,arg)
 		f:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		f:RegisterEvent("PLAYER_TALENT_UPDATE")
 		
+		S.createDurabilityDT(S.panels.bottomlefttextbox)
+		
 		--this should be last, it might induce a reloadui
 		--local tukui_installed = TukuiDatabase.Variables[S.MyRealm][S.MyName].Installation.Done
 		SanUIdb.addedWeakAuras = (type(SanUIdb.addedWeakAuras) == "string" and SanUIdb.addedWeakAuras) or "None"
