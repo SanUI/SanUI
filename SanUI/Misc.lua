@@ -41,6 +41,7 @@ function S.misc(self,event,arg)
 		f:RegisterEvent("PLAYER_TALENT_UPDATE")
 		
 		S.createDurabilityDT(S.panels.bottomlefttextbox)
+		S.createGuildDT(S.panels.bottomlefttextbox)
 		
 		--this should be last, it might induce a reloadui
 		--local tukui_installed = TukuiDatabase.Variables[S.MyRealm][S.MyName].Installation.Done
