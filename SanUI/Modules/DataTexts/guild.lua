@@ -9,7 +9,7 @@ S.createGuildDT = function(frame)
 	frame:RegisterEvent("PLAYER_GUILD_UPDATE")
 	
 	local text = frame:CreateFontString(nil, "OVERLAY")
-	text:SetPoint("LEFT", frame, "LEFT", S.Scale(35), -S.scale1)
+	text:SetPoint("CENTER", frame, "CENTER", 0, -S.scale1)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)

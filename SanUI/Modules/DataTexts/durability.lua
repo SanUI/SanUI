@@ -22,9 +22,10 @@ S.createDurabilityDT = function(frame, pos)
 	frame:RegisterEvent("MERCHANT_SHOW")
 	frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	frame:RegisterEvent("UPDATE_INVENTORY_DURABILITY")
-	
+	frame:RegisterEvent("UNIT_INVENTORY_CHANGED")
+
 	local text = frame:CreateFontString(nil, "OVERLAY")
-	text:SetPoint("LEFT", frame, "LEFT", S.Scale(4), -S.scale1)
+	text:SetPoint("CENTER", frame, "CENTER", 0, -S.scale1)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
