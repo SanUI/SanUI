@@ -1,8 +1,6 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
-local format = format
-
 local lootSpecName
 local currentSpecName
 
