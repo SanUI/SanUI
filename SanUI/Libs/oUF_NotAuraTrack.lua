@@ -82,15 +82,18 @@ local Update = function(self, event, unit)
 	local icons = nat.Icons
 	local texts = nat.Texts
 	local showing = { icons = {}, texts = {} }
-	local swiftmendable = false
+	--local swiftmendable = false
 	
-	-- lets do 41 so we have at least one nil return value for UnitAura so we can
-	-- handle swiftmend in all cases
-	for i = 1, 41 do
-		local name, texture, count, debuffType, duration, expiration, caster, isStealable,
-			nameplateShowSelf, spellID, canApply, isBossDebuff, casterIsPlayer, nameplateShowAll,
-			timeMod, effect1, effect2, effect3 = UnitAura(unit, i, "HELPFUL")
+	-- do 41 when reactivating swiftment handling, so we have at least one nil return value
+	-- for UnitAura so we can handle swiftmend in all cases
+	for i = 1, 40 do
+		-- name, texture, count, debuffType, duration, expiration, caster, isStealable,
+		-- nameplateShowSelf, spellID, canApply, isBossDebuff, casterIsPlayer, nameplateShowAll,
+		-- timeMod, effect1, effect2, effect
+		local name, texture, count, _, duration, expiration, caster, _,
+			_, spellID = UnitAura(unit, i, "HELPFUL")
 		
+		--[=[
 		if not name then 
 			if not swiftmendable or showing.icons[icons[smid]] then
 				break
@@ -98,12 +101,14 @@ local Update = function(self, event, unit)
 			spellID = smid
 			caster = "player" -- otherwise icon isn't shown
 		end
+		--]=]
 				
 		local icon = icons[spellID]
-		
+		--[=[
 		if smhots[name] and caster == "player" then
 			swiftmendable = true
 		end
+		--]=]
 		
 		if  icon and (icon.anyCaster or caster == "player") then	
 			if icon.setTex then
