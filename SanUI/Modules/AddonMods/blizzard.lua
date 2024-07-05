@@ -3,6 +3,8 @@ local S = unpack(addon)
 
 local function Noop() end
 
+local hide = function(self) self:Hide() end
+
 function S.disableBlizzard()
 	local i
 
@@ -35,4 +37,20 @@ function S.disableBlizzard()
 		UIParent:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		CompactRaidFrameManager_SetSetting("IsShown", "0")
 	end
+	
+    for _, button in ipairs({
+        CharacterMicroButton, SpellbookMicroButton, TalentMicroButton, 
+        QuestLogMicroButton, GuildMicroButton, LFDMicroButton, 
+        EJMicroButton, StoreMicroButton, MainMenuMicroButton,
+        CollectionsMicroButton, HelpMicroButton, AchievementMicroButton
+    }) do
+		hooksecurefunc(button, "Show", hide)
+        button:SetShown(false)
+		button:Hide()
+    end
+    
+    -- Specifically handle the StoreMicroButton (Shop button)
+	hooksecurefunc(StoreMicroButton:GetParent(), "Show", hide)
+    StoreMicroButton:GetParent():SetShown(false)
+	StoreMicroButton:GetParent():Hide()
 end

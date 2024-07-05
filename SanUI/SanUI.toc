@@ -30,6 +30,7 @@ Modules\DataTexts\lootspec.lua
 Modules\DataTexts\durability.lua
 Modules\DataTexts\guild.lua
 Modules\DataTexts\calltoarms.lua
+Modules\DataTexts\micromenu.lua
 Modules\DataTexts\main.lua
 
 Modules\Unitframes\tracking.lua
