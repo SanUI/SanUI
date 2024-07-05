@@ -129,3 +129,25 @@ S.createGuideDT = function(frame)
 		ToggleEncounterJournal()
 	end)
 end
+
+S.createFriendsDT = function(frame)
+	local text = frame:CreateFontString(nil, "OVERLAY")
+	text:SetPoint("CENTER", frame, "CENTER", 0, -S.scale1)
+	text:SetJustifyH("CENTER")
+	text:SetJustifyV("MIDDLE")
+	text:SetFont(font, fontsize)
+	text:SetText("F")
+	
+	frame.Text = text
+		
+	frame:SetScript("OnMouseDown", function(self, button)
+
+		if InCombatLockdown() then
+			print("In combat - not opening friends frame")
+			return
+		end
+		
+		ToggleFriendsFrame(1)
+	end)
+end
+

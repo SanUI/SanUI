@@ -57,3 +57,9 @@ guide:SetWidth(32)
 guide:SetPoint("LEFT", collections, "RIGHT", S.Scale(4), 0)
 S.createGuideDT(guide)
 
+local friends = CreateFrame("Frame", nil, S.panels.bottomrighttextbox)
+friends:SetHeight(height)
+friends:SetWidth(32)
+friends:SetPoint("LEFT", guide, "RIGHT", S.Scale(4), 0)
+S.createFriendsDT(friends)
+
