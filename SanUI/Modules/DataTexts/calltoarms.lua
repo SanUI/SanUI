@@ -102,7 +102,7 @@ S.createCalltoarmsDT = function(frame)
 			text:SetText("CtA NA")
 		else
 			if (TankReward or HealerReward or DPSReward) then
-				text:SetText(MakeString(TankReward, HealerReward, DPSReward, true))
+				text:SetText("CtA: "..MakeString(TankReward, HealerReward, DPSReward, true))
 			else
 				text:SetText("No CtA")
 			end

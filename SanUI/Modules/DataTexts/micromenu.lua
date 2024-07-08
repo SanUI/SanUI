@@ -10,7 +10,7 @@ S.createSpellbookDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("P")
+	text:SetText("Spells")
 	
 	frame.Text = text
 		
@@ -31,7 +31,7 @@ S.createTalentDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("N")
+	text:SetText("Talents")
 	
 	frame.Text = text
 		
@@ -52,7 +52,7 @@ S.createQuestDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("L")
+	text:SetText("Quests")
 	
 	frame.Text = text
 		
@@ -73,7 +73,7 @@ S.createAchievementDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("A")
+	text:SetText("Achieve")
 	
 	frame.Text = text
 		
@@ -94,7 +94,7 @@ S.createCollectionsDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("C")
+	text:SetText("Collect")
 	
 	frame.Text = text
 		
@@ -115,7 +115,7 @@ S.createGuideDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("EJ")
+	text:SetText("Guide")
 	
 	frame.Text = text
 		
@@ -136,7 +136,7 @@ S.createFriendsDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("F")
+	text:SetText("Friends")
 	
 	frame.Text = text
 		
