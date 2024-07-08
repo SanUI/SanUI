@@ -10,8 +10,9 @@ local S,C = unpack(addon)
 
 local Scale = S.Scale
 local font = C.medias.fonts.Font
+local fontsize = 12
 
-local SanUIButtonOrder = {Grid=1, DBM=2, Altoholic=3, Hack=4}
+local SanUIButtonOrder = {Grid=1, DBM=2, Hack=3}
 
 if S["profiles"][S.MyName]["AddonMenu"] then
 	SanUIButtonOrder = S["profiles"][S.MyName]["AddonMenu"]
@@ -45,14 +46,6 @@ local BtnHeight = 20
 -- Sets side of minimap that menu anchors to
 -- DON'T CHANGE
 local AnchorSide = true
-
--- Set this to true if you want it to hide your loot frame when skada is shown
---HideChat = false
-
--- Set font
---local font = C["media"].uffont --local font = S["media"].uffont
-local font = C["medias"].fonts.Font
-local fontsize = 12
 
 -------------------------------------------------------------------
 -- CREATING NEW MODULES -------------------------------------------
@@ -153,7 +146,7 @@ local function MenuMouseDown()
 		MenuOpen:SetSize(S.scale10, S.scale10)
 		MenuOpen:ClearAllPoints()
 		MenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
-		Text:SetFont(C.Medias.Font, 10)
+		Text:SetFont(font, 10)
 		MenuOpen.text:SetText("a")
 		MenuOpen:Show()
 	else
@@ -163,7 +156,7 @@ local function MenuMouseDown()
 		MenuOpen:SetSize(Scale(Minimap:GetWidth()), Scale(BtnHeight))
 		MenuOpen:ClearAllPoints()
 		MenuOpen:SetPoint("TOP", Menu, "BOTTOM", 0, -Scale(3))
-		Text:SetFont(C.Medias.Font, fontsize)
+		Text:SetFont(font, fontsize)
 		MenuOpen.text:SetText(CLOSE)
 	end
 end
@@ -179,7 +172,7 @@ local function CreateButton(f, o) --(Frame,ButtonOrderName)
 	if AnchorSide == true then
 		--f:CreatePanel("", Menu:GetWidth()-4, BtnHeight, "BOTTOM", Menu, "TOP", 0, -o*(BtnHeight+1)-1)
 		f:SetSize(Scale(Menu:GetWidth()-4), Scale(BtnHeight))
-		f:SetPoint("BOTTOM", Menu, "TOP", 0, -Scale(o*(BtnHeight+1)-1))
+		f:SetPoint("BOTTOM", Menu, "TOP", 0, -Scale(o*(BtnHeight+1)+1))
 		S.CreateBackdrop(f)
 		
 		f:SetFrameStrata("DIALOG")

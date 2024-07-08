@@ -8,23 +8,23 @@ local S = addon[1]
 S["profiles"] = {
  ["Tavore"] = { 
 	modes = {"SanHeal","SanChicken","SanBear", "SanCat", "SanLarodar" },
-	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
+	AddonMenu = {BigWigs=1,  Hack=2, MDT=3},
  },
  ["Tovi"] ={ 
 	modes = {"ToviDam", "ToviAug" },
-	AddonMenu = {BigWigs=1, Altoholic=2, Hack=3, MDT=4},
+	AddonMenu = {BigWigs=1,  Hack=2, MDT=3},
  },
   ["Dovi"] = { 
 	modes = {"DoviBM" },
-	AddonMenu = {DBM=1, Altoholic=2, Hack=3, MDT=4},
+	AddonMenu = {DBM=1,  Hack=2, MDT=3},
  },
   ["Tamdam"] = { 
 	modes = {"SanHeal","SanChicken","SanBear", "SanCat" },
-	AddonMenu = {DBM=1, Altoholic=2, Hack=3, MDT=4},
+	AddonMenu = {DBM=1,  Hack=2, MDT=4},
  },
  ["Jhess"] = {
 	modes = {"JhessDisc","JhessHoly","JhessShadow"},
-	AddonMenu = {DBM=1,Altoholic=2, WorldFrame=3},
+	AddonMenu = {DBM=1, WorldFrame=2},
  },
  ["Picker"] = { 
 	modes = {"PickerEnh" },
@@ -32,7 +32,7 @@ S["profiles"] = {
  },
  ["Sahnetorture"] = { 
 	modes = {"SahneUnholy"},
-	AddonMenu = {DBM=1, Altoholic=2, WorldFrame=3},
+	AddonMenu = {DBM=1,  WorldFrame=3},
  },
  ["Alakabaster"] = {
 	modes = {"Alakabaster"},
@@ -40,7 +40,7 @@ S["profiles"] = {
  },
  ["Nortrum"] = {
 	modes = {"NortrumTank"},
-	AddonMenu = {DBM=1,Altoholic=2,WorldFrame=3},
+	AddonMenu = {DBM=1,WorldFrame=3},
  },
  ["Suran"] = {
 	modes = {"Suran"},
@@ -56,23 +56,23 @@ S["profiles"] = {
  },
  ["Sindaria"] = {
 	modes = {"SinHeal","SinShadow"},
-	AddonMenu = {DBM=1,Altoholic=2, WorldFrame=3},
+	AddonMenu = {DBM=1, WorldFrame=3},
  },
  ["Simplex"] = {
 	modes = {"Simplex"},
-	AddonMenu = {Grid=1,Altoholic=2,DXE=3}
+	AddonMenu = {Grid=1}
  },
  ["Amber"] = {
  	modes = {"PHoly","PProt","PRet"},
-	AddonMenu = {DBM=1, Altoholic=2, Hack=3},
+	AddonMenu = {DBM=1,  Hack=2},
  },
  ["Hedge"] = { 
 	modes = {"HedgeBM" },
-	AddonMenu = {DBM=1, Altoholic=2, Hack=3, MDT=4},
+	AddonMenu = {DBM=1,  Hack=2, MDT=3},
  },
  ["DEFAULT"] = {
  	modes = {"Heal","Tank", "Damage" },
-	AddonMenu = {DBM=1, Altoholic=2, WorldFrame=3},
+	AddonMenu = {DBM=1,  WorldFrame=2},
  },
 }
 
@@ -304,7 +304,7 @@ S["Modes"] = {
 
 if not S["profiles"][S.MyName] then
 
-	if S.MyClass == "DRUID" then
+	if S.MyClass == "Druid" then
 		S["profiles"][S.MyName] = S["profiles"]["Tavore"]
 	else
 		S["profiles"][S.MyName] = S["profiles"]["DEFAULT"]
@@ -313,7 +313,7 @@ if not S["profiles"][S.MyName] then
 		S["Modes"]["Damage"] = S["Modes"]["SanChicken"]
 	end
 	
-	if S.MyClass == "PRIEST" then
+	if S.MyClass == "Priest" then
 		S["profiles"][S.MyName]["modes"][4]="Discipline"
 		S["Modes"]["Discipline"] = S["Modes"]["JhessDisc"]
 	end
