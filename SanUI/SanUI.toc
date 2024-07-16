@@ -20,7 +20,6 @@ Core\panels.lua
 Libs\LibDispel.lua
 Libs\oUF_NotAuraTrack.lua
 Libs\oUF_TextAuras.lua
-Libs\oUF_ShadowTouched.lua
 Libs\oUF_NotRaidDebuffs.lua
 
 Modules\Auras\SimpleAuraFilter.lua

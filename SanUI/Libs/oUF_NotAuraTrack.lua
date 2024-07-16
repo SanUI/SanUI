@@ -29,7 +29,7 @@ assert(oUF, "oUF_NotAuraTrack cannot find an instance of oUF. If your oUF is emb
 			       duration of the buff is <time, we use the format string format and a maximum update time of res (see the notes above)
 ]]
 
-local UnitAura = UnitAura
+local UnitAura = C_UnitAuras.GetAuraDataByIndex
 
 -- key for swiftmend, will get special treatment
 local smid = 18562
@@ -48,7 +48,7 @@ local smhots = {
 
 local function UpdateText(text, current_time)
 	local buf_remaining = text.expiration - current_time
-	
+
 	local format = text.format
 	local res = text.res
 
@@ -60,11 +60,11 @@ local function UpdateText(text, current_time)
 		end
 	end
 	text:SetFormattedText(format, buf_remaining)
-	
+
 	if not text.timer_running then
 		C_Timer.After(res, function()
 			text.timer_running = false
-			if text:IsShown() then 
+			if text:IsShown() then
 				UpdateText(text, GetTime())
 			end
 		end)
@@ -83,16 +83,23 @@ local Update = function(self, event, unit)
 	local texts = nat.Texts
 	local showing = { icons = {}, texts = {} }
 	--local swiftmendable = false
-	
+
 	-- do 41 when reactivating swiftment handling, so we have at least one nil return value
 	-- for UnitAura so we can handle swiftmend in all cases
 	for i = 1, 40 do
 		-- name, texture, count, debuffType, duration, expiration, caster, isStealable,
 		-- nameplateShowSelf, spellID, canApply, isBossDebuff, casterIsPlayer, nameplateShowAll,
 		-- timeMod, effect1, effect2, effect
-		local name, texture, count, _, duration, expiration, caster, _,
-			_, spellID = UnitAura(unit, i, "HELPFUL")
-		
+		local data = UnitAura(unit, i, "HELPFUL")
+		if not data then break end
+		--local name = data.name
+		local texture = data.icon
+		local count = data.charges
+		local duration = data.duration
+		local expiration = data.expirationTime
+		local caster = data.sourceUnit
+		local spellID = data.spellId
+
 		--[=[
 		if not name then 
 			if not swiftmendable or showing.icons[icons[smid]] then
@@ -102,15 +109,15 @@ local Update = function(self, event, unit)
 			caster = "player" -- otherwise icon isn't shown
 		end
 		--]=]
-				
+
 		local icon = icons[spellID]
 		--[=[
 		if smhots[name] and caster == "player" then
 			swiftmendable = true
 		end
 		--]=]
-		
-		if  icon and (icon.anyCaster or caster == "player") then	
+
+		if  icon and (icon.anyCaster or caster == "player") then
 			if icon.setTex then
 				icon.tex:SetTexture(texture)
 			end
@@ -118,11 +125,11 @@ local Update = function(self, event, unit)
 			if icon.cd then
 				icon.cd:SetCooldown(expiration - duration, duration)
 			end
-			
+
 			if count ~= nil and icon.count then
 				icon.count:SetText(count)
 			end
-			
+
 			local color = icon.color
 			if icon.timers then
 				local buf_remaining = expiration - nat.lastUpdate
@@ -133,14 +140,14 @@ local Update = function(self, event, unit)
 					end
 				end
 			end
-			
+
 			if color then
 				icon.tex:SetVertexColor(unpack(color))
 			end
 			icon:Show()
 			showing.icons[icon] = true
 		end
-		
+
 		local text = texts[spellID]
 		if text and (text.anyCaster or caster == "player") then
 			text.expiration = expiration
@@ -157,17 +164,17 @@ local Update = function(self, event, unit)
 		end
 	end
 
-	for spellID, icon in pairs(icons) do
+	for _, icon in pairs(icons) do
 		if not showing.icons[icon] then
 			icon:Hide()
 		end
-	end	
-	
+	end
+
 	for spellID, text in pairs(texts) do
 		if not showing.texts[spellID] then
 			text:Hide()
 		end
-	end	
+	end
 end
 
 local ForceUpdate = function(element)
@@ -176,10 +183,10 @@ end
 
 local function Enable(self)
 	local nat = self.NotAuraTrack
-	
+
 	if (nat) then
 		nat.__owner = self
-		nat.ForceUpdate = ForceUpdate	
+		nat.ForceUpdate = ForceUpdate
 		self:RegisterEvent("UNIT_AURA", Update)
 		nat.lastUpdate = GetTime() - 0.6
 		nat.Ticker = C_Timer.NewTicker(0.6, function() if GetTime() - nat.lastUpdate > 0.5 then ForceUpdate(nat) end end)
@@ -189,7 +196,7 @@ end
 
 local function Disable(self)
 	local nat = self.NotAuraTrack
-	
+
 	if (nat) then
 		self:UnregisterEvent("UNIT_AURA", Update)
 		if nat.Ticker then

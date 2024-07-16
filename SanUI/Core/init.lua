@@ -1,17 +1,7 @@
---we just import the full Tukui, and modify it to our hearts desire
 local addonName, addon = ...
 
---[[
-if not Tukui then
-  print("Tukui not installed! If you want to use SanUI, install a recent Tukui!")
-  return
-end
---]]
-
-addon[1] = (Tukui and Tukui[1]) or {} -- S, functions, constants, variables
-addon[2] = (Tukui and Tukui[2]) or {} -- C, config
-addon[3] = (Tukui and Tukui[3]) or {} -- C, config
-addon[4] = (Tukui and Tukui[4]) or {} -- C, config
+addon[1] = {} -- S, functions, constants, variables
+addon[2] = {} -- C, config
 
 local S = addon[1]
 local C = addon[2]
@@ -20,12 +10,8 @@ local C = addon[2]
 S.myname = UnitName("player")
 S.MyName = UnitName("player")
 S.MyClass = UnitClass("player")
-				
-addon.oUF = Tukui and Tukui.oUF
 
 SanUI = addon -- Allow other addons to use SanUI
-
-
 
 --[=[
 local LSM = LibStub("LibSharedMedia-3.0")
@@ -36,7 +22,6 @@ local MediaType_STATUSBAR = LSM.MediaType.STATUSBAR
 LSM:Register(MediaType_STATUSBAR, "AAA1", [[Interface\Addons\SanUI\Medias\Textures\Flash.tga]])
 --]=]
 
-
 S.Kill = function(f)
 	if (f.UnregisterAllEvents) then
 		f:UnregisterAllEvents()
@@ -44,7 +29,7 @@ S.Kill = function(f)
 	else
 		f.Show = f.Hide
 	end
-	
+
 	if f.SetTexture then
 		f:SetTexture(nil)
 	end
@@ -59,9 +44,6 @@ local Scale = function(size)
 	local Mult = ppscale / GetCVar("uiScale")
 	local Value = Mult * math.floor(size / Mult + .5)
 
-	--if Value == 0 then
-		-- print(size .. " -> " .. Value)
-	-- end
 	return Value
 end
 
@@ -77,16 +59,17 @@ addon[1].scale10 = Scale(10)
 S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, BorderTemplate)
 	local f = frame
 	local colors = C.colors
-	
+
 	if (f.Backdrop) then
 		return
 	end
 
+	---@class MyBackdrop: BackdropTemplate, Frame
 	local backdrop = CreateFrame("Frame", nil, f, "BackdropTemplate")
 	backdrop:SetAllPoints()
 	backdrop:SetFrameLevel(f:GetFrameLevel())
 	backdrop:SetBackdrop({bgFile = BackgroundTexture or colors.NormalTexture})
-	
+
 	local bgalpha = (BackgroundTemplate == "Transparent" and colors.BackdropTransparency) or (1)
 	backdrop:SetBackdropColor(colors.BackdropColor[1], colors.BackdropColor[2], colors.BackdropColor[3], bgalpha)
 
@@ -123,13 +106,13 @@ S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, Border
 	borderright:SetSnapToPixelGrid(false)
 	borderright:SetTexelSnappingBias(0)
 	backdrop.BorderRight = borderright
-	
+
 	local r, g, b = unpack(colors.BorderColor)
 	bordertop:SetColorTexture(r, g, b)
 	borderright:SetColorTexture(r, g, b)
 	borderbottom:SetColorTexture(r, g, b)
 	borderleft:SetColorTexture(r, g, b)
-	
+
 	f.Backdrop = backdrop
 	f.SetBackdropBorderColor = function(t)
 		bordertop:SetColorTexture(t[1], t[2], t[3])
