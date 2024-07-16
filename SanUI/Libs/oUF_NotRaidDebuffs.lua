@@ -5,7 +5,7 @@ local _G = _G
 local addon = {}
 
 ns.oUF_NotRaidDebuffs = addon
-_G.oUF_NotRaidDebuffs = ns.oUF_NotRaidDebuffs
+--_G.oUF_NotRaidDebuffs = ns.oUF_NotRaidDebuffs
 
 local libDispel = SanUI[1].libDispel
 local bleedList = libDispel:GetBleedList()
@@ -20,7 +20,7 @@ local UnitCanAttack = UnitCanAttack
 local UnitIsCharmed = UnitIsCharmed
 local GetSpellInfo = GetSpellInfo
 local IsSpellKnown = IsSpellKnown
-local UnitAura = UnitAura
+local UnitAura = C_UnitAuras.GetAuraDataByIndex
 local GetTime = GetTime
 
 local debuff_data = {}
@@ -167,14 +167,14 @@ local function OnUpdate(self, elapsed)
 end
 
 local function UpdateDebuffs(self, data)
-	
+
 	for index = 1,2 do
 		local f = self.NotRaidDebuffs[index]
 		local data = data[index]
-		
-		if (not f) then return end 
+
+		if (not f) then return end
 		if (not data) then f:Hide() return end
-		
+
 		local name = data.name
 		local icon = data.icon
 		local count = data.count
@@ -183,7 +183,7 @@ local function UpdateDebuffs(self, data)
 		local endTime = data.expiration
 		local spellID = data.spellID
 		local stackThreshold = data.stackThreshold
-		
+
 
 		if name and (count >= stackThreshold) then
 			f.icon:SetTexture(icon)
@@ -238,16 +238,17 @@ local function UpdateDebuffs(self, data)
 end
 
 local function debuffData(unit, index)
-	local name, icon, count, debuffType, duration, expiration, _, _, _, spellID = UnitAura(unit, index, 'HARMFUL')
-	return { 
+	local data = UnitAura(unit, index, 'HARMFUL')
+	if not data then return end
+	return {
 		priority = -1,
-		name = name,
-		icon = icon,
-		count = count,
-		debuffType = debuffType,
-		duration = duration,
-		expiration = expiration,
-		spellID = spellID,
+		name = data.name,
+		icon = data.icon,
+		count = data.charges,
+		debuffType = data.dispelName,
+		duration = data.duration,
+		expiration = data.expirationTime,
+		spellID = data.spellId,
 		stackThreshold = 0
 	}
 end
@@ -263,11 +264,11 @@ local function Update(self, event, unit, isFullUpdate, updatedAuras)
 
 	local index = 1
 	local data = debuffData(unit, index)
-	
-	while data.name do
+
+	while data and data.name do
 
 		if not blackList[data.spellID] then
-				if bleedList[data.spellID] then	
+				if bleedList[data.spellID] then
 					data.debuffType = 'Bleed'
 				end
 			if shouldShowDispellable and data.debuffType then
@@ -285,10 +286,10 @@ local function Update(self, event, unit, isFullUpdate, updatedAuras)
 				data.priority = max(data.priority, debuff.priority or 0)
 				data.stackThreshold = debuff.stackThreshold or 0
 			end
-		
+
 			if data.priority > -1 then
 				if data.priority > toShow[1].priority then
-					toShow[2] = toShow[1]	
+					toShow[2] = toShow[1]
 					toShow[1] = data
 				elseif data.priority > toShow[2].priority then
 					toShow[2] = data
@@ -312,7 +313,7 @@ local function Update(self, event, unit, isFullUpdate, updatedAuras)
 	if toShow[1].icon == toShow[2].icon then
 		toShow[2] = nil
 	end
-	
+
 	UpdateDebuffs(self, toShow)
 end
 
@@ -320,10 +321,10 @@ local function Enable(self)
 	if self.NotRaidDebuffs then
 		if self.NotRaidDebuffs.blackList then
 			for k,v in pairs(self.NotRaidDebuffs.blackList) do
-				blackList[k] = value
+				blackList[k] = v
 			end
 		end
-		
+
 		self:RegisterEvent('UNIT_AURA', Update)
 
 		return true

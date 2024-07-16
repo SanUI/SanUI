@@ -65,7 +65,7 @@ dt_right:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT",0,1)
 S.CreateBackdrop(dt_right)
 dt_right:SetFrameStrata("LOW")
 minimap.dt_right = dt_right
- 
+
 panels.minimap = minimap
- 
+
 S.panels = panels

@@ -1,5 +1,5 @@
 local addonName, addon = ...
-local S,C,L = unpack(addon) 
+local S,C,L = unpack(addon)
 local oUF = addon.oUF
 
 local Scale = S.Scale
@@ -84,14 +84,14 @@ S.PostUpdateHealthRaid = function(health, unit, min, max)
 		health:SetStatusBarColor(r, g, b)
 		health.bg:SetTexture(.1, .1, .1)
 	end
-	
+
 end
 
 local updateThreat = function(self, event, unit)
 	if (self.unit ~= unit) then return end
-	
+
 	local threat = UnitThreatSituation(unit)
-	
+
 	if threat and threat > 1 then
 		self.Health.bg:SetVertexColor(120/255,12/255,12/255)
 		self.Health.bg:SetColorTexture(.8,.8,.8)
@@ -116,7 +116,8 @@ local function Shared(self, unit)
 	self:RegisterForClicks("AnyUp")
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
-	
+
+	---@class SanUINamedHealthBar: StatusBar
 	local health = CreateFrame("StatusBar", nil, self)
 	health:SetPoint("TOPLEFT")
 	health:SetPoint("TOPRIGHT")
@@ -131,7 +132,7 @@ local function Shared(self, unit)
 	health.bg:SetAllPoints()
 	health.bg:SetVertexColor(0,43/255,54/255,1)
 	health.bg:SetTexture(normTex)
-	
+
 	health.colorDisconnected = false
 	health.colorClass = false
 	health.colorTapping = false
@@ -146,9 +147,10 @@ local function Shared(self, unit)
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", updateThreat, true)
 	self:RegisterEvent("UNIT_THREAT_LIST_UPDATE", updateThreat)
 	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", updateThreat)
-	
+
 	-- highlight
 	local glowBorder = {edgeFile = C["Medias"].Blank, edgeSize = 1}
+	---@class SanUINamedHighlightTarget: Frame, BackdropTemplate
 	local HighlightTarget = CreateFrame("Frame", nil, self.Health, "BackdropTemplate")
 
 	HighlightTarget:SetFrameLevel(self.Health:GetFrameLevel() + 3)
@@ -156,7 +158,7 @@ local function Shared(self, unit)
 	HighlightTarget:SetBackdrop(glowBorder)
 	HighlightTarget.origColor = {0,0,0,1}
 	HighlightTarget:SetBackdropBorderColor(unpack(HighlightTarget.origColor))
-	
+
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", function(self,event,unit)
 			if UnitIsUnit("target", self.unit) then
 				self.HighlightTarget:SetBackdropBorderColor(1,1,1)
@@ -164,21 +166,21 @@ local function Shared(self, unit)
 				self.HighlightTarget:SetBackdropBorderColor(unpack(HighlightTarget.origColor))
 			end
 		end)
-		
+
 	self.HighlightTarget = HighlightTarget
-	
+
 	local name = HighlightTarget:CreateFontString(nil, "OVERLAY")
 	name:SetPoint("BOTTOMRIGHT", HighlightTarget,"BOTTOMRIGHT", -scales[2],scales[2]) -- -1, 1)
 	name:SetFont(font1, rfsizes.name)
 	self:Tag(name, "[getnamecolor][nameshort]")
 	self.Name = name
-	
+
 	local Dead = HighlightTarget:CreateFontString(nil, "OVERLAY")
 	Dead:SetPoint("TOPRIGHT",HighlightTarget,"TOPRIGHT",0,0) -- -S.scale1,0)
 	Dead:SetFont(C["Medias"].Font, 11)
 	self:Tag(Dead, "[status]")
 	self.Dead = Dead
-	
+
 	local RaidIcon = HighlightTarget:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetHeight(rfsizes.raidicon)
 	RaidIcon:SetWidth(rfsizes.raidicon)
@@ -188,10 +190,11 @@ local function Shared(self, unit)
 	self.RaidTargetIndicator  = RaidIcon
 	RaidIcon:Hide() -- not sure if necessary, seems so from MOTHER's rooms
 
+	---@class SanUINamedReadyCheck: Texture
 	local ReadyCheck = self.Health:CreateTexture(nil, "OVERLAY")
 	ReadyCheck:SetHeight(rfsizes.readycheck)
 	ReadyCheck:SetWidth(rfsizes.readycheck)
-	ReadyCheck:SetPoint("CENTER",self.Health,"TOP") 
+	ReadyCheck:SetPoint("CENTER",self.Health,"TOP")
 	ReadyCheck.readyTexture = READY_CHECK_READY_TEXTURE
 	ReadyCheck.notReadyTexture = READY_CHECK_NOT_READY_TEXTURE
 	ReadyCheck.waitingTexture = READY_CHECK_WAITING_TEXTURE
@@ -204,22 +207,22 @@ local function Shared(self, unit)
 	ResurrectIcon:SetPoint("BOTTOMRIGHT",self.Health,"BOTTOMRIGHT",scales[4],-scales[4])
 	ResurrectIcon:SetDrawLayer("OVERLAY", 7)
 	self.ResurrectIndicator = ResurrectIcon
-	
+
 	local SummonIndicator = self.Health:CreateTexture(nil, "HIGHLIGHT", nil, 7)
 	SummonIndicator:SetSize(rfsizes.summonindicator, rfsizes.summonindicator)
 	SummonIndicator:SetPoint("BOTTOMRIGHT",self.Health,"BOTTOMRIGHT",scales[4],-scales[4])
 	SummonIndicator:SetDrawLayer("OVERLAY", 7)
 	self.SummonIndicator = SummonIndicator
-	
+
 	local range = {insideAlpha = 1, outsideAlpha = C["Raid"].RangeAlpha}
 	range.PostUpdate = function(self, object, inRange, checkedRange, connected)
-		if not connected then 
+		if not connected then
 			object:SetAlpha(self.outsideAlpha)
 		end
 		ResurrectIcon:SetAlpha(self.insideAlpha)
 	end
 	self.Range = range
-	
+
 	local mhpb = CreateFrame("StatusBar", nil, self.Health)
 	mhpb:SetOrientation("VERTICAL")
 	mhpb:SetPoint("BOTTOM", self.Health:GetStatusBarTexture(), "TOP", 0, 0)
@@ -235,12 +238,12 @@ local function Shared(self, unit)
 	ohpb:SetHeight(rfsizes.height)
 	ohpb:SetStatusBarTexture(normTex)
 	ohpb:SetStatusBarColor(0, 0.5, 0, 1)
-	
+
 	local absb = CreateFrame("StatusBar", nil, self.Health)
 	absb:SetOrientation("VERTICAL")
 	absb:SetPoint("BOTTOM", self.Health:GetStatusBarTexture(), "TOP", 0, 0)
 	absb:SetWidth(rfsizes.width)
-	absb:SetHeight(rfsizes.height)				
+	absb:SetHeight(rfsizes.height)
 	absb:SetStatusBarTexture(normTex)
 	absb:SetStatusBarColor(0.5, 0.5, 0, 1)
 
@@ -252,7 +255,8 @@ local function Shared(self, unit)
 	}
 
 	self.Name:SetParent(absb)
-	
+
+	---@class SanUINamedAuras: Frame
 	local auras = CreateFrame("Frame", nil, self)
 	auras:SetPoint("TOPLEFT", self.Health, scales[2], -scales[2])
 	auras:SetPoint("BOTTOMRIGHT", self.Health, -scales[2], scales[2])
@@ -261,6 +265,7 @@ local function Shared(self, unit)
 	auras.Texts = {}
 
 	for _, spell in pairs(evobuffs) do
+		---@class SanUINamedAurasIcon: Frame
 		local icon = CreateFrame("Frame", nil, auras)
 		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
@@ -271,33 +276,34 @@ local function Shared(self, unit)
 		icon.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
 		icon:SetWidth(rfsizes.notauratrackicon)
 		icon:SetHeight(rfsizes.notauratrackicon)
-			
-		if icon.cooldownAnim then 
+
+		if icon.cooldownAnim then
+			---@class SanUINamedAurasIconCD: Cooldown
 			local cd = CreateFrame("Cooldown", nil, icon,"CooldownFrameTemplate")
 			cd:SetAllPoints(icon)
 			cd.noCooldownCount = icon.noCooldownCount or false -- needed for tullaCC to not show cooldown numbers
 			cd:SetReverse(true)
 			icon.cd = cd
 		end
-		
+
 		if spell.count then
 			icon.count = icon:CreateFontString(nil, "OVERLAY")
 			icon.count:SetFont(font1, spell.count.size, "THINOUTLINE")
 			icon.count:SetPoint("LEFT", icon, "RIGHT", 0, 0)
-			icon.count:SetTextColor(1, 1, 1)	
+			icon.count:SetTextColor(1, 1, 1)
 		end
-		
+
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
 		tex:SetTexture(C.Medias.Blank)
 		tex:SetVertexColor(unpack(spell.color))
-		
+
 		icon.tex = tex
-		icon.color = spell.color	
-		
+		icon.color = spell.color
+
 		auras.Icons[spell.spellID] = icon
 		icon:Hide()
-	end	
+	end
 
 	local roleframe = CreateFrame("Frame", nil, self)
 	self.roleframe = roleframe
@@ -313,9 +319,10 @@ local function Shared(self, unit)
     -- Register it with oUF
     --self.RaidRoleIndicator = RaidRoleIndicator
 	self.GroupRoleIndicator = RaidRoleIndicator
-	
-	local turtle_icon = CreateFrame("Frame", nil, auras)	
-	turtle_icon:SetPoint("TOPRIGHT", S.scale2, S.scale2)	
+
+	---@class SanUINamedTurtleIcon: Frame
+	local turtle_icon = CreateFrame("Frame", nil, auras)
+	turtle_icon:SetPoint("TOPRIGHT", S.scale2, S.scale2)
 	--RoleFrame has + 4, we want to be above that
 	turtle_icon:SetFrameLevel(health:GetFrameLevel() + 5)
 	turtle_icon.anyCaster = true
@@ -323,34 +330,36 @@ local function Shared(self, unit)
 	turtle_icon:SetWidth(rfsizes.turtleicon)
 	turtle_icon:SetHeight(rfsizes.turtleicon)
 	turtle_icon.setTex = true
-	
+
 	local tex = turtle_icon:CreateTexture(nil, "OVERLAY")
 	tex:SetAllPoints(turtle_icon)
 	tex:SetTexCoord(.1,.9,.1,.9)
 	turtle_icon.tex = tex
-	
+
+	---@class SanUINamedTurtleIconCD: Cooldown
 	local cd = CreateFrame("Cooldown", nil, turtle_icon,"CooldownFrameTemplate")
 	cd:SetAllPoints(turtle_icon)
 	cd.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
 	cd:SetReverse(true)
 	turtle_icon.cd = cd
-	
+
 	turtle_icon:Hide()
-	
-	for _, spellID in pairs(S["UnitFrames"].RaidBuffsTracking["ALL"]) do	
+
+	for _, spellID in pairs(S["UnitFrames"].RaidBuffsTracking["ALL"]) do
 		auras.Icons[spellID] = turtle_icon
 	end
-	
+
 	for _, spell in ipairs(S["UnitFrames"].TextAuras[S.MyClass] or {}) do
+		---@class SanUINamedTextAurasText: FontString
 		local text = auras:CreateFontString(nil, "OVERLAY")
 		text:SetFont("Fonts\\FRIZQT__.TTF", spell.textsize)--, "THINOUTLINE")
 		text:SetPoint(unpack(spell.pos))
-		
+
 		text.anyCaster = spell.anyCaster
 		text.format = spell.format
 		text.res = 0.3
 		text.timers = spell.timers
-		
+
 		if type(spell.spellID == "table") then
 			for _, id in ipairs(spell.spellID) do
 				auras.Texts[id] = text
@@ -368,17 +377,18 @@ local function Shared(self, unit)
 	if auras.Icons[8936] and auras.Icons[18562] then
 		auras.Icons[8936]:SetFrameLevel(auras.Icons[18562]:GetFrameLevel()+1)
 	end
-	
+
 	self.NotAuraTrack = auras
-	
+
 	-- oUF_NotRaidDebuffs
 	local raiddebuffs = S["UnitFrames"].RaidDebuffs
 	self.NotRaidDebuffs = { } --forceShow = true }
 	for i = 1,2 do
+		---@class SanUINamedRaidDebuffs: Frame
 		local rd = CreateFrame("Frame", nil, self)
 		rd:SetHeight(rfsizes.raiddebuffs)
 		rd:SetWidth(rfsizes.raiddebuffs)
-		
+
 		if i == 1 then
 			rd:SetPoint("BOTTOMLEFT",self,0,0)-- scales[1], scales[1])
 		else
@@ -387,39 +397,41 @@ local function Shared(self, unit)
 		rd:SetFrameStrata(health:GetFrameStrata())
 		--HighlightTarget has + 3, we want to be above that
 		rd:SetFrameLevel(health:GetFrameLevel() + 4)
-		
+
 		S.CreateBackdrop(rd)
-		
+
+		---@class SanUINamedRaidDebuffsIcon: Texture
 		rd.icon = rd:CreateTexture(nil, "OVERLAY")
 		rd.icon:SetTexCoord(.1,.9,.1,.9)
 		rd.icon:SetPoint("CENTER")
 		rd.icon:SetSize(rfsizes.raiddebuffsicon, rfsizes.raiddebuffsicon)
 
+		---@class SanUINamedRaidDebuffsIconCD: Cooldown
 		rd.cd = CreateFrame("Cooldown", nil, rd,"CooldownFrameTemplate")
 		rd.cd:SetAllPoints(rd.icon)
 		rd.cd.noOCC = true -- remove this line if you want cooldown number on it
 		rd.cd.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
 		rd.cd:SetReverse(true)
-		
+
 		rd.count = rd:CreateFontString(nil, "OVERLAY")
 		rd.count:SetFont(font2, 9, "THINOUTLINE")
 		rd.count:SetPoint("BOTTOMRIGHT", rd, "BOTTOMRIGHT", 0, S.scale2)
-		rd.count:SetTextColor(1, .9, 0)	
+		rd.count:SetTextColor(1, .9, 0)
 
 		rd.Debuffs = raiddebuffs
-		
+
 		self.NotRaidDebuffs[i] = rd
 	end
-		
-	local ORD = oUF_NotRaidDebuffs	
+
+	local ORD = addon.oUF_NotRaidDebuffs
 	--ORD.ShowDispelableDebuff = true
 	--ORD.FilterDispellableDebuff = true
 	ORD.MatchBySpellName = true
 	--ORD.SetDebuffTypeColor = RaidDebuffs.SetBorderColor
-	
+
 	ORD:ResetDebuffData()
 	ORD:RegisterDebuffs(raiddebuffs)
-	
+
 	if not ORD.RegisteredSanUI then
 		S["UnitFrames"].Debuffs.PvE.spells = raiddebuffs
 		ORD:ResetDebuffData()
@@ -432,8 +444,8 @@ end
 
 local function GetEvoFrameAttributes()
 	return
-	"SanUINamed", 
-	nil, 
+	"SanUINamed",
+	nil,
 	"solo,party,raid",
 	"oUF-initialConfigFunction", [[
 		local header = self:GetParent()
@@ -448,7 +460,7 @@ local function GetEvoFrameAttributes()
 	"showSolo", true,
 	"xoffset", scales[2],
 	"yOffset", scales[-2],
-	"point", point,
+	--"point", point,
 	"nameList", "",
 	"maxColumns", 1,
 	"groupBy", "ROLE",
@@ -474,42 +486,43 @@ local function MouseoverName(escape)
 	if name and not realm then
 		player = name
 	else
-		if escape then 
+		if escape then
 			player = name.."%-"..realm
 		else
 			player = name.."-"..realm
 		end
 	end
-	
+
 	return player
 end
+
 S.addPlayer2NamedFrames = function()
-	if not SanUINamed then return end
-	
+	if not S.unitFrames.namedFrames then return end
+
 	local player = MouseoverName(false)
-	
+
 	if player then
-		local oldlist = SanUINamed:GetAttribute("nameList")
+		local oldlist = S.unitFrames.namedFrames:GetAttribute("nameList")
 		local newlist =  oldlist..","..player
 		print("newlist: "..newlist)
-		SanUINamed:SetAttribute("nameList", newlist)
+		S.unitFrames.namedFrames:SetAttribute("nameList", newlist)
 	else
 		print("No name")
 end
 	end
 
 S.removePlayerFromNamedFrames = function()
-	if not SanUINamed then return end
-	
+	if not S.unitFrames.namedFrames then return end
+
 	local player = MouseoverName(true)
-	
-	if player then	
-		local oldlist = SanUINamed:GetAttribute("nameList")
+
+	if player then
+		local oldlist = S.unitFrames.namedFrames:GetAttribute("nameList")
 		local newlist =  oldlist:gsub(player..",","")
 		newlist = newlist:gsub(","..player,"")
 		print("player: "..player)
 		print("newlist: "..newlist)
-		SanUINamed:SetAttribute("nameList", newlist)
+		S.unitFrames.namedFrames:SetAttribute("nameList", newlist)
 	end
 end
 
@@ -517,9 +530,10 @@ if S.MyClass == "EVOKER" then
 	oUF:RegisterStyle("SanUINamed", Shared)
 	oUF:SetActiveStyle("SanUINamed")
 	local evoframes = oUF:SpawnHeader(GetEvoFrameAttributes())
-	evoframes:SetParent(Tukui_PetBattleFrameHider)
+	evoframes:SetParent(SanUI_PetBattleFrameHider)
 	evoframes:ClearAllPoints()
 	evoframes:SetPoint("BOTTOM",UIParent,"CENTER",240,-130)
+	S.unitFrames = S.unitFrames or {}
+	S.unitFrames.namedFrames = evoframes
 end
 	--]]
-	

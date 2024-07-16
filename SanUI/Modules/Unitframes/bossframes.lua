@@ -11,7 +11,7 @@ local ALTERNATE_POWER_INDEX = ALTERNATE_POWER_INDEX
 --local BAR_TEXTURE = C["Medias"].Blank
 local BAR_TEXTURE =  C["medias"].textures.Flat
 local normTex = C["medias"].textures.StatusbarNormal
-local TEXT_FONT = C["medias"].fonts.Font
+local font = C["medias"].fonts.Font
 local fontcolor = {0.9, 0.9, 0.9, 1}
 local fontSize = 12
 local bordercolor = C.colors.BorderColor
@@ -62,11 +62,12 @@ local function CreateUnitFrame(self, unit)
 
 	self:SetSize(BarWidth, BarHeight)
 
+	---@class SanUIBossHeathBar: StatusBar
 	local health = CreateFrame("StatusBar",nil, self)
 	health:SetPoint("TOPLEFT", self, "TOPLEFT", S.scale1, -S.scale1)
 	health:SetSize(BarWidth - 2, BarHeight - 2)
 	health:SetStatusBarTexture(BAR_TEXTURE)
-	health:SetStatusBarColor(unpack(barcolor))	
+	health:SetStatusBarColor(unpack(barcolor))
 	health:SetFrameStrata("MEDIUM")
 	health.colorHealth = false
 	health.colorDisconnected = false
@@ -79,10 +80,10 @@ local function CreateUnitFrame(self, unit)
 	health.colorHealth = false
 	health.Smooth = true
 	self.Health = health
-	
+
 	S.CreateBackdrop(self)
 	self.Backdrop:SetBackdropColor(unpack(barbgcolor))
-	
+
 	-- highlight
 	local glowBorder = {edgeFile = normTex, edgeSize = S.scale1}
 	local HighlightTarget = CreateFrame("Frame", nil, self, "BackdropTemplate")
@@ -90,7 +91,7 @@ local function CreateUnitFrame(self, unit)
 	HighlightTarget:SetBackdrop(glowBorder)
 	HighlightTarget:SetFrameLevel(self:GetFrameLevel() + 1)
 	HighlightTarget:SetBackdropBorderColor(unpack(bordercolor))
-	
+
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", function(self,event,unit)
 			if UnitIsUnit("target", self.unit) then
 				self.HighlightTarget:SetBackdropBorderColor(1,1,1)
@@ -98,11 +99,11 @@ local function CreateUnitFrame(self, unit)
 				self.HighlightTarget:SetBackdropBorderColor(unpack(bordercolor))
 			end
 		end, true)
-		
+
 	self.HighlightTarget = HighlightTarget
-	
-	local Name = health:CreateFontString(nil, "Overlay")
-	Name:SetFont(TEXT_FONT, fontSize)
+
+	local Name = health:CreateFontString(nil, "OVERLAY")
+	Name:SetFont(font, fontSize)
 	Name:SetShadowOffset(0,-1)
 	Name:SetTextColor(unpack(fontcolor))
 	Name:SetJustifyH("LEFT")
@@ -110,16 +111,18 @@ local function CreateUnitFrame(self, unit)
 	Name:SetSize(BarWidth-50, BarHeight - 2)
 	self.name = Name
 	self:Tag(Name, "[name]")
-	
-	local hpText = health:CreateFontString(nil, "Overlay")
-	hpText:SetFont(TEXT_FONT, fontSize)
+
+	local hpText = health:CreateFontString(nil, "OVERLAY")
+	hpText:SetFont(font, fontSize)
 	hpText:SetShadowOffset(.8,-.8)
 	hpText:SetTextColor(unpack(fontcolor))
 	hpText:SetJustifyH("RIGHT")
 	hpText:SetPoint("RIGHT", health, "RIGHT", -2, 0)
-	self.hpText = hpText	
+	self.hpText = hpText
 	self:Tag(hpText,"[BossBars:health]%")
-	
+
+	---@class SanUIBossPowerBar: StatusBar
+	---@field Backdrop SanUIBackdrop
 	local power = CreateFrame("StatusBar", nil, self)
 	power:SetFrameLevel(self.Health:GetFrameLevel())
 	power:SetSize(98, 13)
@@ -135,23 +138,31 @@ local function CreateUnitFrame(self, unit)
 	power.Backdrop:SetPoint("BOTTOMRIGHT", power,  S.scale1, -S.scale1)
 	power.colorPower = false
 	self.Power = power
-	
-	local powerText = power:CreateFontString(nil, "Overlay")
-	powerText:SetFont(TEXT_FONT, fontSize-1)
+
+	local powerText = power:CreateFontString(nil, "OVERLAY")
+	powerText:SetFont(font, fontSize-1)
 	powerText:SetShadowOffset(.8,-.8)
 	powerText:SetTextColor(unpack(fontcolor))
 	powerText:SetPoint("RIGHT", power, "RIGHT", -S.scale4, -S.scale1)
 	powerText:SetJustifyH("RIGHT")
-	powerText:SetJustifyV("MIDDLE")	
-	
+	powerText:SetJustifyV("MIDDLE")
+	power.Text = powerText
+
 	self:Tag(powerText, "[BossBars:ppDetailed]")
 
+	---@class SanUIBossCastBar: StatusBar
+	---@field Backdrop SanUIBackdrop
+	---@field Text FontString
+	---@field CustomTimeText function
+	---@field Time FontString
+	---@field Spark Texture
+	---@field castIsChanneled boolean
 	local castbar = CreateFrame('StatusBar', nil, self)
 	castbar:SetFrameStrata("HIGH")
 	castbar:SetPoint("TOP",self.Power,"BOTTOM",0,S.scale2)
 	castbar:SetWidth(BarWidth - 2 )
 	castbar:SetHeight(BarHeight - 2)
-	castbar:SetStatusBarTexture(BAR_TEXTURE)	
+	castbar:SetStatusBarTexture(BAR_TEXTURE)
 	castbar:SetFrameStrata(self.Health:GetFrameStrata())
 	castbar:SetFrameLevel(self.Health:GetFrameLevel())
 	castbar:SetStatusBarColor(unpack(barcolor))
@@ -159,40 +170,43 @@ local function CreateUnitFrame(self, unit)
 	castbar.Backdrop:SetBackdropColor(unpack(barbgcolor))
 	castbar.Backdrop:SetPoint("TOPLEFT", castbar, -S.scale1, S.scale1)
 	castbar.Backdrop:SetPoint("BOTTOMRIGHT", castbar,  S.scale1, -S.scale1)
-	
+
 	self.Castbar = castbar
-	
+
 	local castbarText = self.Castbar:CreateFontString(nil, 'OVERLAY')
 	castbarText:SetPoint('LEFT', self.Castbar, 4, 0)
 	castbarText:SetSize((BarWidth-2)* (2/3), BarHeight - 2)
-	castbarText:SetFont(TEXT_FONT, fontSize)
+	castbarText:SetFont(font, fontSize)
 	castbarText:SetJustifyH("LEFT")
 	castbarText:SetShadowOffset(.8,-.8)
 	castbarText:SetTextColor(unpack(fontcolor))
-	
+
 	self.Castbar.Text = castbarText
 
 	local castbarTime = self.Castbar:CreateFontString(nil, 'OVERLAY')
 	castbarTime:SetPoint('RIGHT', self.Castbar, -4, 0)
 	castbarTime:SetSize((BarWidth-2.1) * (1/3), BarHeight - 2.1)
-	castbarTime:SetFont(TEXT_FONT, fontSize)
+	castbarTime:SetFont(font, fontSize)
 	castbarTime:SetShadowOffset(.8,-.8)
 	castbarTime:SetTextColor(unpack(fontcolor))
 	castbarTime:SetJustifyH("RIGHT")
 	self.Castbar.CustomTimeText = function(_, t)
-		self.Castbar.Time:SetText(("%.1f/%.1f"):format(self.Castbar.castIsChanneled and t or self.Castbar.max - t, self.Castbar.max))
+		local _, max = castbar:GetMinMaxValues()
+
+		self.Castbar.Time:SetText(("%.1f/%.1f"):format(self.Castbar.castIsChanneled and t or max - t, max))
 	end
 
 	self.Castbar.Time = castbarTime
-	
+
 	local Spark = self.Castbar:CreateTexture(nil, "OVERLAY")
 	Spark:SetSize(20, 20)
 	Spark:SetBlendMode("ADD")
     Spark:SetPoint("CENTER", self.Castbar:GetStatusBarTexture(), "RIGHT", 0, 0)
-	
+
 	self.Castbar.Spark = Spark
-	
-	-- alt power bar
+
+	---@class SanUIBossPowerBar
+	---@field PostUpdate function
 	local Altpower = CreateFrame("StatusBar", nil, self)
 	Altpower:SetFrameLevel(power:GetFrameLevel() + 2)
 	Altpower:SetSize(98, 13)
@@ -214,16 +228,16 @@ local function CreateUnitFrame(self, unit)
 			self:Show()
 		end
 	end
-	
-	local pbText = Altpower:CreateFontString(nil, "Overlay")
-	pbText:SetFont(TEXT_FONT, fontSize-1)
+
+	local pbText = Altpower:CreateFontString(nil, "OVERLAY")
+	pbText:SetFont(font, fontSize-1)
 	pbText:SetShadowOffset(.8,-.8)
 	pbText:SetTextColor(unpack(fontcolor))
 	pbText:SetJustifyH("RIGHT")
 	pbText:SetPoint("RIGHT", Altpower, "RIGHT", -4, 0)
 	self:Tag(pbText, "[BossBars:altpower]")
 	self.Altpower.Text = pbText
-	
+
 	self.Altpower:Hide()
 
 	local RaidIcon = self.Health:CreateTexture(nil, "OVERLAY")
@@ -233,12 +247,12 @@ local function CreateUnitFrame(self, unit)
 	RaidIcon:SetTexture("Interface\\AddOns\\Tukui\\medias\\textures\\Others\\RaidIcons.blp")
 	RaidIcon.SetTexture = S.dummy -- idk why but RaidIcon:GetTexture() is returning nil in oUF, resetting icons to default ... stop it!
 	self.RaidTargetIndicator = RaidIcon
-	
+
 	local range = {insideAlpha = 1, outsideAlpha = C.colors.RangeAlpha}
 	self.Range = range
 
-	
 
+	---@class SanUIBossAuras: Frame
 	local auras = CreateFrame("Frame", nil, self)
 	--auras:SetPoint("RIGHT", self.Health,-Scale(33), 0)
 	auras:SetPoint("CENTER", 0, 0)
@@ -249,7 +263,7 @@ local function CreateUnitFrame(self, unit)
 	auras.missingAlpha = 0
 	auras.Icons = {}
 	auras.Texts = {}
-	
+
 	auras.PostCreateIcon = function(self, icon)
 		if icon.icon and not icon.hideIcon then
 			S.CreateBackdrop(icon)
@@ -258,11 +272,11 @@ local function CreateUnitFrame(self, unit)
 			icon.icon:SetTexCoord(.08, .92, .08, .92)
 			icon.icon:SetDrawLayer("ARTWORK")
 		end
-	
+
 		if (icon.cd) then
 			icon.cd:SetReverse()
 		end
-		
+
 		if icon.overlay then
 			icon.overlay:SetTexture()
 		end
@@ -306,13 +320,13 @@ local function CreateUnitFrame(self, unit)
 		timers = { {2, {1, 0, 0}}, {3.6, {1, 1, 0}} }
 	  },
 	}
-	
+
 	local bufftexts = {
 		{
 			spellID = {33763, 33778, 43421, 188550, 290754, 186371},
 			pos = {"CENTER"},
-			textsize = 10, 
-			format = "|cFF00FF00%u|r", 
+			textsize = 10,
+			format = "|cFF00FF00%u|r",
 			timers = { { 2, "|cFFFF0000%.1f|r", 0.05}, { 4.5, "|cFFFFFF00%u|r", 0.3} },
 			anyCaster = false,
 		},
@@ -320,10 +334,11 @@ local function CreateUnitFrame(self, unit)
 
 	-- "Cornerbuffs"
 	for _, spell in pairs(buffs) do
+		---@class SanUIBossAurasIcon: Frame
 		local icon = CreateFrame("Frame", nil, auras)
 		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
-		
+
 		icon.spellID = spell.spellID
 		icon.anyCaster = spell.anyCaster
 		icon.timers = spell.timers
@@ -331,44 +346,46 @@ local function CreateUnitFrame(self, unit)
 		icon.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
 		icon:SetWidth(S.scale6)
 		icon:SetHeight(S.scale6)
-			
-		if icon.cooldownAnim then 
+
+		if icon.cooldownAnim then
+			---@class SanUIBossAurasIconCD: Cooldown
 			local cd = CreateFrame("Cooldown", nil, icon,"CooldownFrameTemplate")
 			cd:SetAllPoints(icon)
 			cd.noCooldownCount = icon.noCooldownCount or false -- needed for tullaCC to not show cooldown numbers
 			cd:SetReverse(true)
 			icon.cd = cd
 		end
-		
+
 		if spell.count then
 			icon.count = icon:CreateFontString(nil, "OVERLAY")
-			icon.count:SetFont(font1, spell.count.size, "THINOUTLINE")
+			icon.count:SetFont(font, spell.count.size, "THINOUTLINE")
 			icon.count:SetPoint("LEFT", icon, "RIGHT", 0, 0)
-			icon.count:SetTextColor(1, 1, 1)	
+			icon.count:SetTextColor(1, 1, 1)
 		end
-		
+
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
 		tex:SetTexture(normTex)
 		tex:SetVertexColor(unpack(spell.color))
-		
+
 		icon.tex = tex
-		icon.color = spell.color	
-		
+		icon.color = spell.color
+
 		auras.Icons[spell.spellID] = icon
-		icon:Hide()	
+		icon:Hide()
 	end
-	
+
 	for _, spell in ipairs(bufftexts) do
+		---@class SanUIBossAurasText: FontString
 		local text = auras:CreateFontString(nil, "OVERLAY")
 		text:SetFont("Fonts\\FRIZQT__.TTF", spell.textsize)--, "THINOUTLINE")
 		text:SetPoint(unpack(spell.pos))
-		
+
 		text.anyCaster = spell.anyCaster
 		text.format = spell.format
 		text.res = 0.3
 		text.timers = spell.timers
-		
+
 		if type(spell.spellID == "table") then
 			for _, id in ipairs(spell.spellID) do
 				auras.Texts[id] = text
@@ -380,7 +397,7 @@ local function CreateUnitFrame(self, unit)
 		end
 		text:Hide()
 	end
-	
+
 	self.NotAuraTrack = auras
 
 end
@@ -395,10 +412,10 @@ local boss1 = oUF:Spawn("player", "oUF_Boss1")
 boss1:SetPoint("TOPRIGHT",UIParent,"TOP",-5,-5)
 
 local boss2 = oUF:Spawn("boss2", "oUF_Boss2")
-boss2:SetPoint("LEFT", oUF_Boss1, "RIGHT", 20, 0)
+boss2:SetPoint("LEFT", boss1, "RIGHT", 20, 0)
 
 local boss3 = oUF:Spawn("boss3", "oUF_Boss3")
-boss3:SetPoint("RIGHT", oUF_Boss1, "LEFT",-20,0)
+boss3:SetPoint("RIGHT", boss2, "LEFT",-20,0)
 
 local boss4 = oUF:Spawn("boss4", "oUF_Boss4")
-boss4:SetPoint("LEFT", oUF_Boss2, "RIGHT", 20,0)
+boss4:SetPoint("LEFT", boss3, "RIGHT", 20,0)

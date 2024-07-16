@@ -31,7 +31,7 @@ assert(oUF, "oUF_NotAuraTrack cannot find an instance of oUF. If your oUF is emb
 
 local UnitAura = C_UnitAuras.GetAuraDataByIndex
 
--- key for swiftmend, will get special treatment
+--[[ key for swiftmend, will get special treatment
 local smid = 18562
 local rjname = GetSpellInfo(774) --rejuvenation
 local rgname = GetSpellInfo(8936) --regrowth
@@ -45,6 +45,7 @@ local smhots = {
 	[germname] = true,
 	[rbloomname] = true,
 }
+--]]
 
 local function UpdateText(text, current_time)
 	local buf_remaining = text.expiration - current_time
@@ -87,12 +88,8 @@ local Update = function(self, event, unit)
 	-- do 41 when reactivating swiftment handling, so we have at least one nil return value
 	-- for UnitAura so we can handle swiftmend in all cases
 	for i = 1, 40 do
-		-- name, texture, count, debuffType, duration, expiration, caster, isStealable,
-		-- nameplateShowSelf, spellID, canApply, isBossDebuff, casterIsPlayer, nameplateShowAll,
-		-- timeMod, effect1, effect2, effect
 		local data = UnitAura(unit, i, "HELPFUL")
 		if not data then break end
-		--local name = data.name
 		local texture = data.icon
 		local count = data.charges
 		local duration = data.duration

@@ -64,7 +64,7 @@ S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, Border
 		return
 	end
 
-	---@class MyBackdrop: BackdropTemplate, Frame
+	---@class SanUIBackdrop: BackdropTemplate, Frame
 	local backdrop = CreateFrame("Frame", nil, f, "BackdropTemplate")
 	backdrop:SetAllPoints()
 	backdrop:SetFrameLevel(f:GetFrameLevel())
