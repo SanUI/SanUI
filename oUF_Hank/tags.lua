@@ -54,7 +54,7 @@ end
 -- "23.5k/40.9k"
 oUF.Tags.Events["apDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"]
 oUF.Tags.Methods["apDetailed"] = function(unit)
-	local pType = ADDITIONAL_POWER_BAR_NAME
+	local pType = "MANA" --ADDITIONAL_POWER_BAR_NAME
 	local ADDITIONAL_POWER_BAR_INDEX = 0
 	local color = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
 	return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, valShort(UnitPower(unit, ADDITIONAL_POWER_BAR_INDEX)), valShort(UnitPowerMax(unit, ADDITIONAL_POWER_BAR_INDEX)))
@@ -64,11 +64,12 @@ end
 oUF.Tags.Events["statusName"] = "UNIT_NAME_UPDATE PLAYER_FLAGS_CHANGED UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT"
 oUF.Tags.Methods["statusName"] = function(unit)
 	local flags, color
-	local name = Abbreviate(UnitName(unit))
+	local name, realm = UnitName(unit)
+	name = Abbreviate(name)
 
 	if UnitIsPlayer(unit) then
 		flags = UnitIsAFK(unit) and "<Away>" or UnitIsDND(unit) and "<Busy>"
-		if GetRealmName(unit) ~= GetRealmName("player") then
+		if realm then
 			name = name .. "*"
 		end
 		local _, class = UnitClass(unit)

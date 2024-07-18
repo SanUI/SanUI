@@ -18,7 +18,6 @@ local ToggleDropDownMenu = ToggleDropDownMenu
 local UnitIsUnit = UnitIsUnit
 local GetTime = GetTime
 local AnimateTexCoords = AnimateTexCoords
-local MirrorTimerColors = MirrorTimerColors
 local GetSpecialization = GetSpecialization
 local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitHealth = UnitHealth
@@ -34,14 +33,13 @@ local UnitIsPVPFreeForAll = UnitIsPVPFreeForAll
 local UnitIsPVP = UnitIsPVP
 local UnitInRaid = UnitInRaid
 local IsResting = IsResting
-local UnitAura = UnitAura
 local UnitCanAttack = UnitCanAttack
 local UnitIsGroupAssistant = UnitIsGroupAssistant
 local GetRuneCooldown = GetRuneCooldown
 local UnitClass = UnitClass
 local CancelUnitBuff = CancelUnitBuff
 local CreateFrame = CreateFrame
-local IsAddOnLoaded = IsAddOnLoaded
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local UnitFrame = UnitFrame_OnEnter
 local UnitFrame = UnitFrame_OnLeave
 local unpack = unpack
@@ -141,46 +139,13 @@ oUF_Hank.menu = function(self)
 	local cunit = self.unit:gsub("(.)", upper, 1)
 
 	-- Swap menus in vehicle
-	if self == oUF_player and cunit=="Vehicle" then cunit = "Player" end
-	if self == oUF_pet and cunit=="Player" then cunit = "Pet" end
+	if unit == "player"  and cunit=="Vehicle" then cunit = "Player" end
+	if unit == "pet" and cunit=="Player" then cunit = "Pet" end
 
 	if(unit == "party" or unit == "partypet") then
 		ToggleDropDownMenu(nil, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
 	elseif(_G[cunit.."FrameDropDown"]) then
 		ToggleDropDownMenu(nil, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
-	end
-end
-
--- Set up the mirror bars (breath, exhaustion etc.)
-oUF_Hank.AdjustMirrorBars = function()
-	for k, v in pairs(MirrorTimerColors) do
-		MirrorTimerColors[k].r = cfg.colors.castbar.bar[1]
-		MirrorTimerColors[k].g = cfg.colors.castbar.bar[2]
-		MirrorTimerColors[k].b = cfg.colors.castbar.bar[3]
-	end
-
-	for i = 1, MIRRORTIMER_NUMTIMERS do
-		local mirror = _G["MirrorTimer" .. i]
-		local statusbar = _G["MirrorTimer" .. i .. "StatusBar"]
-		local backdrop = select(1, mirror:GetRegions())
-		local border = _G["MirrorTimer" .. i .. "Border"]
-		local text = _G["MirrorTimer" .. i .. "Text"]
-
-		mirror:ClearAllPoints()
-		mirror:SetPoint("BOTTOM", (i == 1) and oUF_player.Castbar or _G["MirrorTimer" .. i - 1], "TOP", 0, 5 + ((i == 1) and 5 or 0))
-		mirror:SetSize(cfg.CastbarSize[1], 12)
-		statusbar:SetStatusBarTexture(cfg.CastbarTexture)
-		statusbar:SetAllPoints(mirror)
-		backdrop:SetTexture(cfg.CastbarBackdropTexture)
-		backdrop:SetVertexColor(0.22, 0.22, 0.19, 0.8)
-		backdrop:SetAllPoints(mirror)
-		border:Hide()
-		text:SetFont(unpack(cfg.CastBarMedium))
-		text:SetJustifyH("LEFT")
-		text:SetJustifyV("MIDDLE")
-		text:ClearAllPoints()
-		text:SetPoint("TOPLEFT", statusbar, "TOPLEFT", 10, 0)
-		text:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", -10, 0)
 	end
 end
 
@@ -263,7 +228,7 @@ end
 oUF_Hank.UpdateStatus = function(self)
 	local referenceElement
 	-- TODO find a better way to do this
-	hasAdditionalPower = {
+	local hasAdditionalPower = {
 		["DEMONHUNTER"] = false,
 		["DEATHKNIGHT"] = false,
 		["DRUID"] = (GetSpecialization() ~= 4),
@@ -338,16 +303,15 @@ end
 oUF_Hank.PostUpdateButton = function(icons, icon, unit, data, index)
 	local filter = icons.filter
 	local config = cfg["Auras" .. upper(unit)]
-	local stickyauras = config.StickyAuras
+	local stickyauras = (config and config.StickyAuras) or {}
 	local can_attack = UnitCanAttack("player", unit)
-	
+
 	local dtype = data.dispelName
 	local caster = data.sourceUnit
-	
+
 	-- We want the border, not the color for the type indication
 	icon.Overlay:SetVertexColor(1, 1, 1)
 
-	--local _, _, _, dtype, _, _, caster, _, _, _ = UnitAura(unit, index, icon.filter)
 	if caster == "vehicle" then caster = "player" end
 
 	if filter == "HELPFUL" and (not can_attack) and caster == "player" and stickyauras.myBuffs then
@@ -384,15 +348,15 @@ oUF_Hank.FilterAura = function(icons, unit, data)
 --function(icons, unit, icon, name, texture, count, dtype, duration, timeLeft, caster)
 	local filter = icons.filter
 	local config = cfg["Auras" .. upper(unit)]
-	local stickyauras = config.StickyAuras
+	local stickyauras = (config and config.StickyAuras) or {}
 	local can_attack = UnitCanAttack("player", unit)
-	
+
 	local name = data.name
 	local dtype = data.dispelName
 	local caster = data.sourceUnit
-	
+
 	if caster == "vehicle" then caster = "player" end
-	
+
 	if filter == "HELPFUL" and (not can_attack) and caster == "player" and stickyauras.myBuffs then
 		-- Sticky aura: myBuffs
 		return true
@@ -413,11 +377,13 @@ oUF_Hank.FilterAura = function(icons, unit, data)
 		return true
 	else
 		local auratype = filter == "HELPFUL" and "Buffs" or "Debuffs"
-		local filtermethod = config.FilterMethod[auratype]
-		
+		local filtermethod = config and config.FilterMethod[auratype]
+		local blacklist = (config and config.BlackList) or {}
+		local whitelist = (config and config.WhiteList) or {}
+
 		-- Aura is not sticky, filter is set to blacklist
 		if filtermethod == "BLACKLIST" then
-			for _, v in ipairs(config.BlackList) do
+			for _, v in ipairs(blacklist) do
 				if v == name then
 					return false
 				end
@@ -425,7 +391,7 @@ oUF_Hank.FilterAura = function(icons, unit, data)
 			return true
 		-- Aura is not sticky, filter is set to whitelist
 		elseif filtermethod == "WHITELIST" then
-			for _, v in ipairs(config.WhiteList) do
+			for _, v in ipairs(whitelist) do
 				if v == name then
 					return true
 				end
@@ -497,10 +463,10 @@ oUF_Hank.BuffsPostUpdate = function(buffs, unit)
 	local buffs_shown = #buffs.sorted
 	local rows = floor((buffs_shown - 1) / cols)
 	--print("rows: "..tostring(rows).."width: "..tostring(buffs:GetWidth()))
-	
+
 	local debuffs = buffs:GetParent().Debuffs
 	debuffs:ClearAllPoints()
-	
+
 	if buffs_shown > 0 then
 		-- Anchor debuff frame to bottomost buff icon, i.e the last buff row
 		debuffs:SetPoint("TOPLEFT", buffs, "BOTTOMLEFT", 0, -rows*sizey -cfg.AuraSpacing -2)
@@ -916,6 +882,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 
 	-- Runes
 	if unit == "player" and playerClass == "DEATHKNIGHT" then
+		---@class PlayerRunes: Frame
 		self.Runes = CreateFrame("Frame", nil, self)
 		self.Runes:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT")
 		self.Runes:SetSize(96, 16)
@@ -923,8 +890,8 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		self.Runes.growth = "RIGHT"
 		self.Runes.height = 16
 		self.Runes.width = 16
-    self.Runes.colorSpec = true
-    self.colors.runes = oUF.colors.runes
+    	self.Runes.colorSpec = true
+   		 self.colors.runes = oUF.colors.runes
 
 		for i = 1, 6 do
       -- TODO why doesn't UnitPowerMax("player", SPELL_POWER_RUNES) return the 
@@ -1014,10 +981,10 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 
 	self.Runes.PostUpdate = function(self, runemap)
 			for index, runeID in next, runemap do
-				rune = self[index]
+				local rune = self[index]
 				if(not rune) then break end
 
-				start, duration, runeReady = GetRuneCooldown(runeID)
+				local start, duration, runeReady = GetRuneCooldown(runeID)
 				if not runeReady then
 					local val = GetTime() - start
 					-- Dot distance from top & bottom of texture: 4px
@@ -1086,6 +1053,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 	local showTotemBar = playerClass == "SHAMAN" and IsAddOnLoaded("oUF_TotemBar") and cfg.TotemBar
 	if unit == "player" and showTotemBar then
 		initClassPower = function(unitFrame)
+			---@class PlayerTotemBar: Frame
 			unitFrame.TotemBar = CreateFrame("Frame", "oUFHank_TotemBar", unitFrame)
 			unitFrame.TotemBar.Destroy = cfg.ClickToDestroy
 			unitFrame.TotemBar.delay = 0.3
@@ -1195,6 +1163,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		end
 
 		for i = 1, oUF_Hank.classResources[playerClass].max do
+			---@class PlayerClassResourceIcon: StatusBar
 			local icon = CreateFrame("StatusBar", nil, self)
 			icon:SetSize(data.size[1], data.size[2])
 			icon:SetStatusBarTexture(data['active'][1])
@@ -1326,12 +1295,11 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		self.additionalPower = additionalPower
 
 		-- Register it with oUF
+		---@class PlayerAdditionalPowerDummyBar: StatusBar
 		local dummyBar = CreateFrame("StatusBar", nil, self)
 		self.AdditionalPower = dummyBar
 
-		self.AdditionalPower.PostUpdate = function(_, current, max)
-			print('x')
-			print(UnitPowerType(self.unit))
+		dummyBar.PostUpdate = function(_, current, max)
 			if  UnitPowerType(self.unit) ~= 0 then --ADDITIONAL_POWER_BAR_NAME then
 				additionalPower:Show()
 			else
@@ -1345,6 +1313,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		local offset = 0
 		local relative
 		-- Buffs
+		---@class UnitFrameBuffs: Frame
 		self.Buffs = CreateFrame("Frame", unit .. "_Buffs", self) -- ButtonFace needs a name
 		if unit == "player" then
 			if self.CPoints then
@@ -1372,6 +1341,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		self.Buffs.filter = "HELPFUL" -- Explicitly set the filter or the first customFilter call won't work
 
 		-- Debuffs
+		---@class UnitFrameDebuffs: Frame
 		self.Debuffs = CreateFrame("Frame", unit .. "_Debuffs", self)
 		self.Debuffs:SetPoint("TOPLEFT", self.Buffs, "BOTTOMLEFT", 0, -cfg.AuraSpacing)
 		self.Debuffs:SetHeight(cfg.DebuffSize)
@@ -1384,6 +1354,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		self.Debuffs.filter = "HARMFUL"
 
 		-- Buff magnification effect on mouseover
+		---@class UnitFrameHightlightAura: Frame
 		self.HighlightAura = CreateFrame("Frame", nil, self)
 		self.HighlightAura:SetFrameLevel(5) -- Above auras (level 3) and their cooldown overlay (4)
 		--self.HighlightAura:SetBackdrop()--{bgFile = cfg.AuraBorder})
@@ -1409,160 +1380,6 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 			insideAlpha = 1,
 			outsideAlpha = cfg.RangeFadeOpacity
 		}
-	end
-
-	-- Castbar
-	if cfg.Castbar and (unit == "player" or unit == "target" or unit == "focus") then
-		-- StatusBar
-		local cb = CreateFrame("StatusBar", nil, self)
-		cb:SetStatusBarTexture(cfg.CastbarTexture)
-		cb:SetStatusBarColor(unpack(cfg.colors.castbar.bar))
-		cb:SetSize(cfg.CastbarSize[1], cfg.CastbarSize[2])
-		if unit == "player" then
-			cb:SetPoint("LEFT", self, "RIGHT", (cfg.CastbarIcon and (cfg.CastbarSize[2] + 5) or 0) + 5 + cfg.CastbarMargin[1], cfg.CastbarMargin[2])
-		elseif unit == "focus" then
-			cb:SetSize(0.8 * cfg.CastbarSize[1], cfg.CastbarSize[2])
-			cb:SetPoint("LEFT", self, "RIGHT", -10 - cfg.CastbarFocusMargin[1], cfg.CastbarFocusMargin[2])
-		else
-			cb:SetPoint("RIGHT", self, "LEFT", (cfg.CastbarIcon and (-cfg.CastbarSize[2] - 5) or 0) - 5 - cfg.CastbarMargin[1], cfg.CastbarMargin[2])
-		end
-
-		-- BG
-		cb.Background = CreateFrame("Frame", nil, cb)
-		cb.Background:SetFrameStrata("BACKGROUND")
-		cb.Background:SetPoint("TOPLEFT", cb, "TOPLEFT", -5, 5)
-		cb.Background:SetPoint("BOTTOMRIGHT", cb, "BOTTOMRIGHT", 5, -5)
-
-		local backdrop = {
-			bgFile = cfg.CastbarBackdropTexture,
-			edgeFile = cfg.CastbarBorderTexture,
-			tileSize = 16, edgeSize = 16, tile = true,
-			insets = {left = 4, right = 4, top = 4, bottom = 4}
-		}
-
-		cb.Background:SetBackdrop(backdrop)
-		cb.Background:SetBackdropColor(0.22, 0.22, 0.19)
-		cb.Background:SetBackdropBorderColor(0, 0, 0, 1)
-		cb.Background:SetAlpha(0.8)
-
-		-- Spark
-		cb.Spark = cb:CreateTexture(nil, "OVERLAY")
-		cb.Spark:SetSize(20, 35 * 2.2)
-		cb.Spark:SetBlendMode("ADD")
-
-		-- Spell name
-		cb.Text = cb:CreateFontString(nil, "OVERLAY")
-		cb.Text:SetTextColor(unpack(cfg.colors.castbar.text))
-		if unit == "focus" then
-			cb.Text:SetFont(unpack(cfg.CastBarBig))
-			cb.Text:SetShadowOffset(1.5, -1.5)
-			cb.Text:SetPoint("LEFT", 3, 0)
-			cb.Text:SetPoint("RIGHT", -3, 0)
-		else
-			cb.Text:SetFont(unpack(cfg.CastBarMedium))
-			cb.Text:SetShadowOffset(0.8, -0.8)
-			cb.Text:SetPoint("LEFT", 3, 9)
-			cb.Text:SetPoint("RIGHT", -3, 9)
-		end
-
-		if unit ~= "focus" then
-			-- Icon
-			if cfg.CastbarIcon then
-				cb.Icon = cb:CreateTexture(nil, "OVERLAY")
-				cb.Icon:SetSize(cfg.CastbarSize[2], cfg.CastbarSize[2])
-				cb.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-				if unit == "player" or unit == "focus" then
-					cb.Icon:SetPoint("RIGHT", cb, "LEFT", -5, 0)
-				else
-					cb.Icon:SetPoint("LEFT", cb, "RIGHT", 5, 0)
-				end
-			end
-
-			-- Cast time
-			cb.Time = cb:CreateFontString(nil, "OVERLAY")
-			cb.Time:SetFont(unpack(cfg.CastBarBig))
-			cb.Time:SetTextColor(unpack(cfg.colors.castbar.text))
-			cb.Time:SetShadowOffset(0.8, -0.8)
-			cb.Time:SetPoint("TOP", cb.Text, "BOTTOM", 0, -3)
-			cb.Time:SetPoint("LEFT", 3, 9)
-			cb.Time:SetPoint("RIGHT", -3, 9)
-			cb.CustomTimeText = function(_, t)
-				cb.Time:SetText(("%.2f / %.2f"):format(cb.castIsChanneled and t or cb.max - t, cb.max))
-			end
-			cb.CustomDelayText = function(_, t)
-				cb.Time:SetText(("%.2f |cFFFF5033%s%.2f|r"):format(cb.castIsChanneled and t or cb.max - t, cb.castIsChanneled and "-" or "+", cb.delay))
-			end
-		end
-
-		-- Latency
-		if unit == "player" then
-			cb.PreciseSafeZone = cb:CreateTexture(nil, "BACKGROUND")
-			cb.PreciseSafeZone:SetTexture(cfg.CastbarBackdropTexture)
-			cb.PreciseSafeZone:SetVertexColor(unpack(cfg.colors.castbar.latency))
-
-			cb.Latency = cb:CreateFontString(nil, "OVERLAY")
-			cb.Latency:SetFont(unpack(cfg.CastBarSmall))
-			cb.Latency:SetTextColor(unpack(cfg.colors.castbar.latencyText))
-			cb.Latency:SetShadowOffset(0.8, -0.8)
-			cb.Latency:SetPoint("CENTER", cb.PreciseSafeZone)
-			cb.Latency:SetPoint("BOTTOM", cb.PreciseSafeZone)
-
-			self:RegisterEvent("UNIT_SPELLCAST_SENT", function(_, _, caster)
-				if caster == "player" or caster == "vehicle" then
-					cb.castSent = GetTime()
-				end
-			end, true)
-		end
-
-		-- Animation dummy
-		cb.Dummy = CreateFrame("Frame", nil, self)
-		cb.Dummy:SetAllPoints(cb.Background)
-		cb.Dummy:SetBackdrop(backdrop)
-		cb.Dummy:SetBackdropColor(0.22, 0.22, 0.19)
-		cb.Dummy:SetBackdropBorderColor(0, 0, 0, 1)
-		cb.Dummy:SetAlpha(0.8)
-
-		cb.Dummy.Fill = cb.Dummy:CreateTexture(nil, "OVERLAY")
-		cb.Dummy.Fill:SetTexture(cfg.CastbarTexture)
-		cb.Dummy.Fill:SetAllPoints(cb)
-
-		if unit ~= "focus" and cfg.CastbarIcon then
-			cb.Dummy.Icon = cb.Dummy:CreateTexture(nil, "OVERLAY")
-			cb.Dummy.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-			cb.Dummy.Icon:SetAllPoints(cb.Icon)
-		end
-
-		cb.Dummy:Hide()
-
-		cb.Dummy.anim = cb.Dummy:CreateAnimationGroup()
-		local alphaOut = cb.Dummy.anim:CreateAnimation("Alpha")
-		alphaOut:SetFromAlpha(1)
-		alphaOut:SetToAlpha(0)
-		alphaOut:SetDuration(1)
-		alphaOut:SetOrder(0)
-
-		cb:SetScript("OnShow", function()
-			if cb.Dummy.anim:IsPlaying() then cb.Dummy.anim:Stop() end
-			cb.Dummy:Hide()
-		end)
-
-		cb.Dummy.anim:SetScript("OnFinished", function() cb.Dummy:Hide() end)
-
-		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", function(_, _, unit, spell, rank)
-			if UnitIsUnit(unit, self.unit) and not cb.castIsChanneled then
-				oUF_Hank.PostCastSucceeded(cb, spell)
-			end
-		end)
-
-		-- Shield dummy
-		cb.Shield = cb:CreateTexture(nil, "BACKGROUND")
-
-		cb.PostCastStart = oUF_Hank.PostCastStart
-		cb.PostChannelStart = oUF_Hank.PostChannelStart
-		cb.PostCastStop = oUF_Hank.PostCastStop
-		cb.PostChannelStop = oUF_Hank.PostChannelStop
-
-		self.Castbar = cb
 	end
 
 	-- Initial size
@@ -1640,8 +1457,6 @@ if cfg.FocusFrameScale <= 0.7 then
 else
 	oUF_ToF:SetScale(cfg.FrameScale * cfg.FocusFrameScale)
 end
-
-if cfg.Castbar then oUF_Hank.AdjustMirrorBars() end
 
 if cfg.RangeFade and not IsAddOnLoaded("oUF_SpellRange") then
 	DEFAULT_CHAT_FRAME:AddMessage("oUF_Hank: Please download and install oUF_SpellRange before enabling range checks!", cfg.colors.text[1], cfg.colors.text[2], cfg.colors.text[3])

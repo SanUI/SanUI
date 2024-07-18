@@ -89,7 +89,7 @@ oUF.Tags.Methods['getnamecolor'] = function(unit)
 			local c = S.Colors.reaction[reaction]
 			return string.format('|cff%02x%02x%02x', c[1] * 255, c[2] * 255, c[3] * 255)
 		else
-			r, g, b = .84,.75,.65
+			local r, g, b = .84,.75,.65
 			return string.format('|cff%02x%02x%02x', r * 255, g * 255, b * 255)
 		end
 	end
