@@ -46,15 +46,15 @@ end
 S.createCalltoarmsDT = function(frame)
 	frame:RegisterEvent("LFG_UPDATE_RANDOM_INFO")
 	frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	
+
 	local text = frame:CreateFontString(nil, "OVERLAY")
 	text:SetPoint("CENTER", frame, "CENTER", 0, -S.scale1)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	
+
 	frame.Text = text
-	
+
 	text:SetScript("OnMouseDown", function()
 		if InCombatLockdown() then
 			print("In combat - not opening LFD frame")
@@ -63,13 +63,13 @@ S.createCalltoarmsDT = function(frame)
 
 		PVEFrame_ToggleFrame()
 	end)
-	
+
 	local update = function(event)
 		local TankReward = false
 		local HealerReward = false
 		local DPSReward = false
 		local Unavailable = true
-		
+
 		--Dungeons
 		for i = 1, GetNumRandomDungeons() do
 			local ID = GetLFGRandomDungeonInfo(i)
@@ -83,11 +83,11 @@ S.createCalltoarmsDT = function(frame)
 				if Eligible and ForDamage and ItemCount > 0 then DPSReward = true end
 			end
 		end
-		
+
 		--LFR
 		for i = 1, GetNumRFDungeons() do
 			local ID = GetRFDungeonInfo(i)
-			
+
 			for x = 1,LFG_ROLE_NUM_SHORTAGE_TYPES do
 				local Eligible, ForTank, ForHealer, ForDamage, ItemCount = GetLFGRoleShortageRewards(ID, x)
 
@@ -108,10 +108,10 @@ S.createCalltoarmsDT = function(frame)
 			end
 		end
 	end
-	
+
 	local OnEnter = function(self)
 		update()
-		GameTooltip:SetOwner(ChatFrame1Tab or frame)
+		GameTooltip:SetOwner(ChatFrame1Tab or frame, "ANCHOR_TOPLEFT")
 		GameTooltip:ClearLines()
 		GameTooltip:AddLine("Call to Arms")
 		GameTooltip:AddLine(" ")
@@ -147,7 +147,7 @@ S.createCalltoarmsDT = function(frame)
 				end
 			end
 		end
-		
+
 		for i = 1, GetNumRFDungeons() do
 			local ID, Name = GetRFDungeonInfo(i)
 			local TankReward = false
@@ -192,12 +192,12 @@ S.createCalltoarmsDT = function(frame)
 	local OnLeave = function()
 		GameTooltip:Hide()
 	end
-	
+
 	frame:SetScript("OnEvent", update)
 	frame:SetScript("OnEnter", OnEnter)
 	frame:SetScript("OnLeave", OnLeave)
 	text:SetScript("OnEnter", OnEnter)
 	text:SetScript("OnLeave", OnLeave)
-	
+
 	update()
 end

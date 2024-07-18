@@ -1,9 +1,10 @@
 local addonName, addon = ...
 local S = unpack(addon)
 
+local GetItemInfo = C_Item.GetItemInfo
 S.switchCoolLine = function(profile)
 
-	local db, block = {}
+	local db, block = {}, nil
 
 	CoolLineDB = CoolLineDB or { }
 	if CoolLineDB.perchar then
@@ -11,7 +12,7 @@ S.switchCoolLine = function(profile)
 	else
 		db = CoolLineDB
 	end
-	
+
 	if profile == "SanHeal" or profile == "SanChicken" then
 		block = {
 			[GetItemInfo(6948) or "Hearthstone"] = true,
@@ -27,7 +28,7 @@ S.switchCoolLine = function(profile)
 			[GetItemInfo(144249) or "Archimonde's Hatred Reborn"] = true,
 			["Rebirth"] = true
 		}
-		
+
 	elseif profile == "SanBear" then
 		block = {
 			[GetItemInfo(6948) or "Hearthstone"] = true,  -- Hearthstone
@@ -45,7 +46,7 @@ S.switchCoolLine = function(profile)
 			--[GetSpellInfo(33745) or "Aufschlitzen"] = true, --Lacerate
 			[GetSpellInfo(144258) or "Velen's Future Sight"] = true,
 		}
-		
+
 	elseif profile == "SanCat" then
 		block = {
 			[GetItemInfo(6948) or "Hearthstone"] = true,  -- Hearthstone
@@ -67,7 +68,7 @@ S.switchCoolLine = function(profile)
 			[GetSpellInfo(144258) or "Velen's Future Sight"] = true,
 			--[GetSpellInfo(33745) or "Aufschlitzen"] = true, --Lacerate
 		}
-		
+
 	elseif profile == "Simplex" then
 		block = {
 			[GetItemInfo(6948) or "Hearthstone"] = true,  -- Hearthstone
@@ -76,13 +77,13 @@ S.switchCoolLine = function(profile)
 			[GetSpellInfo(73680) or "Elemente entfesseln"] = true,
 			[GetSpellInfo(188389) or "Flammenschock"] = true,
 			[GetSpellInfo(8056) or "Frostschock"] = true,
-			[GetSpellInfo(73899) or "Urtümlicher Schlag"] = true,
+			[GetSpellInfo(73899) or "Urtï¿½mlicher Schlag"] = true,
 			[GetSpellInfo(58861) or "Hieb"] = true,
 			[GetSpellInfo(187874) or "Crash Lightning"] = true,
 			[GetSpellInfo(115356) or "Windstrike"] = true,
 			[GetSpellInfo(197214) or "Sundering"] = true,
 		}
-		
+
 	elseif profile == "SahneUnholy" then
 		block = {
 			[GetItemInfo(6948) or "Hearthstone"] = true,  -- Hearthstone
@@ -90,7 +91,7 @@ S.switchCoolLine = function(profile)
 			[GetSpellInfo(91837) or "Eitriges Bollwerk"] = true, -- Putrid Bulwark (Ghoul ability)
 			[GetSpellInfo(47468) or "Klaue"] = true, -- Claw(Ghoul ability)
 			[GetSpellInfo(91778) or "Klauenfeger"] = true, -- Sweeping Claws(Ghoul ability)
-			[GetSpellInfo(91797 ) or "Monströser Hieb"] = true,  -- Monstrous Blow(Ghoul ability)
+			[GetSpellInfo(91797 ) or "Monstrï¿½ser Hieb"] = true,  -- Monstrous Blow(Ghoul ability)
 			[GetSpellInfo(47481) or "Nagen"] = true,  -- Gnaw(Ghoul ability)
 			[GetSpellInfo(91802) or "Torkelnder Ansturm"] = true, -- Shambling Rush (Ghoul ability)
 			[GetSpellInfo(47484) or "Zusammenkauern"] = true, -- Huddle(Ghoul ability)	     
@@ -149,8 +150,6 @@ S.switchCoolLine = function(profile)
 			[GetItemInfo(153023) or "Lightforged Augment Rune"] = true,
 		}
 	end
-		
-	local key, value
 
 	for key, value in pairs(db.block) do
 		db.block[key] = nil
@@ -159,6 +158,6 @@ S.switchCoolLine = function(profile)
 	for key, value in pairs(block) do
 		db.block[key] = value
 	end
-	
+
 	CoolLine:updatelook()
 end

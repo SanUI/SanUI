@@ -38,9 +38,6 @@ Modules\Unitframes\namedframes.lua
 
 Modules\AddonMods\blizzard.lua
 Modules\AddonMods\minimap.lua
-#Modules\AddonMods\tukui.lua
-#Modules\AddonMods\tukui_lfrdatatext.lua
-#Modules\AddonMods\tukui_lootspecdatatext.lua
 Modules\AddonMods\coolline.lua
 Modules\AddonMods\bugsack.lua
 Modules\AddonMods\weakauras_displays.lua

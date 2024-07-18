@@ -53,4 +53,4 @@ S.modMinimap = function()
 	map.zonetext:SetPoint("BOTTOM", map.backdrop, "TOP", map.db.profile.zoneTextConfig.x, -Scale(20))
 end
 
-hooksecurefunc(BasicMinimap, "LOADING_SCREEN_DISABLED", S.modMinimap)
+hooksecurefunc(map, "LOADING_SCREEN_DISABLED", S.modMinimap)

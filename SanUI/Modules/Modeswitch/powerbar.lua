@@ -4,22 +4,23 @@ local S, C = unpack(addon)
 local Scale = S.Scale
 
 S.switchPowerbar = function(profile)
+	local player = S.unitFrames.player
 
   local wrathname = GetSpellInfo(190984)
   local starfirename = GetSpellInfo(194153)
   local TukuiBar1 = S.ActionBars and S.ActionBars.Bars and S["ActionBars"].Bars.Bar1
-	
-  local Power = oUF_player.Power
+
+  local Power = player.Power
   Power.update_surge = function(self, event, unit)
     self.Power:ForceUpdate(event, unit)
   end
 
-  oUF_player:RegisterEvent('UNIT_SPELLCAST_START', Power.update_surge)
-  oUF_player:RegisterEvent('UNIT_SPELLCAST_STOP', Power.update_surge)
-  oUF_player:RegisterEvent('UNIT_SPELLCAST_FAILED', Power.update_surge)
-  oUF_player:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED', Power.update_surge)
-  oUF_player:RegisterEvent('UNIT_DISPLAYPOWER', Power.update_surge)
-	
+  player:RegisterEvent('UNIT_SPELLCAST_START', Power.update_surge)
+  player:RegisterEvent('UNIT_SPELLCAST_STOP', Power.update_surge)
+  player:RegisterEvent('UNIT_SPELLCAST_FAILED', Power.update_surge)
+  player:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED', Power.update_surge)
+  player:RegisterEvent('UNIT_DISPLAYPOWER', Power.update_surge)
+
 	if not Power then
 		print("No Power bar on oUF_player found!")
 		return
@@ -74,7 +75,7 @@ S.switchPowerbar = function(profile)
     Power.update_surge = function(self, event, unit) end
 		Power.PostUpdate = nil
 	end
-	
+
 	if profile == "SanCat" or profile == "SanChicken" then
 		Power:ClearAllPoints()
 		Power:SetPoint("CENTER",UIParent,"CENTER",0,-188)
@@ -104,7 +105,7 @@ S.switchPowerbar = function(profile)
 		Power:SetWidth(288)
 	elseif profile == "Manyak" then
 		Power:ClearAllPoints()
-		Power:SetPoint("TOP",oUF_player.Castbar,"BOTTOM",0,-4)
+		Power:SetPoint("TOP",player.Castbar,"BOTTOM",0,-4)
 		Power:SetHeight(10)
 		Power:SetWidth(300)
 		Power:Show()

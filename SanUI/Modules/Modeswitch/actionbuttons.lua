@@ -21,16 +21,16 @@ S.styleActionButton = function(button)
 	S.Kill(button.SlotBackground)
 	S.Kill(button.NormalTexture)
 	S.Kill(button.Border)
-	
+
 	button:SetSize(absize, absize)
 	S.CreateBackdrop(button, "Transparent")
-	
+
 	-- This works better for me...
 	local br = button.Backdrop.BorderRight
 	br:ClearAllPoints()
 	br:SetPoint("TOPRIGHT", button.Backdrop, "TOPRIGHT", S.scale1, 0)
 	br:SetPoint("BOTTOMRIGHT", button.Backdrop, "BOTTOMRIGHT", S.scale1, 0)
-	
+
 	-- Highlight Texture
 	S.Kill(button.HighlightTexture)
 	local Highlight = button:CreateTexture()
@@ -38,7 +38,7 @@ S.styleActionButton = function(button)
 	--Highlight:SetInside()
 	button:SetHighlightTexture(Highlight)
 	button.HighlightTexture = Highlight
-	
+
 	-- Pushed Texture
 	S.Kill(button.PushedTexture)
 	local Pushed = button:CreateTexture()
@@ -58,10 +58,10 @@ S.styleActionButton = function(button)
 	button.cooldown:SetAllPoints()
 	button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	button.styled = true
-	
+
 	button.Count:ClearAllPoints()
 	button.Count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -S.scale1, S.scale1)
-	
+
 	button.HotKey:ClearAllPoints()
 	button.HotKey:SetPoint("TOPRIGHT", button, "TOPRIGHT", -S.scale1, -S.scale2)
 end
@@ -78,7 +78,7 @@ S.switchActionButtons = function(profile)
 		for i = 1, 12 do
 			button = _G["ActionButton"..i]
 			button:ClearAllPoints()
-			
+
 			if i == 1 then
 				button:SetPoint("CENTER",UIParent,-89,-185)
 			elseif 1 < i and i < 7 then
@@ -86,7 +86,7 @@ S.switchActionButtons = function(profile)
 			elseif i == 7 then
 				button:SetPoint("TOPLEFT",ActionButton2,"BOTTOMLEFT",0, -Spacing)
 			elseif i == 8 then
-				button:SetPoint("TOPLEFT",ActionButton7,"BOTTOMLEFT",0, -Spacing)	
+				button:SetPoint("TOPLEFT",ActionButton7,"BOTTOMLEFT",0, -Spacing)
 			else
 				local xoff = (12-i)*Size + (12-i)* Spacing + Spacing/2
 				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
@@ -101,7 +101,7 @@ S.switchActionButtons = function(profile)
 			elseif i == 7 then
 				button:SetPoint("TOPLEFT",ActionButton2,"BOTTOMLEFT",0,-7)
 			elseif i == 9 then
-				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", 8 * Size + 8 * Spacing + Spacing/2, 3 + Spacing)	
+				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", 8 * Size + 8 * Spacing + Spacing/2, 3 + Spacing)
 			else
 				local previous = _G["ActionButton"..i-1]
 				button:SetPoint("LEFT", previous, "RIGHT", Spacing, 0)
@@ -116,7 +116,7 @@ S.switchActionButtons = function(profile)
 			elseif i == 7 then
 				button:SetPoint("TOPLEFT",ActionButton2,"BOTTOMLEFT",0, -C["ActionBars"].ButtonSpacing)
 			elseif i == 9 then
-				button:SetPoint("BOTTOMLEFT", 9*C["ActionBars"].NormalButtonSize + 3*C["ActionBars"].ButtonSpacing, C["ActionBars"].ButtonSpacing)	
+				button:SetPoint("BOTTOMLEFT", 9*C["ActionBars"].NormalButtonSize + 3*C["ActionBars"].ButtonSpacing, C["ActionBars"].ButtonSpacing)
 			else
 				local previous = _G["ActionButton"..i-1]
 				button:SetPoint("LEFT", previous, "RIGHT", C["ActionBars"].ButtonSpacing, 0)
@@ -126,7 +126,7 @@ S.switchActionButtons = function(profile)
 		for i = 1, 12 do
 			button = _G["ActionButton"..i]
 			button:ClearAllPoints()
-			
+
 			if i == 1 then
 				button:SetPoint("CENTER",UIParent,-89,-100)
 			elseif 1 < i and i < 7 then
@@ -134,7 +134,7 @@ S.switchActionButtons = function(profile)
 			elseif i == 7 then
 				button:SetPoint("TOPLEFT",ActionButton2,"BOTTOMLEFT",0, -Spacing)
 			elseif i == 8 then
-				button:SetPoint("TOPLEFT",ActionButton7,"BOTTOMLEFT",0, -Spacing)	
+				button:SetPoint("TOPLEFT",ActionButton7,"BOTTOMLEFT",0, -Spacing)
 			else
 				local xoff = (12-i)*Size + (12-i)* Spacing + Spacing/2
 				button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
@@ -164,21 +164,21 @@ S.switchActionButtons = function(profile)
 			end
 		  end
 		end
-	
-	else 
+
+	else
 		for i=1, 12 do
 		  local b = _G[bnames.main2 .. i]
 		  local c = _G[bnames.main1 .. 13-i]
 		  b:ClearAllPoints()
 		  c:ClearAllPoints()
-		  
+
 		  if not b.styled then
 			S.styleActionButton(b)
 		  end
 		  if not c.styled then
 			S.styleActionButton(c)
 		  end
-		  
+
 		  if i == 1 then
 			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
 			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
@@ -188,7 +188,7 @@ S.switchActionButtons = function(profile)
 			c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
 		  end
 		end
-		
+
 		DominosFrame5:SetNumButtons(8)
 		-- same as buttons below, plus half the panel height plus have a spacing
 		local yoff = 3 + Spacing + S.panels.actionbarpanel1:GetHeight()-- + Spacing/2 
@@ -198,26 +198,26 @@ S.switchActionButtons = function(profile)
 			if not b.styled then
 				S.styleActionButton(b)
 			end
-			
+
 			local xoff = (i+4-1)*Size + (i+3) * Spacing + Spacing / 2
 			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
 		end
-		
-		
+
+
 		for i = 1,5 do
 			local b = _G[bnames.stance .. i]
-			
+
 			if b then
 				b:ClearAllPoints()
 				if not b.styled then
 					S.styleActionButton(b)
 				end
-				
-				xoff = (i-12-1)*Size + (i-13) * Spacing + Spacing / 2
+
+				local xoff = (i-12-1)*Size + (i-13) * Spacing + Spacing / 2
 				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
 			end
 		end
-		
+
 		local barright = S.panels.actionbarright
 		for i = 1,12 do
 			local b = _G[bnames.right .. i]
@@ -228,11 +228,11 @@ S.switchActionButtons = function(profile)
 				b.HotKey:ClearAllPoints()
 				b.HotKey:SetPoint("TOPRIGHT", b, "TOPRIGHT", -S.scale1, -S.scale4)
 			end
-			
+
 			b:SetPoint("TOP", barright, "TOP", 0, - i * abspacing - (i-1)*absize)
 		end
-		
-	end	
+
+	end
 end
 local hookfun = function()
 	if S["Modes"][SanUIdb["Mode"]]["ActionButtons"] then

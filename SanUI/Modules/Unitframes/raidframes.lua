@@ -523,10 +523,12 @@ oUF:Factory(function(self)
 	raid:SetParent(SanUI_PetBattleFrameHider)
 	raid:ClearAllPoints()
 	raid:SetPoint("CENTER",UIParent,0,-195)
+	S.unitFrames.raid = raid
 
 	local pets = oUF:SpawnHeader(GetPetFrameAttributes())
 	pets:SetParent(SanUI_PetBattleFrameHider)
 	pets:SetPoint(pa1, raid, pa2, Scale(px), Scale(py))
+	S.unitFrames.pets = pets
 
 	-- Max number of group according to Instance max players
 	local ten = "1,2"

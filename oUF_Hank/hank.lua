@@ -1329,8 +1329,10 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		local dummyBar = CreateFrame("StatusBar", nil, self)
 		self.AdditionalPower = dummyBar
 
-		self.AdditionalPower.PostUpdate = function(_, unit, current, max)
-			if select(2, UnitPowerType(unit)) ~= ADDITIONAL_POWER_BAR_NAME then
+		self.AdditionalPower.PostUpdate = function(_, current, max)
+			print('x')
+			print(UnitPowerType(self.unit))
+			if  UnitPowerType(self.unit) ~= 0 then --ADDITIONAL_POWER_BAR_NAME then
 				additionalPower:Show()
 			else
 				additionalPower:Hide()
@@ -1610,16 +1612,22 @@ if modList then
 end
 
 -- Frame creation --------------------------------
-
 oUF:RegisterStyle("Hank", oUF_Hank.sharedStyle)
 oUF:SetActiveStyle("Hank")
-oUF:Spawn("player", "oUF_player"):SetPoint("RIGHT", UIParent, "CENTER", -cfg.FrameMargin[1], -cfg.FrameMargin[2])
-oUF:Spawn("pet", "oUF_pet"):SetPoint("BOTTOMRIGHT", oUF_player, "TOPRIGHT")
-oUF:Spawn("target", "oUF_target"):SetPoint("LEFT", UIParent, "CENTER", cfg.FrameMargin[1], -cfg.FrameMargin[2])
-oUF:Spawn("targettarget", "oUF_ToT"):SetPoint("BOTTOMLEFT", oUF_target, "TOPLEFT")
-oUF:Spawn("targettargettarget", "oUF_ToTT"):SetPoint("BOTTOMLEFT", oUF_ToT, "TOPLEFT")
-oUF:Spawn("focus", "oUF_focus"):SetPoint("CENTER", UIParent, "CENTER", -cfg.FocusFrameMargin[1], -cfg.FocusFrameMargin[2])
-oUF:Spawn("focustarget", "oUF_ToF"):SetPoint("BOTTOMLEFT", oUF_focus, "TOPLEFT", 0, 5)
+S.unitFrames.player = oUF:Spawn("player", "oUF_player")
+S.unitFrames.player:SetPoint("RIGHT", UIParent, "CENTER", -cfg.FrameMargin[1], -cfg.FrameMargin[2])
+S.unitFrames.pet = oUF:Spawn("pet", "oUF_pet")
+S.unitFrames.pet:SetPoint("BOTTOMRIGHT", oUF_player, "TOPRIGHT")
+S.unitFrames.target = oUF:Spawn("target", "oUF_target")
+S.unitFrames.target:SetPoint("LEFT", UIParent, "CENTER", cfg.FrameMargin[1], -cfg.FrameMargin[2])
+S.unitFrames.targettarget = oUF:Spawn("targettarget", "oUF_ToT")
+S.unitFrames.targettarget:SetPoint("BOTTOMLEFT", oUF_target, "TOPLEFT")
+S.unitFrames.targettargettarget = oUF:Spawn("targettargettarget", "oUF_ToTT")
+S.unitFrames.targettargettarget:SetPoint("BOTTOMLEFT", oUF_ToT, "TOPLEFT")
+S.unitFrames.focus = oUF:Spawn("focus", "oUF_focus")
+S.unitFrames.focus:SetPoint("CENTER", UIParent, "CENTER", -cfg.FocusFrameMargin[1], -cfg.FocusFrameMargin[2])
+S.unitFrames.focustarget = oUF:Spawn("focustarget", "oUF_ToF")
+S.unitFrames.focustarget:SetPoint("BOTTOMLEFT", oUF_focus, "TOPLEFT", 0, 5)
 
 oUF_player:SetScale(cfg.FrameScale)
 oUF_pet:SetScale(cfg.FrameScale)

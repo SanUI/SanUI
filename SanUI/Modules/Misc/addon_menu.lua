@@ -12,6 +12,8 @@ local Scale = S.Scale
 local font = C.medias.fonts.Font
 local fontsize = 12
 
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+
 local SanUIButtonOrder = {Grid=1, DBM=2, Hack=3}
 
 if S["profiles"][S.MyName]["AddonMenu"] then
@@ -96,28 +98,30 @@ end
 -- CREATE MENU ----------------------------------------------------
 -------------------------------------------------------------------
 -- Open/Close Button
-local MenuOpen = CreateFrame("Frame", "MenuOpen", UIParent)
-S.CreateBackdrop(MenuOpen)
+---@class AddonMenuOpen: Frame
+local AddonMenuOpen = CreateFrame("Frame", "MenuOpen", UIParent)
+S.CreateBackdrop(AddonMenuOpen)
 if AnchorSide == true then
-	MenuOpen:SetSize(S.scale10, S.scale10)
-	MenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
+	AddonMenuOpen:SetSize(S.scale10, S.scale10)
+	AddonMenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
 else
-	MenuOpen:SetSize(Minimap:GetWidth()+S.scale4 , Scale(14))
-	MenuOpen:SetPoint("BOTTOM", Minimap, "TOP", 0, Scale(5 + Offset))
+	AddonMenuOpen:SetSize(Minimap:GetWidth()+S.scale4 , Scale(14))
+	AddonMenuOpen:SetPoint("BOTTOM", Minimap, "TOP", 0, Scale(5 + Offset))
 end
+S.AddonMenuOpen = AddonMenuOpen
 
-local Text = MenuOpen:CreateFontString(nil, "OVERLAY")
+local Text = AddonMenuOpen:CreateFontString(nil, "OVERLAY")
 Text:SetFont(font, 10)
 Text:SetText("a")
 Text:SetJustifyH("CENTER")
 Text:SetJustifyV("MIDDLE")
-Text:SetPoint("CENTER", MenuOpen)
+Text:SetPoint("CENTER", AddonMenuOpen)
 Text:Show()
 
-MenuOpen.text = Text
+AddonMenuOpen.text = Text
 
-MenuOpen:EnableMouse(true)
-MenuOpen:SetFrameStrata("MEDIUM")
+AddonMenuOpen:EnableMouse(true)
+AddonMenuOpen:SetFrameStrata("MEDIUM")
 
 -- Menu Background
 local Menu = CreateFrame("Frame", "MinimapMenu", UIParent)
@@ -128,7 +132,7 @@ if AnchorSide == true then
 	S.CreateBackdrop(Menu)
 else
 	--Menu:CreatePanel("", MenuOpen:GetWidth(),(Btns*(BtnHeight+1))+3, "BOTTOM", Minimap, "TOP",0, 5 + Offset)
-	Menu:SetSize(Scale(MenuOpen:GetWidth()),Scale((Btns*(BtnHeight+1))+3))
+	Menu:SetSize(Scale(AddonMenuOpen:GetWidth()),Scale((Btns*(BtnHeight+1))+3))
 	Menu:SetPoint("BOTTOM", Minimap, "TOP",0, Scale(5 + Offset))
 	S.CreateBackdrop(Menu)
 end
@@ -137,32 +141,32 @@ Menu:SetFrameStrata("MEDIUM") --BACKGROUND")
 Menu:EnableMouse(true)
 
 --MenuOpen:SkinButton()
-S.CreateBackdrop(MenuOpen)
+S.CreateBackdrop(AddonMenuOpen)
 local function MenuMouseDown()
 	if Menu:IsShown() then
-		MenuOpen:SetFrameStrata("MEDIUM")
+		AddonMenuOpen:SetFrameStrata("MEDIUM")
 		Menu:Hide()
-		RaidUtilitiesButton:Show()
-		MenuOpen:SetSize(S.scale10, S.scale10)
-		MenuOpen:ClearAllPoints()
-		MenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
+		S.raidutilities:Show()
+		AddonMenuOpen:SetSize(S.scale10, S.scale10)
+		AddonMenuOpen:ClearAllPoints()
+		AddonMenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
 		Text:SetFont(font, 10)
-		MenuOpen.text:SetText("a")
-		MenuOpen:Show()
+		AddonMenuOpen.text:SetText("a")
+		AddonMenuOpen:Show()
 	else
-		MenuOpen:SetFrameStrata("HIGH")
+		AddonMenuOpen:SetFrameStrata("HIGH")
 		Menu:Show()
-		RaidUtilitiesButton:Hide()
-		MenuOpen:SetSize(Scale(Minimap:GetWidth()), Scale(BtnHeight))
-		MenuOpen:ClearAllPoints()
-		MenuOpen:SetPoint("TOP", Menu, "BOTTOM", 0, -Scale(3))
+		S.raidutilities:Hide()
+		AddonMenuOpen:SetSize(Scale(Minimap:GetWidth()), Scale(BtnHeight))
+		AddonMenuOpen:ClearAllPoints()
+		AddonMenuOpen:SetPoint("TOP", Menu, "BOTTOM", 0, -Scale(3))
 		Text:SetFont(font, fontsize)
-		MenuOpen.text:SetText(CLOSE)
+		AddonMenuOpen.text:SetText(CLOSE)
 	end
 end
 
 -- Create Open/Close Scripts
-MenuOpen:SetScript("OnMouseDown", MenuMouseDown)
+AddonMenuOpen:SetScript("OnMouseDown", MenuMouseDown)
 
 -------------------------------------------------------------------
 -- MODULES --------------------------------------------------------
@@ -174,9 +178,9 @@ local function CreateButton(f, o) --(Frame,ButtonOrderName)
 		f:SetSize(Scale(Menu:GetWidth()-4), Scale(BtnHeight))
 		f:SetPoint("BOTTOM", Menu, "TOP", 0, -Scale(o*(BtnHeight+1)+1))
 		S.CreateBackdrop(f)
-		
+
 		f:SetFrameStrata("DIALOG")
-		
+
 		f.title = f:CreateFontString()
 		f.title:SetPoint("CENTER", f, "CENTER", 0, S.scale1)
 		f.title:SetFont(font, fontsize, "OUTLINE") --14
@@ -189,7 +193,7 @@ local function CreateButton(f, o) --(Frame,ButtonOrderName)
 		f:SetPoint("TOP", Menu, "BOTTOM", 0, Scale(o*(BtnHeight+1)+1))
 		S.CreateBackdrop(f)
 		f:SetFrameStrata("DIALOG")
-		
+
 		f.title = f:CreateFontString()
 		f.title:SetPoint("CENTER", f, "CENTER", 0, S.scale1)
 		f.title:SetFont(font, fontsize, "OUTLINE") --14
@@ -204,57 +208,61 @@ end
 
 -----World State Button-----
 if SanUIButtonOrder["WorldFrame"] then
+	---@class AddonMenuButton: Frame
+	---@field title FontString
 	local WSButton = CreateFrame("Frame", "WorldStateToggle", Menu)
 	CreateButton(WSButton, SanUIButtonOrder["WorldFrame"])
-	
+
 	if WorldStateAlwaysUpFrame and WorldStateAlwaysUpFrame:IsShown() then
 		WSButton.title:SetText("Hide World Frame")
 	else
 		WSButton.title:SetText("Show World Frame")
 	end
-	
+
 	WSButton:SetScript("OnMouseDown", function()
 		if WorldStateAlwaysUpFrame and WorldStateAlwaysUpFrame:IsShown() then
 			WorldStateAlwaysUpFrame:Hide()
 			WSButton.title:SetText("Show World Frame")
 		else
-			if WorldStateAlwaysUpFrame then 
+			if WorldStateAlwaysUpFrame then
 				WorldStateAlwaysUpFrame:Show()
 			end
 			WSButton.title:SetText("Hide World Frame")
 		end
 	end)
-	
+
 end
 
 -----Profile Button-----
 if #S["profiles"][S.myname]["modes"] >1 then
 	for i = 1,#S["profiles"][S.myname]["modes"] do
 		local profile = S["profiles"][S.myname]["modes"][i]
+		---@class AddonMenuButton
 		local Button = CreateFrame("Frame",profile.."ToggleButton",Menu)
 		CreateButton(Button,SanUIButtonOrder[profile])
-		
+
 		Button.title:SetText(profile)
-		
+
 		Button:SetScript("OnMouseDown", function()
 			S.switch2Mode(profile)
 			MenuMouseDown()
 		end)
-		
+
 	end
 end
 
 -----DBM Toggle Button----
 if SanUIButtonOrder["DBM"] then
+	---@class AddonMenuButton
 	local DBMButton = CreateFrame("Frame", "DBMToggle", Menu)
 	CreateButton(DBMButton, SanUIButtonOrder["DBM"])
 
-	if not IsAddOnLoaded("DBM-Core") then 
+	if not IsAddOnLoaded("DBM-Core") then
 		DBMButton.title:SetTextColor(0.6, 0.6, 0.6)
 		DBMButton.title:SetText("DBM Disabled")
 	else
 		DBMButton.title:SetText("DBM")
-		
+
 		DBMButton:SetScript("OnMouseDown", function()
 				SlashCmdList.DEADLYBOSSMODS('')
 				MenuMouseDown()
@@ -264,15 +272,16 @@ end
 
 -----BigWigs Toggle Button----
 if SanUIButtonOrder["BigWigs"] then
+	---@class AddonMenuButton
 	local BWButton = CreateFrame("Frame", "BWToggle", Menu)
 	CreateButton(BWButton, SanUIButtonOrder["BigWigs"])
 
-	if not IsAddOnLoaded("BigWigs") then 
+	if not IsAddOnLoaded("BigWigs") then
 		BWButton.title:SetTextColor(0.6, 0.6, 0.6)
 		BWButton.title:SetText("BW Disabled")
 	else
 		BWButton.title:SetText("BigWigs")
-		
+
 		BWButton:SetScript("OnMouseDown", function()
 				SlashCmdList.BigWigs('')
 				MenuMouseDown()
@@ -282,15 +291,16 @@ end
 
 -----Altoholic Button -------
 if SanUIButtonOrder["Altoholic"] then
+	---@class AddonMenuButton
 	local AltoholicButton = CreateFrame("Frame", "AltoholicToggle", Menu)
 	CreateButton(AltoholicButton, SanUIButtonOrder["Altoholic"])
 
-	if not IsAddOnLoaded("Altoholic") then 
+	if not IsAddOnLoaded("Altoholic") then
 		AltoholicButton.title:SetTextColor(0.6, 0.6, 0.6)
 		AltoholicButton.title:SetText("Altoholic Disabled")
 	else
 		AltoholicButton.title:SetText("Altoholic")
-		
+
 		AltoholicButton:SetScript("OnMouseDown", function()
 				Altoholic:ToggleUI()
 				MenuMouseDown()
@@ -299,15 +309,16 @@ if SanUIButtonOrder["Altoholic"] then
 end
 -----Hack Button -------
 if SanUIButtonOrder["Hack"] then
+	---@class AddonMenuButton
 	local HackButton = CreateFrame("Frame", "HackToggle", Menu)
 	CreateButton(HackButton, SanUIButtonOrder["Hack"])
 
-	if not IsAddOnLoaded("REHack") then 
+	if not IsAddOnLoaded("REHack") then
 		HackButton.title:SetTextColor(0.6, 0.6, 0.6)
 		HackButton.title:SetText("Hack Disabled")
 	else
 		HackButton.title:SetText("Hack")
-		
+
 		HackButton:SetScript("OnMouseDown", function()
 				REHack:Toggle()
 				MenuMouseDown()
@@ -316,31 +327,32 @@ if SanUIButtonOrder["Hack"] then
 end
 -----MethodDungeonTools Button -------
 if SanUIButtonOrder["MDT"] then
-	local HackButton = CreateFrame("Frame", "MDTToggle", Menu)
-	CreateButton(HackButton, SanUIButtonOrder["MDT"])
-	
+	---@class AddonMenuButton
+	local MDTButton = CreateFrame("Frame", "MDTToggle", Menu)
+	CreateButton(MDTButton, SanUIButtonOrder["MDT"])
+
 	local is_mdt = IsAddOnLoaded("MythicDungeonTools")
 	local is_mandt = IsAddOnLoaded("ManbabyDungeonTools")
 	local is_dt = IsAddOnLoaded("DungeonTools")
 
-	if not (is_mdt or is_mandt or is_dt) then 
-		HackButton.title:SetTextColor(0.6, 0.6, 0.6)
-		HackButton.title:SetText("MDT Disabled")
+	if not (is_mdt or is_mandt or is_dt) then
+		MDTButton.title:SetTextColor(0.6, 0.6, 0.6)
+		MDTButton.title:SetText("MDT Disabled")
 	else
-		HackButton.title:SetText("MDT")
-		
+		MDTButton.title:SetText("MDT")
+
 		if is_mdt then
-			HackButton:SetScript("OnMouseDown", function()
+			MDTButton:SetScript("OnMouseDown", function()
 					SlashCmdList.MYTHICDUNGEONTOOLS('')
 					MenuMouseDown()
 			end)
 		elseif is_mandt then
-			HackButton:SetScript("OnMouseDown", function()
+			MDTButton:SetScript("OnMouseDown", function()
 					SlashCmdList.MANBABYDUNGEONTOOLS('')
 					MenuMouseDown()
 			end)
 		else --is_dt
-			HackButton:SetScript("OnMouseDown", function()
+			MDTButton:SetScript("OnMouseDown", function()
 					SlashCmdList.DUNGEONTOOLS('')
 					MenuMouseDown()
 			end)

@@ -27,7 +27,7 @@ S.SetFontString = function(parent, fontName, fontHeight, fontStyle)
 	fs:SetShadowOffset(1.25, -1.25)
 	return fs
 end
-	
+
 oUF_Hank.digitTexCoords = {
 	["1"] = {1, 20},
 	["2"] = {21, 31},
@@ -69,7 +69,7 @@ oUF.Tags.Methods["mergedPower"] = function(unit)
       else
          local cur = UnitPower(unit)
          local max = UnitPowerMax(unit)
-         
+
 		 return ("%s/%s"):format(valShort(cur),valShort(max))
 
       end
@@ -84,8 +84,8 @@ sharedStyle = function(self, unit, isSingle)
 		local row = 0
 		local sizex = self.Buffs.size + cfg.AuraSpacing
 		local cols = math.floor(self.Buffs:GetWidth() / sizex + .5)
-		
-		self.Buffs.buffsPerRow = cols	
+
+		self.Buffs.buffsPerRow = cols
 	end
 
 end,
@@ -153,15 +153,15 @@ end,
 --]]
 
 OnEnterAura = function(self, icon)
-	
+
 	if(self.unit == "player" or self.unit == "target") then
-		
+
 		S.CreateBackdrop(self.HighlightAura)
 		self.HighlightAura:SetFrameLevel(6) -- cd on icon seems to have frame level 5
-		
+
 		self.HighlightAura.icon.remaining = S.SetFontString(icon, font1, 11, "THINOUTLINE")
 		self.HighlightAura.icon.remaining:SetPoint("CENTER", Scale(1), 0)
-		
+
 		self.HighlightAura.icon:SetPoint("TOPLEFT", Scale(2), Scale(-2))
 		self.HighlightAura.icon:SetPoint("BOTTOMRIGHT", Scale(-2), Scale(2))
 		self.HighlightAura.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
@@ -169,7 +169,7 @@ OnEnterAura = function(self, icon)
 		self.HighlightAura.icon.overlayFrame = CreateFrame("frame", nil, icon, nil)
 		self.HighlightAura.icon.remaining:SetParent(icon.overlayFrame)
 		self.HighlightAura.oldicon = icon
-		
+
 		icon.Count:SetPoint("BOTTOMRIGHT", self.HighlightAura, Scale(3), 0) --Scale(1.5))
 		icon.Count:SetJustifyH("RIGHT")
 		icon.Count:SetFont(font1, 9*cfg.AuraMagnification, "THICKOUTLINE")
@@ -193,7 +193,7 @@ end,
 		-- color.g = 1
 		-- color.b = 1
 	-- end
-	
+
 	-- return ("FF%.2x%.2x%.2x"):format(color.r * 255, color.g * 255, color.b * 255)
 -- end
 --[[
@@ -208,7 +208,8 @@ end,
 oUF_Hank_hooks.FocusAuras = {
 sharedStyle = function(self, unit, isSingle)
 	if unit ~= "focus" then return end
-	
+
+	---@class SanUIFocusAuras: Frame
 	local auras = CreateFrame("Frame", nil, self)
 	auras:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, S.scale1)
 	auras:SetScale(1/cfg.FocusFrameScale)
@@ -216,53 +217,53 @@ sharedStyle = function(self, unit, isSingle)
 	S.CreateBackdrop(auras)
 	auras.Icons = {}
 	auras.Texts = {}
-	
+
 	for _, spell in pairs(S["UnitFrames"].RaidBuffsTracking[S.MyClass] or {}) do
+		---@class SanUIFocusAurasIcon: Frame
 		local icon = CreateFrame("Frame", nil, auras)
 		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
-		
+
 		icon.spellID = spell.spellID
 		icon.anyCaster = spell.anyCaster
 		icon.timers = spell.timers
-		icon.cooldownAnim = spell.cooldownAnim	
+		icon.cooldownAnim = spell.cooldownAnim
 		icon.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
 		icon:SetWidth(S.scale6)
 		icon:SetHeight(S.scale6)
-	
-		if icon.cooldownAnim then 
+
+		if icon.cooldownAnim then
+			---@class SanUIFocusAurasIconCD: Cooldown
 			local cd = CreateFrame("Cooldown", nil, icon,"CooldownFrameTemplate")
 			cd:SetAllPoints(icon)
 			cd.noCooldownCount = icon.noCooldownCount or false -- needed for tullaCC to not show cooldown numbers
 			cd:SetReverse(true)
 			icon.cd = cd
 		end
-		
+
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
 		tex:SetTexture(normTex)
 		tex:SetVertexColor(unpack(spell.color))
-		
+
 		icon.tex = tex
-		icon.color = spell.color	
-		
+		icon.color = spell.color
+
 		auras.Icons[spell.spellID] = icon
 		icon:Hide()
 	end
-		for _, spellID in pairs(S["UnitFrames"].RaidBuffsTracking["ALL"]) do	
-		auras.Icons[spellID] = turtle_icon
-	end
-	
+
 	for _, spell in ipairs(S["UnitFrames"].TextAuras[S.MyClass] or {}) do
+		---@class SanUIFocusTextAurasText: FontString
 		local text = auras:CreateFontString(nil, "OVERLAY")
 		text:SetFont("Fonts\\FRIZQT__.TTF", spell.textsize)--, "THINOUTLINE")
 		text:SetPoint(unpack(spell.pos))
-		
+
 		text.anyCaster = spell.anyCaster
 		text.format = spell.format
 		text.res = 0.3
 		text.timers = spell.timers
-		
+
 		if type(spell.spellID == "table") then
 			for _, id in ipairs(spell.spellID) do
 				auras.Texts[id] = text
@@ -282,9 +283,9 @@ end,
 oUF_Hank_hooks.HealthColored = {
 	UpdateHealth = function(self)
 		if self.unit == "player" then
-		
+
 			local h, hMax
-			
+
 			if UnitHasVehicleUI("player") then
 				h, hMax = UnitHealth("pet"), UnitHealthMax("pet")
 			else
@@ -302,7 +303,7 @@ oUF_Hank_hooks.HealthColored = {
 
 oUF_Hank_hooks.PetBattleHide = {
 	sharedStyle = function(self,unit,isSingle)
-		self:SetParent(Tukui_PetBattleFrameHider)
+		self:SetParent(S.panels.PetBattleHiderr)
 	end
 }
 
@@ -310,16 +311,17 @@ oUF_Hank_hooks.customCastbar = {
 
 sharedStyle = function(self, unit, isSingle)
 	if (unit == "player" or unit == "target" or unit == "focus" or unit:find("boss")) then
-	
-		--Construct castbar
+
+		---@class SanUICastBar: StatusBar
+		---@field bg Frame
 		local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
 		castbar:SetStatusBarTexture(normTex)
 		castbar:SetStatusBarColor(unpack(C.colors.CastingColor))
-			
+
 		castbar.place = function(args)
 			if (unit == "player" or unit:find("boss")) then
 				if self.ClassPower then
-					local nr_ClassPower = #oUF_player.ClassPower
+					local nr_ClassPower = #S.unitFrames.player.ClassPower
 					castbar:SetPoint("TOPRIGHT", self.ClassPower[nr_ClassPower]:GetParent(), "BOTTOMRIGHT", 0, Scale(-2))
 				else
 					castbar:ClearAllPoints()
@@ -337,9 +339,9 @@ sharedStyle = function(self, unit, isSingle)
 				castbar:SetPoint("TOPRIGHT",self,"BOTTOMRIGHT",0,0)
 			end
 		end
-		
+
 		castbar.place()
-			
+
 		castbar.CustomTimeText = S["UnitFrames"].CustomCastTimeText
 		castbar.CustomDelayText = S["UnitFrames"].CustomCastDelayText
 		--castbar.PostCastStart = S["UnitFrames"].CheckCast
@@ -349,21 +351,28 @@ sharedStyle = function(self, unit, isSingle)
 				element:SetStatusBarColor(unpack(C.colors.CastingColor))
 			end
 		end
-		
+
 		self.Castbar = castbar
-		
+
 		-- Castbar background
 		if (unit == "player" or unit == "target") then
+			---@class SanUICarBarBG: Frame
+			---@field SetBackdropColor function
+			---@field SetBackdropBorderColor function
+			---@field Time FontString
+			---@field Icon Texture
+			---@field Spark Texture
 			local castBarBG = CreateFrame("Frame",nil,castbar)
 			castBarBG:SetPoint("TOPLEFT",castbar,"TOPLEFT",-Scale(2),Scale(2))
 			castBarBG:SetPoint("BOTTOMRIGHT",castbar,"BOTTOMRIGHT",Scale(2),-Scale(2))
 			S.CreateBackdrop(castBarBG)
 			castBarBG.SetBackdropColor(C.colors.Castbarbg)
+			castBarBG.SetBackdropBorderColor(C.colors.BackdropColor)
 			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
 			castbar:SetFrameLevel(6)
 			castBarBG:SetFrameLevel(5)
 			self.Castbar.bg = castBarBG
-		elseif (unit == "focus") then	
+		elseif (unit == "focus") then
 			local castBarBG = CreateFrame("Frame",nil,castbar)
 			castBarBG:SetAllPoints(castbar)
 			--castBarBG:SetBackdrop({
@@ -372,17 +381,17 @@ sharedStyle = function(self, unit, isSingle)
 			--castBarBG:SetBackdropColor(.1,.1,.1)
 			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
 			castbar:SetFrameLevel(6)
-			castBarBG:SetFrameLevel(5)	
+			castBarBG:SetFrameLevel(5)
 			self.Castbar.bg = castBarBG
-		end	
-		
+		end
+
 		--Castbar latency texture
 		if unit == "player" then
 			castbar.safezone = castbar:CreateTexture(nil, "ARTWORK")
 			castbar.safezone:SetTexture(normTex)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 			castbar.SafeZone = castbar.safezone
-		end		
+		end
 
 		--Castbar time string
 		castbar.time = castbar:CreateFontString(nil, "OVERLAY")
@@ -394,10 +403,10 @@ sharedStyle = function(self, unit, isSingle)
 		end
 		castbar.time:SetPoint("RIGHT", castbar, "RIGHT", Scale(-4), 0)
 		castbar.time:SetTextColor(0.84, 0.75, 0.65)
-		castbar.time:SetShadowOffset(0.8,-0.8) 
+		castbar.time:SetShadowOffset(0.8,-0.8)
 		castbar.time:SetJustifyH("RIGHT")
-		
-		self.Castbar.Time = castbar.time
+
+		castbar.Time = castbar.time
 
 		--Castbar text string
 		if(unit ~= "focus") then
@@ -411,10 +420,10 @@ sharedStyle = function(self, unit, isSingle)
 		castbar.Text:SetTextColor(0.84, 0.75, 0.65)
 		castbar.Text:SetWidth(castbar:GetWidth()*0.68)
 		castbar.Text:SetHeight(castbar:GetHeight()*0.9)
-		
+
 		--Icon for Castbar	
 		castbar.button = CreateFrame("Frame", nil, castbar)
-			
+
 		if (unit == "player") then
 			castbar.button:SetSize(Scale(28), Scale(28))
 		elseif (unit == "target") then
@@ -422,22 +431,22 @@ sharedStyle = function(self, unit, isSingle)
 		else
 			castbar.button:SetSize(Scale(18), Scale(18))
 		end
-		
+
 		S.CreateBackdrop(castbar.button)
 
 		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
 		castbar.icon:SetPoint("TOPLEFT", castbar.button, Scale(2), Scale(-2))
 		castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, Scale(-2), Scale(2))
 		castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
-		
+
 		if unit == "player" or unit:find("boss") then
 			castbar.button:SetPoint("TOPRIGHT",self.Castbar.bg,"TOPLEFT",-Scale(2),0)
 		elseif unit == "target" then
 			castbar.button:SetPoint("LEFT",self.Castbar.bg,"RIGHT",Scale(2),0)
-		end					
-		
-			self.Castbar.Icon = castbar.icon
-		
+		end
+
+		castbar.Icon = castbar.icon
+
 		--cast bar latency on player
 		if unit == "player" then
 			castbar.safezone =	 castbar:CreateTexture(nil, "ARTWORK")
@@ -445,56 +454,60 @@ sharedStyle = function(self, unit, isSingle)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 			castbar.SafeZone = castbar.safezone
 		end
-		
+
 		--castbar Spark
 		local Spark = castbar:CreateTexture(nil, "OVERLAY")
 		Spark:SetSize(20, 20)
 		Spark:SetBlendMode("ADD")
 		Spark:SetPoint("CENTER", castbar:GetStatusBarTexture(), "RIGHT", 0, 0)
 
-		self.Castbar.Spark = Spark
-		
+		castbar.Spark = Spark
+
 		-- GCD frame for player
 		if (unit == "player") then
-					
-			self.GCD = CreateFrame("StatusBar", self:GetName().."_GCD", self)
+			---@class SanUICastBarGCD: StatusBar
+			self.GCD = CreateFrame("StatusBar", nil, self)
 			self.GCD:SetHeight(Scale(5))
 			self.GCD:SetWidth(Scale(150))
 			self.GCD:SetPoint('TOPLEFT',castbar, 'BOTTOMLEFT', 0, -Scale(4))
 			self.GCD:SetPoint('TOPRIGHT',castbar, 'BOTTOMRIGHT', 0, -Scale(4))
 			self.GCD:SetStatusBarTexture(normTex)
 			self.GCD:SetStatusBarColor(0.8,0.8,0.8)
-			
+
+			---@class SanUICastBarGCDBorder: Frame
+			---@field SetBackdropBorderColor function
 			local gcdcastborder = CreateFrame("Frame", nil, self.GCD)
 			gcdcastborder:SetSize(Scale(1), Scale(1))
-			gcdcastborder:SetPoint("CENTER", health, "CENTER", 0, 0)
 			S.CreateBackdrop(gcdcastborder, "Transparent")
+			gcdcastborder.SetBackdropBorderColor(C.colors.BackdropColor)
 			gcdcastborder:ClearAllPoints()
 			gcdcastborder:SetPoint("TOPLEFT", self.GCD, -Scale(2), Scale(2))
 			gcdcastborder:SetPoint("BOTTOMRIGHT", self.GCD, Scale(2), Scale(-2))
 			gcdcastborder:SetFrameStrata(self.GCD:GetFrameStrata())
-			gcdcastborder:SetFrameLevel(self.GCD:GetFrameLevel()-1)	
-			
+			gcdcastborder:SetFrameLevel(self.GCD:GetFrameLevel()-1)
+
 			self.GCD.border = gcdcastborder
 		end
-		
+
 		if (unit == "focus") then
 			self.Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -Scale(25))
-		elseif (unit == "target") then 
+		elseif (unit == "target") then
 			self.Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 10, -Scale(25))
 		end
-		
+
 		-- if unit == "target" and (select(2, UnitClass("player")) == "ROGUE" or select(2, UnitClass("player")) == "DRUID") then
 			-- self.CPoints[1]:ClearAllPoints()
 			-- self.CPoints[1]:SetPoint("BOTTOMRIGHT", self, "BOTTOMLEFT",0,Scale(5))
-			
+
 			-- for i = 2, MAX_COMBO_POINTS do
 				-- self.CPoints[i]:ClearAllPoints()
 				-- self.CPoints[i]:SetPoint("BOTTOM", self.CPoints[i - 1], "TOP")
 			-- end
 		-- end
-		
+
 		castbar.CreatePip = function(element, stage)
+			---@class SanUICastBarPip: Frame
+			---@field Backdrop BackdropTemplate
 			local f = CreateFrame("Frame", nil)
 			S.CreateBackdrop(f)
 			f:SetHeight(castbar:GetHeight())
@@ -502,52 +515,52 @@ sharedStyle = function(self, unit, isSingle)
 			f.Backdrop:SetBackdropBorderColor(1,1,1)
 			return f
 		end
-	end	
+	end
 end,
 }
 
 oUF_Hank_hooks.ChangeFocus = {
 sharedStyle = function(self, unit, isSingle)
-	
-	if (unit == "focustarget") then	
+
+	if (unit == "focustarget") then
 		self.name:ClearAllPoints()
 		self.name:SetPoint("RIGHT")
 	end
 
 
-	if (unit == "focus") then	
-		
+	if (unit == "focus") then
+
 		for i=1,3 do
 			self.health[i]:ClearAllPoints()
 		end
-		
+
 		self.health[3]:SetPoint("RIGHT")
 		--self.health[3]:SetPoint("RIGHT", self.health[4], "LEFT")
 		self.health[2]:SetPoint("RIGHT", self.health[3], "LEFT")
 		self.health[1]:SetPoint("RIGHT", self.health[2], "LEFT")
-		
+
 		self.power:ClearAllPoints()
 		self.name:ClearAllPoints()
 		self.RaidTargetIndicator:ClearAllPoints()
-		
+
 		self.name:SetPoint("BOTTOMRIGHT",  self.power, "TOPRIGHT")
 		self.power:SetPoint("BOTTOMRIGHT", self.health[1], "BOTTOMLEFT")
 		self.RaidTargetIndicator:SetPoint("RIGHT",self.name,"LEFT",-10,0)
 		self.RaidTargetIndicator:SetPoint("TOP", self, "TOP", 0, -5)
-		
-		
-		self.Buffs.initialAnchor = "RIGHT" 
+
+
+		self.Buffs.initialAnchor = "RIGHT"
 		self.Buffs["growth-x"] = "LEFT"
 		self.Debuffs.initialAnchor = "RIGHT"
 		self.Debuffs["growth-x"] = "LEFT"
-		
+
 	end
 end,
 
 PostUpdateName = function(self)
-	
+
 	if self.unit ~= "focus" then return end
-	
+
 	if (self.name) then
 		self.RaidTargetIndicator:ClearAllPoints()
 		self.RaidTargetIndicator:SetPoint("TOP", self, "TOP", 0, -5)
@@ -564,26 +577,26 @@ end,
 UpdateHealth = function(self)
 
 	if self.unit ~= "focus" then return end
-	
+
 	local h, hMax
-	
+
 	-- In vehicle
 	h, hMax = UnitHealth(self.unit), UnitHealthMax(self.unit)
 
 
 	local status = (not UnitIsConnected(self.unit) or nil) and "Off" or UnitIsGhost(self.unit) and "G" or UnitIsDead(self.unit) and "X"
-	
+
 	if not status then
 		local hPerc = ("%d"):format(h / hMax * 100 + 0.5)
 		local len = string.len(hPerc)
-		
+
 		for i = 1, 3 do
 				if i > len then
 					self.health[4 - i]:Hide()
 					self.healthFill[4 - i]:Hide()
 				else
 					local digit = string.sub(hPerc , -i, -i)
-					
+
 					self.health[4 - i]:SetSize(oUF_Hank.digitTexCoords[digit][2], oUF_Hank.digitTexCoords["height"])
 					self.health[4 - i]:SetTexCoord(oUF_Hank.digitTexCoords[digit][1] / oUF_Hank.digitTexCoords["texWidth"], (oUF_Hank.digitTexCoords[digit][1] + oUF_Hank.digitTexCoords[digit][2]) / oUF_Hank.digitTexCoords["texWidth"], 1 / oUF_Hank.digitTexCoords["texHeight"], (1 + oUF_Hank.digitTexCoords["height"]) / oUF_Hank.digitTexCoords["texHeight"])
 					self.health[4 - i]:Show()
@@ -592,17 +605,17 @@ UpdateHealth = function(self)
 					self.healthFill[4 - i]:Show()
 				end
 			end
-			
-			
-		
+
+
+
 		self.power:ClearAllPoints()
 		self.power:SetPoint("BOTTOMRIGHT", self.health[4-len], "BOTTOMLEFT", 0, 0)
-	
+
 	else
-		
+
 		self.power:ClearAllPoints()
 		self.power:SetPoint("BOTTOMRIGHT", self.health[3], "BOTTOMLEFT", 0, 0)
-		
+
 	end
 end,
 }
@@ -627,6 +640,7 @@ oUF_Hank_hooks.customPowerBar = {
 	if unit == "player" then
 		--this adds a second power bar
 		--and does not replace the old one (which is self.power not self.Power)
+		---@class SanUIPlayerExtraPowerBar: StatusBar
 		local power = CreateFrame('StatusBar', "MyPower", self)
 		power:SetWidth(248)
 		power:SetHeight(15)
@@ -635,14 +649,14 @@ oUF_Hank_hooks.customPowerBar = {
 		power:SetFrameLevel(13)
 		power:SetStatusBarTexture(normTex)
 		power:SetMinMaxValues(0,UnitPowerMax(unit))
-		
+
 		local powerPanel = CreateFrame("Frame", "MyPowerPanel", power)
 		S.CreateBackdrop(powerPanel)
 		powerPanel:SetFrameStrata("MEDIUM")
 		powerPanel:SetFrameLevel(power:GetFrameLevel()-1)
 		powerPanel:SetPoint("TOPLEFT",Scale(-2), Scale(2))
 		powerPanel:SetPoint("BOTTOMRIGHT",Scale(2), -Scale(2))
-	
+
 		local powerValue = power:CreateFontString(nil, "OVERLAY")
 		powerValue:SetFont(font2,13,"OUTLINE")
 		powerValue:SetPoint("RIGHT", power, "RIGHT", -4, -1)
@@ -651,7 +665,7 @@ oUF_Hank_hooks.customPowerBar = {
 		self.powerValue = powerValue
 		self:Tag(powerValue, '[myclassicpower]')
 		power.value = powerValue
-		
+
 		power.colorDisconnected = true
 		power.Smooth = true
 

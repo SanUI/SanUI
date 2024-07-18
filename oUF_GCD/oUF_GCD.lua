@@ -53,7 +53,7 @@ local Init = function()
 			for i = (1+offset), (offset + numSpells) do
 				local bspell = GetSpellBookItemName(i, BOOKTYPE_SPELL)
 				if (bspell == spell) then
-					return i   
+					return i
 				end
 			end
 		end
@@ -71,7 +71,7 @@ local Init = function()
 
 	if spellid == nil then
 		-- XXX: print some error ..
-		print ("Spell not found: "..spell.."!")
+		print ("Spell not found: "..spellid.."!")
 	end
 
 	return spellid
@@ -106,13 +106,14 @@ local Update = function(self, event, unit)
 			end
 		end
 
-		local start, dur = GetSpellCooldown(spellid)
+		-- ... or 0 for luals peace of mind
+		local start, dur = GetSpellCooldown(spellid or 0)
 
 		if (not start) then return end
 		if (not dur) then dur = 0 end
 
 		if (dur == 0) then
-			self.GCD:Hide() 
+			self.GCD:Hide()
 		else
 			self.GCD.starttime = start
 			self.GCD.duration = dur
@@ -139,7 +140,7 @@ end
 local Disable = function(self)
 	if (self.GCD) then
 		self:UnregisterEvent('ACTIONBAR_UPDATE_COOLDOWN')
-		self.GCD:Hide()  
+		self.GCD:Hide()
 	end
 end
 

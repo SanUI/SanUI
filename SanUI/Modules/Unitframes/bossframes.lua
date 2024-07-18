@@ -410,12 +410,16 @@ oUF:SetActiveStyle("oUF_BossBars")
 
 local boss1 = oUF:Spawn("player", "oUF_Boss1")
 boss1:SetPoint("TOPRIGHT",UIParent,"TOP",-5,-5)
+S.unitFrames.boss1 = boss1
 
 local boss2 = oUF:Spawn("boss2", "oUF_Boss2")
 boss2:SetPoint("LEFT", boss1, "RIGHT", 20, 0)
+S.unitFrames.boss2 = boss2
 
 local boss3 = oUF:Spawn("boss3", "oUF_Boss3")
 boss3:SetPoint("RIGHT", boss2, "LEFT",-20,0)
+S.unitFrames.boss3 = boss3
 
 local boss4 = oUF:Spawn("boss4", "oUF_Boss4")
 boss4:SetPoint("LEFT", boss3, "RIGHT", 20,0)
+S.unitFrames.boss4 = boss4

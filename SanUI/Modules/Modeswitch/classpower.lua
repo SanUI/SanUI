@@ -6,10 +6,11 @@ local function pack(...)
 end
 
 S.switchClassPower =  function (profile)
+	local classpower = S.unitFrames.player.ClassPower
 
 	if profile == "PRet" then
-		for i = 1, #oUF_player.ClassPower do
-			local bg = oUF_player.ClassPower[i].bg:GetParent()
+		for i = 1, #classpower do
+			local bg = classpower[i].bg:GetParent()
 			local point, relativeTo, relativePoint, xOfs, yOfs = bg:GetPoint()
 			
 			bg.hank_placement = { point, relativeTo, relativePoint, xOfs, yOfs }
@@ -17,28 +18,28 @@ S.switchClassPower =  function (profile)
 		
 		local indices = {3, 2, 1, 4, 5}
 		for idx, i in ipairs(indices) do
-			local bg = oUF_player.ClassPower[i].bg:GetParent()
+			local bg = classpower[i].bg:GetParent()
 			bg:ClearAllPoints()
 			
 			if idx == 1 then
 				bg:SetPoint("TOP", UIParent, "CENTER", 0, -150)
 			else
 				if idx <= 3 then
-					local prev = oUF_player.ClassPower[indices[idx - 1]].bg:GetParent()
+					local prev = classpower[indices[idx - 1]].bg:GetParent()
 					bg:SetPoint("RIGHT", prev, "LEFT", -2, 0)
 				elseif idx == 4 then
-					local prev = oUF_player.ClassPower[3].bg:GetParent()
+					local prev = classpower[3].bg:GetParent()
 					bg:SetPoint("LEFT", prev, "RIGHT", 2, 0)
 				elseif idx == 5 then
-					local prev = oUF_player.ClassPower[4].bg:GetParent()
+					local prev = classpower[4].bg:GetParent()
 					bg:SetPoint("LEFT", prev, "RIGHT", 2, 0)
 				end
 			end
 		end
 	else
-		if oUF_player.ClassPower then
-			for i = 1, #oUF_player.ClassPower do
-				local bg = oUF_player.ClassPower[i].bg:GetParent()
+		if classpower then
+			for i = 1, #classpower do
+				local bg = classpower[i].bg:GetParent()
 				bg:ClearAllPoints()
 				bg:SetPoint(unpack(bg.hank_placement))
 			end

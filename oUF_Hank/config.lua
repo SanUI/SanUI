@@ -18,7 +18,7 @@ RangeFade = false,
 
 TotemBar = false,
 
-AdditionalPower = false,
+AdditionalPower = true,
 
 ----------------------- Aura filters ------------------------
 -------------------------------------------------------------

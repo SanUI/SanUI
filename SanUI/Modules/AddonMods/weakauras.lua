@@ -3,14 +3,16 @@ local S,C = unpack(addon)
 
 local Scale = S.Scale
 
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 --local GetSpellName = function(id) return select(1,GetSpellInfo(id)) end
-		
+
 function S.weakAurasDialog(new_version, old_version)
+	---@class WeakAurasDialog: Frame
 	local main = CreateFrame("Frame", nil, UIParent)
 	main:SetPoint("CENTER")
 	main:SetSize(500,200)
 	S.CreateBackdrop(main)
-	
+
 	local text1 = main:CreateFontString(nil, "OVERLAY")
 	text1:SetFont(C.medias.fonts.Font, 12)
 	text1:SetJustifyH("LEFT")
@@ -31,9 +33,9 @@ function S.weakAurasDialog(new_version, old_version)
 	main.LeftButton = CreateFrame("Button", nil, main)
 	main.LeftButton:SetPoint("TOPRIGHT", main, "BOTTOMRIGHT", 0, -6)
 	main.LeftButton:SetSize(128, 25)
-	main.LeftButton:SkinButton()
-	main.LeftButton:CreateShadow()
-	
+	--main.LeftButton:SkinButton()
+	--main.LeftButton:CreateShadow()
+
 	local text2 = main.LeftButton:CreateFontString(nil, "OVERLAY")
 	text2:SetFont(C.medias.fonts.Font, 12)
 	text2:SetJustifyH("LEFT")
@@ -42,20 +44,20 @@ function S.weakAurasDialog(new_version, old_version)
 	text2:SetPoint("CENTER")
 	text2:SetPoint("CENTER")
 	text2:SetText("Add and reload")
-	
+
 	main.LeftButton:SetScript("OnClick", function()
 		S.addWeakAuras()
 		SanUIdb.addedWeakAuras = new_version
 		SanUIdb.askedWeakAuras = new_version
 		ReloadUI()
 	end)
-	
+
 	main.RightButton = CreateFrame("Button", nil, main)
 	main.RightButton:SetPoint("TOPLEFT", main, "BOTTOMLEFT", 0, -6)
 	main.RightButton:SetSize(128, 25)
-	main.RightButton:SkinButton()
-	main.RightButton:CreateShadow()
-	
+	-- main.RightButton:SkinButton()
+	-- main.RightButton:CreateShadow()
+
 	local text3 = main.RightButton:CreateFontString(nil, "OVERLAY")
 	text3:SetFont(C.medias.fonts.Font, 12)
 	text3:SetJustifyH("LEFT")
@@ -64,12 +66,12 @@ function S.weakAurasDialog(new_version, old_version)
 	text3:SetPoint("CENTER")
 	text3:SetPoint("CENTER")
 	text3:SetText("Do nothing")
-	
-	main.RightButton:SetScript("OnClick", function() 
+
+	main.RightButton:SetScript("OnClick", function()
 		SanUIdb.askedWeakAuras = new_version
-		main.RightButton:Kill()
-		main.LeftButton:Kill()
-		main:Kill()
+		S.Kill(main.RightButton)
+		S.Kill(main.LeftButton)
+		S.Kill(main)
 	end)
 
 end
@@ -84,7 +86,7 @@ function S.addWeakAuras()
 			WeakAurasSaved.displays[key] = nil
 		end
 	end
-		
+
 	for key, value in pairs(S.weakAuras.displays) do
 		if key:sub(1, #"SanUI_") == "SanUI_" then
 			WeakAurasSaved.displays[key] = value

@@ -13,6 +13,8 @@ S.MyClass = UnitClass("player")
 
 SanUI = addon -- Allow other addons to use SanUI
 
+S.unitFrames = {}
+
 --[=[
 local LSM = LibStub("LibSharedMedia-3.0")
 local MediaType_BACKGROUND = LSM.MediaType.BACKGROUND

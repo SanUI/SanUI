@@ -4,32 +4,37 @@ local S = unpack(addon)
 S.switchBossBars = function(profile)
 
   for i = 1,4 do
-    local boss = _G["oUF_Boss"..i]
+    local boss = S.unitFrames["boss"..i]
     boss:ClearAllPoints()
     boss.Castbar:ClearAllPoints()
   end
 
-  if profile == "SanChicken" then
-    oUF_Boss1:SetPoint("LEFT",oUF_target,"LEFT",0,150)
-    oUF_Boss2:SetPoint("LEFT",oUF_Boss1,"LEFT",0,50)
-    oUF_Boss3:SetPoint("LEFT",oUF_Boss2,"LEFT",0,50)
-    oUF_Boss4:SetPoint("LEFT",oUF_Boss3,"LEFT",0,50)
+  local boss1 = S.unitFrames.boss1
+  local boss2 = S.unitFrames.boss2
+  local boss3 = S.unitFrames.boss3
+  local boss4 = S.unitFrames.boss4
 
-    oUF_Boss1.Castbar:SetPoint("LEFT",oUF_Boss1,"RIGHT",8,0)
-    oUF_Boss2.Castbar:SetPoint("LEFT",oUF_Boss2,"RIGHT",8,0)
-    oUF_Boss3.Castbar:SetPoint("LEFT",oUF_Boss3,"RIGHT",8,0)
-    oUF_Boss4.Castbar:SetPoint("LEFT",oUF_Boss4,"RIGHT",8,0)
+  if profile == "SanChicken" then
+    boss1:SetPoint("LEFT",S.unitFrames.target,"LEFT",0,150)
+    boss2:SetPoint("LEFT",boss1,"LEFT",0,50)
+    boss3:SetPoint("LEFT",boss2,"LEFT",0,50)
+    boss4:SetPoint("LEFT",boss3,"LEFT",0,50)
+
+    boss1.Castbar:SetPoint("LEFT",boss1,"RIGHT",8,0)
+    boss2.Castbar:SetPoint("LEFT",boss2,"RIGHT",8,0)
+    boss3.Castbar:SetPoint("LEFT",boss3,"RIGHT",8,0)
+    boss4.Castbar:SetPoint("LEFT",boss4,"RIGHT",8,0)
 
   else
-    oUF_Boss1:SetPoint("TOPRIGHT",UIParent,"TOP",-5,-5)
-    oUF_Boss2:SetPoint("LEFT", oUF_Boss1, "RIGHT", 20, 0)
-    oUF_Boss3:SetPoint("RIGHT", oUF_Boss1, "LEFT",-20,0)
-    oUF_Boss4:SetPoint("LEFT", oUF_Boss2, "RIGHT", 20,0)
+    boss1:SetPoint("TOPRIGHT",UIParent,"TOP",-5,-5)
+    boss2:SetPoint("LEFT", boss1, "RIGHT", 20, 0)
+    boss3:SetPoint("RIGHT", boss1, "LEFT",-20,0)
+    boss4:SetPoint("LEFT", boss2, "RIGHT", 20,0)
 
-    oUF_Boss1.Castbar:SetPoint("TOP",oUF_Boss1.Power,"BOTTOM",0,2)
-    oUF_Boss2.Castbar:SetPoint("TOP",oUF_Boss2.Power,"BOTTOM",0,2)
-    oUF_Boss3.Castbar:SetPoint("TOP",oUF_Boss3.Power,"BOTTOM",0,2)
-    oUF_Boss4.Castbar:SetPoint("TOP",oUF_Boss4.Power,"BOTTOM",0,2)
+    boss1.Castbar:SetPoint("TOP",boss1.Power,"BOTTOM",0,2)
+    boss2.Castbar:SetPoint("TOP",boss2.Power,"BOTTOM",0,2)
+    boss3.Castbar:SetPoint("TOP",boss3.Power,"BOTTOM",0,2)
+    boss4.Castbar:SetPoint("TOP",boss4.Power,"BOTTOM",0,2)
   end
 
 end

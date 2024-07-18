@@ -55,6 +55,7 @@ end
 oUF.Tags.Events["apDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"]
 oUF.Tags.Methods["apDetailed"] = function(unit)
 	local pType = ADDITIONAL_POWER_BAR_NAME
+	local ADDITIONAL_POWER_BAR_INDEX = 0
 	local color = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
 	return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, valShort(UnitPower(unit, ADDITIONAL_POWER_BAR_INDEX)), valShort(UnitPowerMax(unit, ADDITIONAL_POWER_BAR_INDEX)))
 end
