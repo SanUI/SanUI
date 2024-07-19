@@ -83,11 +83,11 @@ S.switchPowerbar = function(profile)
 		Power:SetWidth(288)
 		Power:Show()
 	elseif profile == "SanBear" then
-		local Size = C.ActionBars.NormalButtonSize
-		local Spacing = C.ActionBars.ButtonSpacing
+		local Size = C.sizes.actionbuttons
+		local Spacing = C.sizes.actionbuttonspacing
 		Power:ClearAllPoints()
 		--why are those offsets necessary? look at Bar1.lua from Tukui, this should be without offsets
-		Power:SetPoint("LEFT",TukuiBar1,Spacing+1, 0)
+		Power:SetPoint("LEFT",S.panels.actionbarpanel1,Spacing+1, 0)
 		Power:SetWidth(8 * Size + 7 * Spacing-3)
 		Power:SetHeight(Scale(Size)-3)
 		Power:Show()

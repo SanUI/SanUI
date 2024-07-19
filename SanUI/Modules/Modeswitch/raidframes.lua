@@ -197,7 +197,7 @@ S.switchRaidFrames = function(profile)
 			end
 		end
 		SetAttributeByProxy(frame,"columnAnchorPoint","LEFT")
-		frame:SetPoint("TOPLEFT",S.DataTexts.Panels.MinimapDataTextLeft,"BOTTOMLEFT",0,-20)
+		frame:SetPoint("TOPLEFT",S.panels.minimap.dt_left,"BOTTOMLEFT",0,-20)
 		frame:SetAttribute("maxColumns", 1)
 		SetAttributeByProxy(frame,"unitsPerColumn", 25)
 		SetAttributeByProxy(frame,"point","TOP")

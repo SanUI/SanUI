@@ -321,7 +321,7 @@ sharedStyle = function(self, unit, isSingle)
 		castbar.place = function(args)
 			if (unit == "player" or unit:find("boss")) then
 				if self.ClassPower then
-					local nr_ClassPower = #S.unitFrames.player.ClassPower
+					local nr_ClassPower = #self.ClassPower
 					castbar:SetPoint("TOPRIGHT", self.ClassPower[nr_ClassPower]:GetParent(), "BOTTOMRIGHT", 0, Scale(-2))
 				else
 					castbar:ClearAllPoints()
