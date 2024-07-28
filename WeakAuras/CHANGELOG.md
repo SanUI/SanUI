@@ -1,57 +1,29 @@
-# [5.13.2](https://github.com/WeakAuras/WeakAuras2/tree/5.13.2) (2024-05-29)
+# [5.15.4](https://github.com/WeakAuras/WeakAuras2/tree/5.15.4) (2024-07-27)
 
-[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.13.1...5.13.2)
+[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.15.3...5.15.4)
 
 ## Highlights
 
- - Initial support for TWW
-- More Cata fixes and API streamlining
-- Bug fixes 
+ - Class and Specialzation triggers now support class/spec conditions 
 
 ## Commits
 
-InfusOnWoW (2):
+Boneshock (1):
 
-- Update Atlas File List from wago.tools
-- Update Atlas File List from wago.tools
+- fix error when creating new reputation trigger
 
-Stanzilla (4):
+InfusOnWoW (6):
 
-- Update TOC for The War Within
-- Update WeakAurasModelPaths from wago.tools
-- Update WeakAurasModelPaths from wago.tools
-- Update WeakAurasModelPaths from wago.tools
+- Class and Specialization Trigger: Add condition for class/spec
+- Triggers: Don't set state.icon if the icon is unknown
+- Model Sub Element: Fix model frame level
+- Model+Model Sub Element: Remove model_path
+- Model Sub Element: Fix Model option
+- Fix custom text function returning a table leading to a lua error
 
-dependabot[bot] (3):
+mrbuds (3):
 
-- Bump cbrgm/mastodon-github-action from 2.1.1 to 2.1.2
-- --- updated-dependencies: - dependency-name: cbrgm/mastodon-github-action   dependency-type: direct:production   update-type: version-update:semver-patch ...
-- Bump cbrgm/mastodon-github-action from 2.0.6 to 2.1.0
-
-emptyrivers (3):
-
-- add build date to pr comment & edit isntead of recreate
-- be more careful about keeping nameSource accurate
-- explicitly checkout head ref
-
-mrbuds (18):
-
-- Update retail/tww toc files for packager
-- Add texture conditions for Texture and AuraBar regions
-- move Compatibility.lua functions to Private.ExecEnv
-- GetItemSetInfo moved to C_Item.GetItemSetInfo
-- Toc handle both 10.2.7 & 11.0.0
-- Hero Talent load option
-- GetMouseFocus is deprecated for GetMouseFoci
-- move blizzard flipbooks to Types_Retail.lua and shorten declarations
-- add some dragonflying flipbook
-- remove outdated name fix in CorrectSpellName
-- fix talent related errors
-- C_Reputation changes
-- use C_Spell.GetSpellInfo
-- use C_Spell.GetSpellCooldown
-- LibSpecialization support on Cataclysm
-- Chat Message trigger: leader events were not added if a chatType was selected fixes #5088
-- Fix item slot for thrown weapon on cataclysm, fixes #5077
-- Purge wrath classic
+- Fix transmission of auras
+- submodel: change default on classic for an existing model
+- Model: change default on classic for an existing model
 
