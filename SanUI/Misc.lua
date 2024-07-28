@@ -93,6 +93,8 @@ end
 f:SetScript("OnEvent",S.misc)
 
 ---@class MyConfigFrame: Frame
+---@field category unknown
+---@field layout unknown
 local main = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 main.name = addonName
 main:Hide()
@@ -115,5 +117,14 @@ main:SetScript("OnShow", main.OnShow)
 
 addon.optionspanel = main
 
-InterfaceOptions_AddCategory(main)
-InterfaceOptions_AddCategory(addon.saf.optionspanel)--, addon.optpanels.ABOUT)
+
+local category, layout = Settings.RegisterCanvasLayoutCategory(main, addonName)
+Settings.RegisterAddOnCategory(category)
+addon.optionspanel.category = category
+addon.optionspanel.layout = layout
+
+category, layout = Settings.RegisterCanvasLayoutSubcategory(addon.optionspanel.category, addon.saf.optionspanel, addon.saf.optionspanel.name)
+addon.saf.optionspanel.category = category
+addon.saf.optionspanel.layout = layout
+--InterfaceOptions_AddCategory(main)
+--InterfaceOptions_AddCategory(addon.saf.optionspanel)--, addon.optpanels.ABOUT)
