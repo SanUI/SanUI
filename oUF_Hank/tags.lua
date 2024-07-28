@@ -24,10 +24,16 @@ end
 -- "Ravenholdt: 1234 / 12k", "XP: 12k/1.67m (10.3% R)"
 oUF.Tags.Events["xpRep"] = "PLAYER_XP_UPDATE UPDATE_EXHAUSTION UNIT_LEVEL UPDATE_FACTION CHAT_MSG_COMBAT_FACTION_CHANGE"
 oUF.Tags.Methods["xpRep"] = function(unit)
-	local faction, lvl, min, max, val = GetWatchedFactionInfo()
-	if faction then
-		local color = oUF.colors.reaction[lvl] or cfg.colors.text
-		return ("|cFF%.2x%.2x%.2x%s: %s/%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, faction, val - min, valShort(max - min))
+	local watchedFactionData = C_Reputation.GetWatchedFactionData()
+
+	if watchedFactionData then
+		local color = oUF.colors.reaction[watchedFactionData.reaction] or cfg.colors.text
+		return ("|cFF%.2x%.2x%.2x%s: %s/%s|r"):format(
+			color[1] * 255, color[2] * 255, color[3] * 255, 
+			watchedFactionData.name,
+			watchedFactionData.currentStanding - watchedFactionData.currentReactionThreshold,
+			valShort(watchedFactionData.nextReactionThreshold - watchedFactionData.currentReactionThreshold)
+		)
 	else
 		if GetXPExhaustion() then
 			return ("XP: %s/%s (%.1f%% R)"):format(valShort(UnitXP("player")), valShort(UnitXPMax("player")), (GetXPExhaustion() or 0) / UnitXPMax("player") * 100)
