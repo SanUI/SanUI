@@ -185,6 +185,10 @@ end
 local redoStance = function() end
 
 S.switchActionBars.stance = function()
+	-- this is neede b/c we hook this function below, might be called in
+	-- combat
+	if InCombatLockdown() then return end
+	
 	local yoff = 3 + Spacing + S.panels.actionbarpanel1:GetHeight()
 	for i = 1,5 do
 		local b = _G[bnames.stance .. i]
