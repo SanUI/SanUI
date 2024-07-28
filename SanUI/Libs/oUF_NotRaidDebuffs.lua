@@ -4,6 +4,8 @@ local oUF = ns.oUF
 local _G = _G
 local addon = {}
 
+local S,C = unpack(ns) 
+
 ns.oUF_NotRaidDebuffs = addon
 --_G.oUF_NotRaidDebuffs = ns.oUF_NotRaidDebuffs
 
@@ -177,7 +179,7 @@ local function UpdateDebuffs(self, data)
 
 		local name = data.name
 		local icon = data.icon
-		local count = data.count
+		local count = data.count or 0
 		local debuffType = data.debuffType
 		local duration = data.duration
 		local endTime = data.expiration
@@ -224,11 +226,7 @@ local function UpdateDebuffs(self, data)
 
 			--print("dtype: "..debuffType)
 			local c = DispelColor[debuffType] or DispelColor.none
-			if f.Backdrop then
-				f.Backdrop:SetBorderColor(c[1], c[2], c[3])
-			else
-				f:SetBackdropBorderColor(c[1], c[2], c[3])
-			end
+			f.SetBackdropBorderColor(c[1], c[2], c[3])
 
 			f:Show()
 		else
@@ -326,6 +324,13 @@ local function Enable(self)
 		end
 
 		self:RegisterEvent('UNIT_AURA', Update)
+
+		for index = 1,2 do
+			local f = self.NotRaidDebuffs[index]
+			if not f.Backdrop then
+				S.CreateBackdrop(f)
+			end
+		end
 
 		return true
 	end
