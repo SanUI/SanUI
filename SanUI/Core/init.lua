@@ -58,18 +58,19 @@ addon[1].scale4 = Scale(4)
 addon[1].scale6 = Scale(6)
 addon[1].scale10 = Scale(10)
 
-S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, BorderTemplate)
+S.CreateAnonymousBackdrop= function(frame, BackgroundTemplate, BackgroundTexture, BorderTemplate)
 	local f = frame
 	local colors = C.colors
-
-	if (f.Backdrop) then
-		return
+	local parentFrame
+	if f:IsObjectType("Frame") then 
+		parentFrame = f
+	else
+		parentFrame = f:GetParent()
 	end
-
 	---@class SanUIBackdrop: BackdropTemplate, Frame
-	local backdrop = CreateFrame("Frame", nil, f, "BackdropTemplate")
-	backdrop:SetAllPoints()
-	backdrop:SetFrameLevel(f:GetFrameLevel())
+	local backdrop = CreateFrame("Frame", nil, parentFrame, "BackdropTemplate")
+	backdrop:SetAllPoints(f)
+	backdrop:SetFrameLevel(parentFrame:GetFrameLevel())
 	backdrop:SetBackdrop({bgFile = BackgroundTexture or colors.NormalTexture})
 
 	local bgalpha = (BackgroundTemplate == "Transparent" and colors.BackdropTransparency) or (1)
@@ -115,12 +116,27 @@ S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, Border
 	borderbottom:SetColorTexture(r, g, b)
 	borderleft:SetColorTexture(r, g, b)
 
+	return backdrop
+end
+
+S.CreateBackdrop = function(frame, BackgroundTemplate, BackgroundTexture, BorderTemplate)
+	local f = frame
+	local colors = C.colors
+
+	if (f.Backdrop) then
+		return
+	end
+
+	local bgalpha = (BackgroundTemplate == "Transparent" and colors.BackdropTransparency) or (1)
+	local backdrop = S.CreateAnonymousBackdrop(f, BackgroundTemplate, BackgroundTexture, BorderTemplate)
+
+	---@class SanUIBackdrop: BackdropTemplate, Frame
 	f.Backdrop = backdrop
 	f.SetBackdropBorderColor = function(t)
-		bordertop:SetColorTexture(t[1], t[2], t[3])
-		borderright:SetColorTexture(t[1], t[2], t[3])
-		borderbottom:SetColorTexture(t[1], t[2], t[3])
-		borderleft:SetColorTexture(t[1], t[2], t[3])
+		backdrop.BorderTop:SetColorTexture(t[1], t[2], t[3])
+		backdrop.BorderRight:SetColorTexture(t[1], t[2], t[3])
+		backdrop.BorderBottom:SetColorTexture(t[1], t[2], t[3])
+		backdrop.BorderLeft:SetColorTexture(t[1], t[2], t[3])
 	end
 	f.SetBackdropColor = function(t)
 		backdrop:SetBackdropColor(t[1], t[2], t[3], t[4] or bgalpha)
