@@ -226,7 +226,7 @@ local function UpdateDebuffs(self, data)
 
 			--print("dtype: "..debuffType)
 			local c = DispelColor[debuffType] or DispelColor.none
-			f.SetBackdropBorderColor(c[1], c[2], c[3])
+			f.SetBackdropBorderColor(c)
 
 			f:Show()
 		else
