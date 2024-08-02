@@ -16,22 +16,6 @@ panels.Hider = Hider
 local PetBattleHider = SanUI_PetBattleFrameHider
 panels.PetBattleHider = PetBattleHider
 
-local actionbarpanel1 = CreateFrame("Frame", nil, PetBattleHider)
-S.CreateBackdrop(actionbarpanel1)
-actionbarpanel1:SetHeight(Scale(absize + (abspacing * 2)))
-actionbarpanel1:SetWidth(Scale((absize * 24) + (abspacing * 25)))
-actionbarpanel1:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 3)
-actionbarpanel1:SetFrameStrata("BACKGROUND")
-panels.actionbarpanel1 = actionbarpanel1
-
-local actionbarright = CreateFrame("Frame", nil, PetBattleHider)
-S.CreateBackdrop(actionbarright)
-actionbarright:SetPoint("RIGHT", UIParent, "RIGHT", -5, -54)
-actionbarright:SetHeight(Scale((absize*12)+(abspacing*13)))
-actionbarright:SetWidth(Scale(absize + (abspacing * 2)))
-actionbarright:SetFrameStrata("BACKGROUND")
-panels.actionbarright = actionbarright
-
 local bottomlefttextbox = CreateFrame("Frame", nil, UIParent)
 bottomlefttextbox:SetSize(350, 23)
 S.CreateBackdrop(bottomlefttextbox)
