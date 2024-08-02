@@ -39,14 +39,14 @@ local smed                                                  = LibStub("LibShared
 
 local _G, pairs, strmatch, tinsert, tremove, random         = _G, pairs, string.match, table.insert, table.remove, math.random
 local GetTime                                               = GetTime
-local GetSpellInfo                                          = GetSpellInfo
+local GetSpellInfo                                          = C_Spell.GetSpellInfo
 local UnitExists, HasPetUI                                  = UnitExists, HasPetUI
 
 local db, block
 local backdrop                                              = { edgeSize = 16 } -- Left Unchanged
 local section, iconsize                                     = 0, 0
 local tick0, tick1, tick3, tick10, tick30, tick120, tick300
-local BOOKTYPE_SPELL, BOOKTYPE_PET                          = BOOKTYPE_SPELL, BOOKTYPE_PET
+local BOOKTYPE_SPELL, BOOKTYPE_PET                          = Enum.SpellBookSpellBank.Player, Enum.SpellBookSpellBank.Pet
 local spells                                                = { [BOOKTYPE_SPELL] = { }, [BOOKTYPE_PET] = { }, }
 local chargespells                                          = { [BOOKTYPE_SPELL] = { }, [BOOKTYPE_PET] = { }, }
 local frames, cooldowns, specialspells                      = { }, { }, { }
@@ -140,7 +140,7 @@ function CoolLine:ADDON_LOADED(a1)
                               inactivealpha = 0.5,
                               activealpha   = 1.0,
                               block         = {  -- [spell or item name] = true,
-                                  [GetItemInfo(6948) or "Hearthstone"] = true, -- Hearthstone
+                                  [C_Item.GetItemInfo(6948) or "Hearthstone"] = true, -- Hearthstone
                               },
                           }) do
             db[k] = (db[k] ~= nil and db[k]) or v
@@ -148,16 +148,20 @@ function CoolLine:ADDON_LOADED(a1)
     end
     block          = db.block
 
+    local function sname(id)
+        local sinfo = GetSpellInfo(id)
+        return sinfo and sinfo.name
+    end
     local _, class = UnitClass("player")
     if class == "DEATHKNIGHT" then
         local runecd = {  -- fix by NeoSyrex
-            [GetSpellInfo(50977) or "Death Gate"]       = 11,
-            [GetSpellInfo(43265) or "Death and Decay"]  = 11,
-            [GetSpellInfo(42650) or "Army of the Dead"] = 11,
+            [sname(50977) or "Death Gate"]       = 11,
+            [sname(43265) or "Death and Decay"]  = 11,
+            [sname(42650) or "Army of the Dead"] = 11,
             --			[GetSpellInfo(47476) or "Strangulate"] = 11,
             --			[GetSpellInfo(51052) or "Anti-Magic Zone"] = 11,
             --			[GetSpellInfo(63560) or "Dark Transformation"] = 10,
-            [GetSpellInfo(49184) or "Howling Blast"]    = 8,
+            [sname(49184) or "Howling Blast"]    = 8,
             --			[GetSpellInfo(51271) or "Pillar of Frost"] = 11,
             --			[GetSpellInfo(55233) or "Vampiric Blood"] = 11,
         }
@@ -169,10 +173,10 @@ function CoolLine:ADDON_LOADED(a1)
         end
     elseif class == "PRIEST" then
         specialspells = {
-            [GetSpellInfo(81209) or "blah"] = 81209, -- Chakra: Chastise
-            [GetSpellInfo(88684) or "blah"] = 88684, -- Holy Word: Serenity
-            [GetSpellInfo(88685) or "blah"] = 88685, -- Holy Word: Sanctuary
-            [GetSpellInfo(88625) or "blah"] = 88625, -- Holy Word: Chastise
+            [sname(81209) or "blah"] = 81209, -- Chakra: Chastise
+            [sname(88684) or "blah"] = 88684, -- Holy Word: Serenity
+            [sname(88685) or "blah"] = 88685, -- Holy Word: Sanctuary
+            [sname(88625) or "blah"] = 88625, -- Holy Word: Chastise
         }
     end
 
@@ -199,9 +203,9 @@ function CoolLine:ADDON_LOADED(a1)
         t2:SetNonSpaceWrap(true)
         t2:SetFormattedText("Notes: %s\nAuthor: %s\nVersion: %s\n" ..
                                     "Hint: |cffffff00/coolline|r to open menu; |cffffff00/coolline SpellOrItemNameOrLink|r to add/remove filter",
-                            GetAddOnMetadata("CoolLine", "Notes") or "N/A",
-                            GetAddOnMetadata("CoolLine", "Author") or "N/A",
-                            GetAddOnMetadata("CoolLine", "Version") or "N/A")
+                            C_AddOns.GetAddOnMetadata("CoolLine", "Notes") or "N/A",
+                            C_AddOns.GetAddOnMetadata("CoolLine", "Author") or "N/A",
+                            C_AddOns.GetAddOnMetadata("CoolLine", "Version") or "N/A")
 
         local b = CreateFrame("Button", nil, this, "UIPanelButtonTemplate")
         b:SetWidth(120)
@@ -212,7 +216,7 @@ function CoolLine:ADDON_LOADED(a1)
         this:SetScript("OnShow", nil)
     end)
 
-    InterfaceOptions_AddCategory(panel)
+    --InterfaceOptions_AddCategory(panel)
 
     createfs            = function(f, text, offset, just)
         local fs = f or self.overlay:CreateFontString(nil, "OVERLAY")
@@ -514,7 +518,7 @@ CoolLine.NewCooldown, CoolLine.ClearCooldown = NewCooldown, ClearCooldown
 
 do
     -- cache spells that have a cooldown
-    local GetSpellBookItemName, GetSpellBookItemInfo, GetSpellBaseCooldown, GetSpellCharges = GetSpellBookItemName, GetSpellBookItemInfo, GetSpellBaseCooldown, GetSpellCharges
+    local GetSpellBookItemName, GetSpellBookItemInfo, GetSpellBaseCooldown, GetSpellCharges = C_SpellBook.GetSpellBookItemName, C_SpellBook.GetSpellBookItemType, GetSpellBaseCooldown, C_Spell.GetSpellCharges
     local function CacheBook(btype)
         local lastID
         local sb = spells[btype]
@@ -527,7 +531,7 @@ do
                 local spellName = GetSpellBookItemName(j, btype)
                 if not spellName then break end
                 local spellType, spellID = GetSpellBookItemInfo(j, btype)
-                if IS_RETAIL_RELEASE and spellID and spellType == "FLYOUT" then
+                if IS_RETAIL_RELEASE and spellID and spellType == Enum.SpellBookItemType.FlyOut then
                     local _, _, numSlots, isKnown = GetFlyoutInfo(spellID)
                     if isKnown then
                         for k = 1, numSlots do
@@ -541,19 +545,22 @@ do
                             end
                         end
                     end
-                elseif spellID and (spellType == "SPELL" or spellType == "PETACTION") and spellID ~= lastID then
+                elseif spellID and (spellType == Enum.SpellBookItemType.Spell or spellType == Enum.SpellBookItemType.PetAction) and spellID ~= lastID then
                     -- Base spell = slot ID + name from slot ID
                     -- Real spell = ID from slot name + name from slot name
                     -- For the purposes of CoolLine we only care about the real spell.
                     lastID                            = spellID
-                    spellName, _, _, _, _, _, spellID = GetSpellInfo(spellName)
+                    local sinfo = GetSpellInfo(spellName) or {}
+                    spellName, spellID = sinfo.name, sinfo.spellID
                     if spellID then
+                        
                         -- Special spells like warlock Cauterize Master can be in
                         -- a limbo state during loading. Just ignore them in that
                         -- case. The spellbook will update again momentarily and
                         -- they will correctly resolve then.
-                        local _, maxCharges = GetSpellCharges(spellID)
-                        if maxCharges and maxCharges > 0 then
+                        local chargeinfo = GetSpellCharges(spellID)
+                        local maxCharges = (chargeinfo and chargeinfo.maxCharges) or 0
+                        if maxCharges > 0 then
                             chargespells[btype][spellID] = spellName
                         else
                             local cd = GetSpellBaseCooldown(spellID)
@@ -584,35 +591,38 @@ do
     -- scans spellbook to update cooldowns, throttled since the event fires a lot
     local selap                                              = 0
     local spellthrot                                         = CreateFrame("Frame", nil, CoolLine)
-    local GetSpellCooldown, GetSpellTexture, GetSpellCharges = GetSpellCooldown, GetSpellTexture, GetSpellCharges
+    local GetSpellCharges = GetSpellCharges
 
     local function CheckSpellBook(btype)
         for id, name in pairs(spells[btype]) do
-            local start, duration, enable = GetSpellCooldown(name)
-            if enable == 1 and start > 0 and not block[name] and (not RuneCheck or RuneCheck(name, duration)) then
-                if duration > 2.5 then
-                    local _, _, texture = GetSpellInfo(id)
-                    NewCooldown(name, texture, start + duration, btype == BOOKTYPE_SPELL)
-                else
-                    for i = 1, #cooldowns do
-                        local frame = cooldowns[i]
-                        if frame.name == name then
-                            if frame.endtime > start + duration + 0.1 then
-                                frame.endtime = start + duration
+            local cdowninfo = C_Spell.GetSpellCooldown(name)
+            if  cdowninfo then 
+                local start, duration, enable = cdowninfo.startTime, cdowninfo.duration, cdowninfo.isEnabled
+                if enable == 1 and start > 0 and not block[name] and (not RuneCheck or RuneCheck(name, duration)) then
+                    if duration > 2.5 then
+                        local texture = C_Spell.GetSpellTexture(id)
+                        NewCooldown(name, texture, start + duration, btype == BOOKTYPE_SPELL)
+                    else
+                        for i = 1, #cooldowns do
+                            local frame = cooldowns[i]
+                            if frame.name == name then
+                                if frame.endtime > start + duration + 0.1 then
+                                    frame.endtime = start + duration
+                                end
+                                break
                             end
-                            break
                         end
                     end
+                else
+                    ClearCooldown(nil, name)
                 end
-            else
-                ClearCooldown(nil, name)
             end
         end
 
         for id, name in pairs(chargespells[btype]) do
             local currentCharges, maxCharges, cooldownStart, cooldownDuration = GetSpellCharges(id)
             if cooldownStart and cooldownDuration and currentCharges < maxCharges and not block[name] then
-                local _, _, texture = GetSpellInfo(id)
+                local texture = C_Spell.GetSpellTexture(id)
                 NewCooldown(name, texture, cooldownStart + cooldownDuration, btype == BOOKTYPE_SPELL)
             else
                 ClearCooldown(nil, name)
@@ -642,7 +652,7 @@ end
 
 do
     -- scans equipments and bags for item cooldowns
-    local GetItemInfo                                       = GetItemInfo
+    local GetItemInfo                                       = C_Item.GetItemInfo
     local GetInventoryItemCooldown, GetInventoryItemTexture = GetInventoryItemCooldown, GetInventoryItemTexture
     local GetContainerItemCooldown, GetContainerItemInfo    = C_Container.GetContainerItemCooldown,     C_Container.GetContainerItemInfo
     local GetContainerNumSlots                              = C_Container.GetContainerNumSlots
@@ -766,7 +776,7 @@ local failborder
 function CoolLine:UNIT_SPELLCAST_FAILED(unit, spell, id8)
     ----------------------------------------------------
     if IS_RETAIL_RELEASE then
-        spell = GetSpellInfo(id8) -- TEMPORARY, need to switch to using spell IDs throughout
+        spell = GetSpellInfo(id8).spellID -- TEMPORARY, need to switch to using spell IDs throughout
     end
 
     if #cooldowns == 0 then return end
