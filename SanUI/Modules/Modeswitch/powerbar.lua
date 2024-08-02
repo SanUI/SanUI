@@ -26,52 +26,57 @@ S.switchPowerbar = function(profile)
 		return
 	end
 
-	if profile == "SanBear" or profile == "SahneUnholy" then
-    Power.update_surge = function(self, event, unit) end
+	if profile == "SanBear" then
+   		Power.update_surge = function(self, event, unit) end
 		Power.PostUpdate = function(self,unit, cur, min, max)
 			local quotient = (max and max > 0) and cur/max or 0
-			if quotient >= .6  and quotient < .9 then
-				Power:SetStatusBarColor(1,.49,.04)
+	
+			if quotient <= 0.1 then
+				Power:SetStatusBarColor(0.77,0.12,0.23)
+			elseif quotient >= 0.1 and quotient < 0.4 then
+				Power:SetStatusBarColor(1.0, 0.49, 0.04)
+			elseif quotient >= 0.4  and quotient < 0.9 then
+				Power:SetStatusBarColor(1.0, 0.96, 0.41)
 			elseif quotient >= .9 then
-				Power:SetStatusBarColor(0.5,1,0)
+				Power:SetStatusBarColor(0.67, 0.83, 0.45)
 			else
-				Power:SetStatusBarColor(0.69, 0.31, 0.31)
+				Power:SetStatusBarColor(0.4, 0.4, 0.4)
 			end
 		end
 	elseif profile == "SanChicken" then
 		Power.PostUpdate = function(self,unit, cur, min, max)
-      if cur > 80 then
-        Power:SetStatusBarColor(0.69, 0.31, 0.31)
-			elseif cur >= 50 and cur < 80 then
-				Power:SetStatusBarColor(0,1,1)
-      elseif cur >= 30 and cur < 80 then
-        Power:SetStatusBarColor(0.5,1,0)
-      else
-        local _, _, _, _, _, _, _, _, spellID = UnitCastingInfo(unit)
-        local spellname = GetSpellInfo(spellID) or ""
-
-        if spellname == wrathname and cur + 6 >= 30 then
-          Power:SetStatusBarColor(0.5,1,0)
-        elseif spellname == starfirename and cur + 8 >= 30 then
-          Power:SetStatusBarColor(0.5,1,0)
-        else
-          Power:SetStatusBarColor(0.69, 0.31, 0.31)
-        end
-      end
-    end
-	elseif profile == "SanCat" then
-    Power.update_surge = function(self, event, unit) end
-		Power.PostUpdate = function(self,unit, cur, min, max)
-			local quotient = max and cur/max or 0
-			if quotient >= .3  and quotient < .9 then
-				Power:SetStatusBarColor(1,.49,.04)
-			elseif quotient >= .9 then
+			if cur > 80 then
+				Power:SetStatusBarColor(0.69, 0.31, 0.31)
+					elseif cur >= 50 and cur < 80 then
+						Power:SetStatusBarColor(0,1,1)
+			elseif cur >= 30 and cur < 80 then
 				Power:SetStatusBarColor(0.5,1,0)
 			else
+				local _, _, _, _, _, _, _, _, spellID = UnitCastingInfo(unit)
+				local spellname = GetSpellInfo(spellID) or ""
+
+				if spellname == wrathname and cur + 6 >= 30 then
+				Power:SetStatusBarColor(0.5,1,0)
+				elseif spellname == starfirename and cur + 8 >= 30 then
+				Power:SetStatusBarColor(0.5,1,0)
+				else
 				Power:SetStatusBarColor(0.69, 0.31, 0.31)
+				end
 			end
 		end
-	else
+	elseif profile == "SanCat" then
+		Power.update_surge = function(self, event, unit) end
+			Power.PostUpdate = function(self,unit, cur, min, max)
+				local quotient = max and cur/max or 0
+				if quotient >= .3  and quotient < .9 then
+					Power:SetStatusBarColor(1,.49,.04)
+				elseif quotient >= .9 then
+					Power:SetStatusBarColor(0.5,1,0)
+				else
+					Power:SetStatusBarColor(0.69, 0.31, 0.31)
+				end
+			end
+		else
     Power.update_surge = function(self, event, unit) end
 		Power.PostUpdate = nil
 	end
@@ -83,14 +88,7 @@ S.switchPowerbar = function(profile)
 		Power:SetWidth(288)
 		Power:Show()
 	elseif profile == "SanBear" then
-		local Size = C.sizes.actionbuttons
-		local Spacing = C.sizes.actionbuttonspacing
-		Power:ClearAllPoints()
-		--why are those offsets necessary? look at Bar1.lua from Tukui, this should be without offsets
-		Power:SetPoint("LEFT",S.panels.actionbarpanel1,Spacing+1, 0)
-		Power:SetWidth(8 * Size + 7 * Spacing-3)
-		Power:SetHeight(Scale(Size)-3)
-		Power:Show()
+		-- this is done in Modeswitch/actionbuttons.lua for reasons
 	elseif profile == "SahneUnholy" then
 		Power:ClearAllPoints()
 		--why are those offsets necessary? look at Bar1.lua from Tukui, this should be without offsets

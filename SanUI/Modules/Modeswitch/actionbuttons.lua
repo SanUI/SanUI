@@ -1,6 +1,8 @@
 local addonName, addon = ...
 local S,C = unpack(addon)
 
+local Scale = S.Scale
+
 local bnames = {
 	--- Standard Hauptbar linke 12 buttons
 	main1 = "DominosActionButton",
@@ -19,11 +21,14 @@ local abspacing = C.sizes.actionbuttonspacing
 local Size = absize
 local Spacing = abspacing
 
-local hideDominosBar = function(bar)
-	Dominos.modules.SlashCommands:OnCmd("hide "..bar)
+local hideDominosBars = function(bars)
+	for _, bar in pairs(bars) do
+		Dominos.modules.SlashCommands:OnCmd("hide "..bar)
+	end
 end
 
 S.styleActionButton = function(button)
+	if true then return end
 	S.Kill(button.IconMask)
 	S.Kill(button.SlotBackground)
 	S.Kill(button.NormalTexture)
@@ -77,62 +82,24 @@ S.switchActionBars = {}
 
 S.switchActionBars.main = function(profile)
 	if profile == "SanBear" then
-		for i = 1, 12 do
-			local b = _G[bnames.main2 .. i]
-			local c = _G[bnames.main1 .. i]
-			b:ClearAllPoints()
-			c:ClearAllPoints()
+		DominosFrame1:ClearAllPoints()
+		DominosFrame1:SetPoint("CENTER", UIParent, "CENTER", 0, -185)
+		DominosFrame1.Backdrop:SetAlpha(0)
+		DominosFrame1:SetColumns(6)
 
-			if not b.styled then
-				S.styleActionButton(b)
-			  end
-			if not c.styled then
-				S.styleActionButton(c)
-			end
-
-			if i == 1 then
-				c:SetPoint("CENTER",UIParent,-89,-185)
-			elseif 1 < i and i < 7 then
-				c:SetPoint("LEFT",_G[bnames.main1..(i-1)],"RIGHT",Spacing, 0)
-			elseif i == 7 then
-				c:SetPoint("TOPLEFT",_G[bnames.main1.."2"],"BOTTOMLEFT",0, -Spacing)
-			elseif i == 8 then
-				c:SetPoint("TOPLEFT",_G[bnames.main1.."7"],"BOTTOMLEFT",0, -Spacing)
-			else
-				local xoff = (12-i)*Size + (12-i)* Spacing + Spacing/2
-				c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
-			end
-
-			if i == 1 then
-				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
-			  else
-				local xoff = (i-1)*Size + i * Spacing - Spacing / 2
-				b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
-			  end
-		end
+		DominosFrame6:ClearAllPoints()
+		DominosFrame6:SetPoint("BOTTOMRIGHT", S.panels.bottomrighttextbox, "BOTTOMLEFT", -6, 0)
+		DominosFrame6:SetColumns(12)
 	elseif profile == "SanHeal" then
-		for i=1, 12 do
-			local b = _G[bnames.main2 .. i]
-			local c = _G[bnames.main1 .. 13-i]
-			b:ClearAllPoints()
-			c:ClearAllPoints()
+		DominosFrame1:ClearAllPoints()
+		DominosFrame1:SetPoint("BOTTOMLEFT", S.panels.bottomlefttextbox, "BOTTOMRIGHT", 6, 0)
+		DominosFrame1:SetColumns(12)
 
-			if not b.styled then
-			  S.styleActionButton(b)
-			end
-			if not c.styled then
-			  S.styleActionButton(c)
-			end
+		DominosFrame6:ClearAllPoints()
+		DominosFrame6:SetPoint("BOTTOMRIGHT", S.panels.bottomrighttextbox, "BOTTOMLEFT", -6, 0)
+		DominosFrame6:SetColumns(12)
 
-			if i == 1 then
-			  b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
-			  c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
-			else
-			  local xoff = (i-1)*Size + i * Spacing - Spacing / 2
-			  b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
-			  c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
-			end
-		end
+		DominosFrame1.Backdrop:SetAlpha(1)
 	elseif profile == "ToviAug" then
 		for i=1, 12 do
 			local b = _G[bnames.main2 .. i]
@@ -168,62 +135,54 @@ end
 
 S.switchActionBars.roc = function()
 	DominosFrame5:SetNumButtons(8)
-	-- same as buttons below, plus half the panel height plus have a spacing
-	local yoff = 3 + Spacing + S.panels.actionbarpanel1:GetHeight()-- + Spacing/2 
-	for i = 1, 8 do
-		local b = _G[bnames.right_of_coolline .. i]
-		b:ClearAllPoints()
-		if not b.styled then
-			S.styleActionButton(b)
-		end
-
-		local xoff = (i+4-1)*Size + (i+3) * Spacing + Spacing / 2
-		b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
-	end
+	DominosFrame5:ClearAllPoints()
+	DominosFrame5:SetPoint("BOTTOMRIGHT", DominosFrame6, "TOPRIGHT", 0, 0)
 end
 
 local redoStance = function() end
 
-S.switchActionBars.stance = function()
+S.switchActionBars.stance = function(profile)
 	-- this is neede b/c we hook this function below, might be called in
 	-- combat
 	if InCombatLockdown() then return end
-	
-	local yoff = 3 + Spacing + S.panels.actionbarpanel1:GetHeight()
-	for i = 1,5 do
-		local b = _G[bnames.stance .. i]
 
-		if b then
-			b:ClearAllPoints()
-			if not b.styled then
-				S.styleActionButton(b)
-			end
+	if profile == "SanHeal" then
+		DominosFrameclass:ClearAllPoints()
+		DominosFrameclass:SetPoint("BOTTOMLEFT", DominosFrame1, "TOPLEFT", 0, 0)
+		S.unitFrames.player.Power:Hide()
+	elseif profile == "SanBear" then
+		S.switchActionBars.main("SanHeal")
+		S.switchActionBars.stance("SanHeal")
 
-			local xoff = (i-12-1)*Size + (i-13) * Spacing + Spacing / 2
-			b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, yoff)
-		end
+		local bot = DominosFrameclass:GetBottom()
+		local left = DominosFrameclass:GetLeft()
+		DominosFrameclass:ClearAllPoints()
+		DominosFrameclass:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", left, bot)
+
+		--really hacky, but no better idea how to do this...
+		-- yes, we need to do this here, yes the numbers work out, quit bugging me, future self
+		local height = DominosFrame6.Backdrop:GetHeight()
+		local width = DominosFrame6.Backdrop:GetWidth()
+		local power = S.unitFrames.player.Power
+		power:ClearAllPoints()
+		power:SetPoint("BOTTOMLEFT", S.panels.bottomlefttextbox, "BOTTOMRIGHT", 6 + Scale(2), Scale(2))
+		power:SetHeight(height - Scale(4))
+		power:SetWidth(width - Scale(4))
+		power:Show()
+
+		S.switchActionBars.main("SanBear")
 	end
 
 	-- when switching to different profiles for the stance bar, update this
-	redoStance = S.switchActionBars.stance
+	redoStance = function() S.switchActionBars.stance(profile) end
 end
 
 redoStance = S.switchActionBars.stance
 
 S.switchActionBars.right = function()
-	local barright = S.panels.actionbarright
-	for i = 1,12 do
-		local b = _G[bnames.right .. i]
-		b:ClearAllPoints()
-		if not b.styled then
-			S.styleActionButton(b)
-			-- Whyever we need this...
-			b.HotKey:ClearAllPoints()
-			b.HotKey:SetPoint("TOPRIGHT", b, "TOPRIGHT", -S.scale1, -S.scale4)
-		end
-
-		b:SetPoint("TOP", barright, "TOP", 0, - i * abspacing - (i-1)*absize)
-	end
+	DominosFrame4:ClearAllPoints()
+	DominosFrame4:SetPoint("RIGHT", UIParent, "RIGHT", -5, -54)
+	DominosFrame4:SetColumns(1)
 end
 
 S.switchActionButtons = function(profile)
@@ -231,35 +190,23 @@ S.switchActionButtons = function(profile)
 	-- combat
 	if InCombatLockdown() then return end
 
-	Dominos.db.profile.showEmptyButtons = true
-
-	hideDominosBar("14")
-	hideDominosBar("13")
-	hideDominosBar("12")
-	hideDominosBar("11")
-	hideDominosBar("10")
-	hideDominosBar("9")
-	hideDominosBar("8")
-	hideDominosBar("7")
-	hideDominosBar("3")
-	hideDominosBar("2")
-	hideDominosBar("bags")
-
 	if profile == "SanBear" then
+		S.switchActionBars.stance(profile)
 		S.switchActionBars.main(profile)
 		S.switchActionBars.roc()
-		S.switchActionBars.stance()
 		S.switchActionBars.right()
+		hideDominosBars({2, 3, 7, 8, 9, 10, 11, 12, 13, 14, "bags"})
 	elseif profile == "ToviAug" then
 		S.switchActionBars.main(profile)
 		S.switchActionBars.roc()
 		S.switchActionBars.right()
-		S.switchActionBars.stance()
+		S.switchActionBars.stance(profile)
 	else
 		S.switchActionBars.main("SanHeal")
 		S.switchActionBars.roc()
-		S.switchActionBars.stance()
+		S.switchActionBars.stance("SanHeal")
 		S.switchActionBars.right()
+		hideDominosBars({2, 3, 7, 8, 9, 10, 11, 12, 13, 14, "bags"})
 	end
 end
 
