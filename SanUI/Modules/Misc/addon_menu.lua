@@ -5,7 +5,7 @@
 --Change the numbers below to change the
 --order of the buttons to your liking.
 --To disabled a button, set it to 0.
-local addonName, addon = ...
+local _, addon = ...
 local S,C = unpack(addon)
 
 local Scale = S.Scale

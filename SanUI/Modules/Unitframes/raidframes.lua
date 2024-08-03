@@ -1,8 +1,9 @@
 -- File originally written by Tukz of Tukui (see general SanUI credits). Lots of changes
 -- by me, so never bug Tukz about any problem with this, please.
 --if true then return end
-local addonName, addon = ...
-local S,C,L = unpack(addon)
+local _, addon = ...
+local S,C = unpack(addon)
+
 local oUF = addon.oUF
 
 local Scale = S.Scale

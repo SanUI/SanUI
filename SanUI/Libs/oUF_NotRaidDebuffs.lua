@@ -1,32 +1,27 @@
-local _, ns = ...
-local oUF = ns.oUF
+local _, addon = ...
+local oUF = addon.oUF
 
-local _G = _G
-local addon = {}
+local ORD = {}
 
-local S,C = unpack(ns) 
+local S = unpack(addon) 
 
-ns.oUF_NotRaidDebuffs = addon
---_G.oUF_NotRaidDebuffs = ns.oUF_NotRaidDebuffs
+addon.oUF_NotRaidDebuffs = ORD
 
-local libDispel = SanUI[1].libDispel
+local libDispel = S.libDispel
 local bleedList = libDispel:GetBleedList()
 
 local abs, max = math.abs, math.max
-local format, floor, next = format, floor, next
+local format, floor = format, floor
 local type, pairs, wipe = type, pairs, wipe
 
-local GetActiveSpecGroup = GetActiveSpecGroup
-local GetSpecialization = GetSpecialization
 local UnitCanAttack = UnitCanAttack
 local UnitIsCharmed = UnitIsCharmed
 local GetSpellInfo = GetSpellInfo
-local IsSpellKnown = IsSpellKnown
 local UnitAura = C_UnitAuras.GetAuraDataByIndex
 local GetTime = GetTime
 
 local debuff_data = {}
-addon.DebuffData = debuff_data
+ORD.DebuffData = debuff_data
 
 local DispelPriority = {
 	Magic   = 54,
@@ -63,7 +58,7 @@ local function add(spell, priority, stackThreshold)
 	end
 end
 
-function addon:RegisterDebuffs(t)
+function ORD:RegisterDebuffs(t)
 	for spell, value in pairs(t) do
 		if type(t[spell]) == 'boolean' then
 			local oldValue = t[spell]
@@ -76,66 +71,13 @@ function addon:RegisterDebuffs(t)
 	end
 end
 
-function addon:ResetDebuffData()
+function ORD:ResetDebuffData()
 	wipe(debuff_data)
 end
 
-function addon:GetDispelColor()
+function ORD:GetDispelColor()
 	return DispelColor
 end
---[[
-local DispelList = {
-	PALADIN = { Poison = true, Disease = true },
-	PRIEST = { Magic = true, Disease = true },
-	MONK = { Disease = true, Poison = true },
-	DRUID = { Curse = true, Poison = true },
-	MAGE = { Curse = true },
-	WARLOCK = {},
-	SHAMAN = { Curse = true },
-	EVOKER = { Poison = true }
-}
-
-local playerClass = select(2, UnitClass('player'))
-
-local DispelFilter = DispelList[playerClass] or {}
-addon.DispelFilter = DispelFilter
-
-local function CheckTalentTree(tree)
-	local activeGroup = GetActiveSpecGroup()
-	local activeSpec = activeGroup and GetSpecialization(false, false, activeGroup)
-	if activeSpec then
-		return tree == activeSpec
-	end
-end
-
-local SingeMagic = 89808
-
-
-local function CheckPetSpells()
-	return IsSpellKnownOrOverridesKnown(SingeMagic, true)
-end
-
--- Check for certain talents to see if we can dispel magic or not
-local function CheckDispel(_, event, arg1)
-	if event == 'UNIT_PET' then
-		if arg1 == 'player' and playerClass == 'WARLOCK' then
-			DispelFilter.Magic = CheckPetSpells()
-		end
-	elseif event == 'CHARACTER_POINTS_CHANGED' and arg1 > 0 then
-		return -- Not interested in gained points from leveling
-	else
-		if playerClass == 'PALADIN' then
-			DispelFilter.Magic = CheckTalentTree(1)
-		elseif playerClass == 'SHAMAN' then
-			DispelFilter.Magic = CheckTalentTree(3)
-		elseif playerClass == 'DRUID' then
-			DispelFilter.Magic = CheckTalentTree(4)
-		elseif playerClass == 'MONK' or playerClass == 'EVOKER' then
-			DispelFilter.Magic = CheckTalentTree(2)
-		end
-	end
-end
---]]
 
 local function formatTime(s)
 	if s > 60 then

@@ -1,6 +1,6 @@
 if not C_AddOns.IsAddOnLoaded("BugSack") then return end
 
-local addonName, addon = ...
+local _, addon = ...
 local S,C = unpack(addon)
 
 local Scale = S.Scale

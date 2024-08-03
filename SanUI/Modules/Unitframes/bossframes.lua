@@ -1,7 +1,7 @@
 -- originally by kameelyan@wowinterface
 -- heavily modified for SanUI by Tavore of EU-Kargath
 
-local addonName, addon = ...
+local _, addon = ...
 local S,C = unpack(addon)
 local oUF = addon.oUF
 

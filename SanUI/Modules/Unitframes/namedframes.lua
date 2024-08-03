@@ -1,5 +1,6 @@
-local addonName, addon = ...
-local S,C,L = unpack(addon)
+local _, addon = ...
+local S,C = unpack(addon)
+
 local oUF = addon.oUF
 
 local Scale = S.Scale

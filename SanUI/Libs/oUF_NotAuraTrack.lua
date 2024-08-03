@@ -1,4 +1,5 @@
-local addonName, addon = ...
+local _, addon = ...
+
 local oUF = addon.oUF
 assert(oUF, "oUF_NotAuraTrack cannot find an instance of oUF. If your oUF is embedded into a layout, it may not be embedded properly.")
 

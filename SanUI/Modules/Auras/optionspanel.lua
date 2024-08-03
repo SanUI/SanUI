@@ -1,5 +1,6 @@
 local addonName, addon = ...
 local S, C = unpack(addon)
+
 local saf = addon.saf
 
 local panel = CreateFrame("Frame")
