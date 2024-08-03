@@ -1,7 +1,7 @@
 # BasicMinimap
 
-## [v10.2.7](https://github.com/funkydude/BasicMinimap/tree/v10.2.7) (2024-06-13)
-[Full Changelog](https://github.com/funkydude/BasicMinimap/compare/v10.2.6...v10.2.7) [Previous Releases](https://github.com/funkydude/BasicMinimap/releases)
+## [v11.0.2](https://github.com/funkydude/BasicMinimap/tree/v11.0.2) (2024-08-02)
+[Full Changelog](https://github.com/funkydude/BasicMinimap/compare/v11.0.1...v11.0.2) [Previous Releases](https://github.com/funkydude/BasicMinimap/releases)
 
-- bump toc  
-- Support guild instance difficulty indicator on Cataclysm  
+- Update luacheck  
+- Show daily and weekly reset timers when you mouse over the clock, closes #98  
