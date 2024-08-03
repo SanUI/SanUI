@@ -5,6 +5,7 @@ local _, addon = ...
 local S,C = unpack(addon)
 
 local oUF = addon.oUF
+local reaction_colors = oUF.colors.reaction
 
 local Scale = S.Scale
 local scales = C.sizes.scales
@@ -71,7 +72,7 @@ S.PostUpdateHealthRaid = function(health, unit, min, max)
 	-- doing this here to force friendly unit (vehicle or pet) very far away from you to update color correcly
 	-- because if vehicle or pet is too far away, unitreaction return nil and color of health bar is white.
 	if not UnitIsPlayer(unit) and UnitIsFriend(unit, "player") and C["UnitFrames"].unicolor ~= true then
-		local c = S.Colors.reaction[5]
+		local c = reaction_colors[5]
 		local r, g, b = c[1], c[2], c[3]
 		health:SetStatusBarColor(r, g, b)
 		health.bg:SetTexture(.1, .1, .1)
@@ -87,7 +88,7 @@ oUF.Tags.Methods['getnamecolor'] = function(unit)
 		local reaction = UnitReaction(unit, 'player')
 
 		if (reaction) then
-			local c = S.Colors.reaction[reaction]
+			local c = reaction_colors[reaction]
 			return string.format('|cff%02x%02x%02x', c[1] * 255, c[2] * 255, c[3] * 255)
 		else
 			local r, g, b = .84,.75,.65
