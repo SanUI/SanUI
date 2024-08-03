@@ -27,57 +27,6 @@ local hideDominosBars = function(bars)
 	end
 end
 
-S.styleActionButton = function(button)
-	if true then return end
-	S.Kill(button.IconMask)
-	S.Kill(button.SlotBackground)
-	S.Kill(button.NormalTexture)
-	S.Kill(button.Border)
-
-	button:SetSize(absize, absize)
-	S.CreateBackdrop(button, "Transparent")
-
-	-- This works better for me...
-	local br = button.Backdrop.BorderRight
-	br:ClearAllPoints()
-	br:SetPoint("TOPRIGHT", button.Backdrop, "TOPRIGHT", S.scale1, 0)
-	br:SetPoint("BOTTOMRIGHT", button.Backdrop, "BOTTOMRIGHT", S.scale1, 0)
-
-	-- Highlight Texture
-	S.Kill(button.HighlightTexture)
-	local Highlight = button:CreateTexture()
-	Highlight:SetColorTexture(1, 1, 1, 0.3)
-	--Highlight:SetInside()
-	button:SetHighlightTexture(Highlight)
-	button.HighlightTexture = Highlight
-
-	-- Pushed Texture
-	S.Kill(button.PushedTexture)
-	local Pushed = button:CreateTexture()
-	Pushed:SetColorTexture(0.9, 0.8, 0.1, 0.3)
-	--Pushed:SetInside()
-	button.PushedTexture = Pushed
-	button:SetPushedTexture(Pushed)
-
-	-- Checked Texture
-	S.Kill(button.CheckedTexture)
-	local Checked = button:CreateTexture()
-	Checked:SetColorTexture(0, 1, 0, 0.3)
-	--Checked:SetInside()
-	button.CheckedTexture = Checked
-	button:SetCheckedTexture(Checked)
-
-	button.cooldown:SetAllPoints()
-	button.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	button.styled = true
-
-	button.Count:ClearAllPoints()
-	button.Count:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -S.scale1, S.scale1)
-
-	button.HotKey:ClearAllPoints()
-	button.HotKey:SetPoint("TOPRIGHT", button, "TOPRIGHT", -S.scale1, -S.scale2)
-end
-
 S.switchActionBars = {}
 
 S.switchActionBars.main = function(profile)
