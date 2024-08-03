@@ -67,17 +67,22 @@ S.switchActionBars.stance = function(profile)
 	if InCombatLockdown() then return end
 
 	if profile == "SanHeal" then
-		DominosFrameclass:ClearAllPoints()
-		DominosFrameclass:SetPoint("BOTTOMLEFT", DominosFrame1, "TOPLEFT", 0, 0)
+		if DominosFrameclass then
+			DominosFrameclass:ClearAllPoints()
+			DominosFrameclass:SetPoint("BOTTOMLEFT", DominosFrame1, "TOPLEFT", 0, 0)
+		end
+		
 		S.unitFrames.player.Power:Hide()
 	elseif profile == "SanBear" then
 		S.switchActionBars.main("SanHeal")
 		S.switchActionBars.stance("SanHeal")
 
-		local bot = DominosFrameclass:GetBottom()
-		local left = DominosFrameclass:GetLeft()
-		DominosFrameclass:ClearAllPoints()
-		DominosFrameclass:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", left, bot)
+		if DominosFrameclass then
+			local bot = DominosFrameclass:GetBottom()
+			local left = DominosFrameclass:GetLeft()
+			DominosFrameclass:ClearAllPoints()
+			DominosFrameclass:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", left, bot)
+		end
 
 		--really hacky, but no better idea how to do this...
 		-- yes, we need to do this here, yes the numbers work out, quit bugging me, future self
@@ -139,4 +144,6 @@ local hookfun = function()
 end
 
 hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD", hookfun)
-hooksecurefunc(Dominos.modules.StanceBar, "UpdateStanceButtons", redoStance)
+if Dominos.modules.StanceBar then
+	hooksecurefunc(Dominos.modules.StanceBar, "UpdateStanceButtons", redoStance)
+end
