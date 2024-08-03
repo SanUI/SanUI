@@ -1,4 +1,4 @@
-* Check SAF options menu
+
 * Make oUF_NotRaidDebuffs work better with charges
     * cf line 188 -->s check for maxcharges, too
     * Rework to handle UnitAura payload
@@ -18,3 +18,4 @@
     * What's update_surge doing, do we still need this?
 
 * /sanui buffs does not work anymore
+    * Bug in wow api, can't open subcategory
