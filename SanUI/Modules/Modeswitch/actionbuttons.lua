@@ -100,35 +100,6 @@ S.switchActionBars.main = function(profile)
 		DominosFrame6:SetColumns(12)
 
 		DominosFrame1.Backdrop:SetAlpha(1)
-	elseif profile == "ToviAug" then
-		for i=1, 12 do
-			local b = _G[bnames.main2 .. i]
-			local c = _G[bnames.main1 .. 13-i]
-			b:ClearAllPoints()
-			c:ClearAllPoints()
-
-			if not b.styled then
-				S.styleActionButton(b)
-			  end
-			  if not c.styled then
-				S.styleActionButton(c)
-			  end
-
-			if i == 1 then
-			  b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", Spacing/2, 3 + Spacing)
-			  c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -Spacing/2, 3 + Spacing)
-			else
-			  local xoff = (i-1)*Size + (i-1)* Spacing + Spacing/2
-			  local eightwidth = 8 * Size + 7 * Spacing
-			  if i >= 5 then
-				  b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
-				  c:SetPoint("RIGHT", UIParent, "CENTER", -xoff + eightwidth + Spacing , -150)
-			  else
-				  b:SetPoint("BOTTOMLEFT", UIParent, "BOTTOM", xoff, 3 + Spacing)
-				  c:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", -xoff, 3 + Spacing)
-			  end
-			end
-		  end
 	end
 
 end

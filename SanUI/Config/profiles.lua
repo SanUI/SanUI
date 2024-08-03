@@ -76,7 +76,7 @@ S["Modes"] = {
 		["gcd"] = "ToviAug",
 		["bossbars"] = "SanHeal",
 		["coolline"] = "SanHeal",
-		["ActionButtons"] = "ToviAug",
+		["ActionButtons"] = "SanBear",
 		["DBM"] = "SanHeal",
 		["namedframes"] = "ToviAug",
 	},

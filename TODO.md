@@ -9,4 +9,12 @@
 
 * Integrate all into SanUI: oUF_GCD, oUF_Hank,
 
-* modeswitch/powerbar is still referencing tukuibar or sth
+* Castbar
+    * Player: Fix  PIPs
+    * Target: Show if not interruptible etc
+
+* Powerbar
+    * Color change for chicken (see Modeswitch/powerbar.lua) needs to be checked
+    * What's update_surge doing, do we still need this?
+
+* /sanui buffs does not work anymore
