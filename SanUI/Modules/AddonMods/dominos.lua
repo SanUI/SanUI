@@ -7,18 +7,25 @@ if not Masque then return end
 Dominos.db.profile.showEmptyButtons = true
 
 local function modDomFrames()
-    local domframes = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14,  "class"}
-    local backDropFrames  = {[1] = true, [4] = true, [6] = true}
+    local domframes = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14,  "class", "pet"}
+    local backDropFrames  = {[1] = true, [4] = true, [6] = true, pet = true}
 
     for _, domframe in ipairs(domframes) do
         local f = _G["DominosFrame" .. domframe]
         
-        if backDropFrames[domframe] then
-          S.CreateBackdrop(f)
-        end
+        if f then 
+            f:SetPadding(1)
+            f:SetSpacing(-8)
+            if f.SetShowEmptyButtons then
+                f:SetShowEmptyButtons(true)
+            end
 
-        f:SetPadding(1)
-        f:SetSpacing(-8)
+            if backDropFrames[domframe] then
+                S.CreateBackdrop(f)
+            end
+
+
+        end
 
     end
 
@@ -29,17 +36,25 @@ local function modDomFrames()
         S.CreateAnonymousBackdrop(button.icon, "Transparent")
     end
 
-    -- Somehow, the stance bar is just different...
-    DominosFrameclass:SetSpacing(-4)
-    DominosFrameclass:SetPadding(1)
-    DominosFrameclass:SetScale(1.33)
+    -- Somehow, the pet bar is just different
+    if DominosFramepet then
+        DominosFramepet:SetPadding(6)
+        DominosFramepet:SetSpacing(4)
+    end
+
+    -- Somehow, the stance bar is just even more different...
+    if DominosFrameclass then
+        DominosFrameclass:SetSpacing(-4)
+        DominosFrameclass:SetPadding(1)
+        DominosFrameclass:SetScale(1.33)
     
-    for _, button in pairs(DominosFrameclass.buttons) do
-        local curfontname, curfontheight, curfontflags = button.HotKey:GetFont()
-        button.HotKey:ClearAllPoints()
-        button.HotKey:SetJustifyH("RIGHT")
-        button.HotKey:SetFont(curfontname, curfontheight * 0.75, curfontflags)
-        button.HotKey:SetPoint("TOPRIGHT", button.icon, "TOPRIGHT", S.scale2, -S.scale1)
+        for _, button in pairs(DominosFrameclass.buttons) do
+            local curfontname, curfontheight, curfontflags = button.HotKey:GetFont()
+            button.HotKey:ClearAllPoints()
+            button.HotKey:SetJustifyH("RIGHT")
+            button.HotKey:SetFont(curfontname, curfontheight * 0.75, curfontflags)
+            button.HotKey:SetPoint("TOPRIGHT", button.icon, "TOPRIGHT", S.scale2, -S.scale1)
+        end
     end
 end
 

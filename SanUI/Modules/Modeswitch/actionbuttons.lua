@@ -16,11 +16,6 @@ local bnames = {
 	right = "MultiBarLeftActionButton"
 }
 
-local absize = C.sizes.actionbuttons
-local abspacing = C.sizes.actionbuttonspacing
-local Size = absize
-local Spacing = abspacing
-
 local hideDominosBars = function(bars)
 	for _, bar in pairs(bars) do
 		Dominos.modules.SlashCommands:OnCmd("hide "..bar)
@@ -104,10 +99,17 @@ end
 
 redoStance = S.switchActionBars.stance
 
-S.switchActionBars.right = function()
+S.switchActionBars.right_pet = function()
 	DominosFrame4:ClearAllPoints()
 	DominosFrame4:SetPoint("RIGHT", UIParent, "RIGHT", -5, -54)
 	DominosFrame4:SetColumns(1)
+
+	if DominosFramepet then
+		DominosFramepet:SetNumButtons(12)
+		DominosFramepet:SetColumns(1)
+		DominosFramepet:ClearAllPoints()
+		DominosFramepet:SetPoint("RIGHT", DominosFrame4, "LEFT", -4, 0)
+	end
 end
 
 S.switchActionButtons = function(profile)
@@ -119,18 +121,18 @@ S.switchActionButtons = function(profile)
 		S.switchActionBars.stance(profile)
 		S.switchActionBars.main(profile)
 		S.switchActionBars.roc()
-		S.switchActionBars.right()
+		S.switchActionBars.right_pet()
 		hideDominosBars({2, 3, 7, 8, 9, 10, 11, 12, 13, 14, "bags"})
 	elseif profile == "ToviAug" then
 		S.switchActionBars.main(profile)
 		S.switchActionBars.roc()
-		S.switchActionBars.right()
+		S.switchActionBars.right_pet()
 		S.switchActionBars.stance(profile)
 	else
 		S.switchActionBars.main("SanHeal")
 		S.switchActionBars.roc()
 		S.switchActionBars.stance("SanHeal")
-		S.switchActionBars.right()
+		S.switchActionBars.right_pet()
 		hideDominosBars({2, 3, 7, 8, 9, 10, 11, 12, 13, 14, "bags"})
 	end
 end
