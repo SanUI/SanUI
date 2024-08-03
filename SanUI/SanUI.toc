@@ -20,6 +20,7 @@ Core\panels.lua
 Libs\LibDispel.lua
 Libs\oUF_NotAuraTrack.lua
 Libs\oUF_NotRaidDebuffs.lua
+Libs\oUF_GCD.lua
 
 Modules\Auras\SimpleAuraFilter.lua
 Modules\Auras\optionspanel.lua

@@ -1,8 +1,0 @@
-## Interface: 100002
-## Title: oUF_GCD
-## Notes: Hungtar's oUF Global Cooldown Bar
-## Author: Hungtar
-## Version: 0.0.2
-## Dependencies: SanUI
-
-oUF_GCD.lua

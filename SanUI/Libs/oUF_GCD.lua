@@ -1,4 +1,6 @@
-local oUF = SanUI.oUF
+local _, addon = ...
+
+local oUF = addon.oUF
 
 -- based on oUF_GCD by Exactly.
 
