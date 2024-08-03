@@ -3,6 +3,8 @@
     * cf line 188 -->s check for maxcharges, too
     * Rework to handle UnitAura payload
 
+* Transition own libs to the new UnitAura payload
+
 * Fix oUF_Hanks AltPower
 
 * Integrate all into SanUI: oUF_GCD, oUF_Hank,
