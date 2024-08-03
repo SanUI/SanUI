@@ -41,7 +41,7 @@ panel.create = function()
 
     for i = 1, 10 do
         ---@class SanUIAurasConfigFrameCheckButton: CheckButton
-	    local cb = CreateFrame("CheckButton", nil, panel.scrollframe, "UICheckButtonTemplate")
+	    local cb = CreateFrame("CheckButton", "SAF_checkbox_Item" .. i, panel.scrollframe, "UICheckButtonTemplate")
 		cb.text = _G["SAF_checkbox_Item" .. i .. "Text"]
 		cb.text:SetFont(font, 12)
 		cb.type = "checkbox"
