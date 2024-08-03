@@ -131,7 +131,7 @@ S["Modes"] = {
 		["powerbar"] = "SanBear",
 		["gcd"] = "Hidden",
 		["bossbars"] = "SanChicken",
-		["coolline"] = "HedgeBM",
+		["coolline"] = "DoviBM",
 		["ActionButtons"] = "SanBear",
 		["DBM"] = "HedgeBM",
 	},
