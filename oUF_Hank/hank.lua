@@ -144,8 +144,24 @@ oUF_Hank.menu = function(self)
 
 	if(unit == "party" or unit == "partypet") then
 		ToggleDropDownMenu(nil, nil, _G["PartyMemberFrame"..self.id.."DropDown"], "cursor", 0, 0)
-	elseif(_G[cunit.."FrameDropDown"]) then
-		ToggleDropDownMenu(nil, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
+	elseif(cunit == "Player") then
+		local which = nil;
+		local contextData = {
+			fromPlayerFrame = true;
+		};
+
+		if unit == "vehicle" then
+			which = "VEHICLE";
+			contextData.unit = "vehicle";
+		else
+			which = "SELF";
+			contextData.unit = "player";
+		end
+		UnitPopup_OpenMenu(which, contextData);
+	elseif(_G[cunit.."Frame_OpenMenu"]) then
+		_G[cunit.."Frame_OpenMenu"]()
+	--elseif(_G[cunit.."FrameDropDown"]) then
+	--	ToggleDropDownMenu(nil, nil, _G[cunit.."FrameDropDown"], "cursor", 0, 0)
 	end
 end
 
@@ -1030,11 +1046,13 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 
 			unitFrame.ClassPower.animLastState = unitFrame.ClassPower.animLastState or 0
 			if current > 0 then
+				-- pretend this is still an int
+				local current_floor = math.floor(current)
 				if unitFrame.ClassPower.animLastState < current then
 					-- Play animation only when we gain power
-					unitFrame.ClassPower[current]:SetAlpha(0)
+					unitFrame.ClassPower[current_floor]:SetAlpha(0)
 					--print("Playing " .. current)
-					unitFrame.ClassPower.animations[current]:Play();
+					unitFrame.ClassPower.animations[current_floor]:Play();
 				end
 			else
 				for i = 1, max do
