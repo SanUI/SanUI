@@ -3,9 +3,6 @@ local S,C = unpack(addon)
 
 local Scale = S.Scale
 
-local absize = C.sizes.actionbuttons
-local abspacing = C.sizes.actionbuttonspacing
-
 local panels = {}
 
 local Hider = CreateFrame("Frame", nil, UIParent)
