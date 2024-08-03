@@ -3,7 +3,8 @@ local S, C = unpack(addon)
 
 local saf = addon.saf
 
-local panel = CreateFrame("Frame")
+---@class SanUIAurasOptionsFrame: Frame
+local panel = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 panel.name = "SimpleAuraFilter"
 panel.parent = addonName
 
@@ -21,12 +22,11 @@ panel.create = function()
     title:SetWidth(panel:GetWidth())
     title:SetJustifyH("LEFT")
     title:SetJustifyV("TOP")
-    title.type = "label"
     title:SetPoint("TOPLEFT", panel, 10, -10)
     title:SetPoint("RIGHT", panel, -10, 0)
     title:SetHeight(45)
     title:SetText("Select buffs to hide for profile "..(saf.profile or "NONE"))
-	
+
 	panel.title = title
 
     local scrollframe = CreateFrame("ScrollFrame", nil, panel, "FauxScrollFrameTemplate")
@@ -34,27 +34,28 @@ panel.create = function()
     scrollframe:SetPoint("RIGHT", panel, "RIGHT", -30, 0)
     scrollframe:SetHeight(320)
     scrollframe:Show()
-	
+
 	panel.scrollframe = scrollframe
 
     panel.buffs = {}
 
     for i = 1, 10 do
-	    local cb = CreateFrame("CheckButton", "SAF_checkbox_Item" .. i, panel.scrollframe, "UICheckButtonTemplate")
+        ---@class SanUIAurasConfigFrameCheckButton: CheckButton
+	    local cb = CreateFrame("CheckButton", nil, panel.scrollframe, "UICheckButtonTemplate")
 		cb.text = _G["SAF_checkbox_Item" .. i .. "Text"]
 		cb.text:SetFont(font, 12)
 		cb.type = "checkbox"
-		
+
 		cb:SetScript("OnClick", function(buff)
 			buffs_selected[buff.name] = not not buff:GetChecked()
 		end)
-        
+
         if i == 1 then
             cb:SetPoint("TOPLEFT", panel.scrollframe, "TOPLEFT", 0, 0)
         else
             cb:SetPoint("TOPLEFT", panel.buffs[i-1], "BOTTOMLEFT", 0, 0)
         end
-		
+
 		panel.buffs[i] = cb
     end
 
@@ -123,7 +124,7 @@ function panel.okay()
     for name, value in pairs(buffs_selected) do
 		saf.filters[name] = not not value
     end
-	
+
 	--BuffFrame_UpdateAllBuffAnchors()
 end
 
@@ -135,8 +136,8 @@ function panel.refresh()
     for name, filtering in pairs(saf.filters) do
         buffs_selected[name] = filtering
     end
-	
-	panel.title:SetText("Select buffs to hide for profile "..(saf.profile or "NONE"))
+
+	panel.title:SetText("Select Buffs to hide for profile "..(saf.profile or "NONE"))
 	--BuffFrame_UpdateAllBuffAnchors()
 
     panel:UpdateScrollFrame()

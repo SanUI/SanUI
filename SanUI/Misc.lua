@@ -34,6 +34,8 @@ function S.misc(self,event,arg)
 		-- Most important call here
 		S.switch2Mode(SanUIdb["Mode"])
 
+		addon.saf.optionspanel:refresh()
+
 		-- need to do those things only once
 		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 
@@ -81,6 +83,8 @@ function S.misc(self,event,arg)
 
 			-- just start empty, switch2Mode will take care of it
 			addon.saf.filters = { }
+
+			addon.saf.optionspanel:create()
 		end
 	end
 
@@ -95,6 +99,7 @@ f:SetScript("OnEvent",S.misc)
 ---@class MyConfigFrame: Frame
 ---@field category unknown
 ---@field layout unknown
+---@field categoryID number
 local main = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 main.name = addonName
 main:Hide()
@@ -121,10 +126,12 @@ addon.optionspanel = main
 local category, layout = Settings.RegisterCanvasLayoutCategory(main, addonName)
 Settings.RegisterAddOnCategory(category)
 addon.optionspanel.category = category
+addon.optionspanel.categoryID = category:GetID()
 addon.optionspanel.layout = layout
 
 category, layout = Settings.RegisterCanvasLayoutSubcategory(addon.optionspanel.category, addon.saf.optionspanel, addon.saf.optionspanel.name)
 addon.saf.optionspanel.category = category
+addon.saf.optionspanel.categoryID = category:GetID()
 addon.saf.optionspanel.layout = layout
 --InterfaceOptions_AddCategory(main)
 --InterfaceOptions_AddCategory(addon.saf.optionspanel)--, addon.optpanels.ABOUT)

@@ -5,11 +5,10 @@ S.SanSlashHandler = function(arg)
 	if arg == "addweakauras" then
 		S.weakAurasDialog()
 	elseif arg == "buffs" or arg == "auras" then
-		InterfaceOptionsFrame_OpenToCategory(addon.saf.optionspanel)
-		InterfaceOptionsFrame_OpenToCategory(addon.saf.optionspanel)
+		Settings.OpenToCategory(addon.optionspanel.categoryID)
+		Settings.OpenToCategory(addon.saf.optionspanel.categoryID)
 	elseif arg == "config" then
-		InterfaceOptionsFrame_OpenToCategory(addon.optionspanel)
-		InterfaceOptionsFrame_OpenToCategory(addon.optionspanel)
+		Settings.OpenToCategory(addon.optionspanel.categoryID)
 	end
 end
 
