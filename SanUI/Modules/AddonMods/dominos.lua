@@ -6,6 +6,14 @@ if not Masque then return end
 
 Dominos.db.profile.showEmptyButtons = true
 
+local function maybeShowPetBackdrop()
+    if DominosPetActionButton1 and DominosPetActionButton1:IsShown() then
+        DominosFramepet.Backdrop:Show()
+    else
+        DominosFramepet.Backdrop:Hide()
+    end
+end
+
 local function modDomFrames()
     local domframes = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14,  "class", "pet"}
     local backDropFrames  = {[1] = true, [4] = true, [6] = true, pet = true}
@@ -23,8 +31,6 @@ local function modDomFrames()
             if backDropFrames[domframe] then
                 S.CreateBackdrop(f)
             end
-
-
         end
 
     end
@@ -40,6 +46,9 @@ local function modDomFrames()
     if DominosFramepet then
         DominosFramepet:SetPadding(6)
         DominosFramepet:SetSpacing(4)
+        DominosPetActionButton1:HookScript("OnShow", maybeShowPetBackdrop)
+        DominosPetActionButton1:HookScript("OnHide", maybeShowPetBackdrop)
+        DominosFramepet.Backdrop:Hide()
     end
 
     -- Somehow, the stance bar is just even more different...
