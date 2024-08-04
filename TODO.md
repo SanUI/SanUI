@@ -1,8 +1,3 @@
-
-* Make oUF_NotRaidDebuffs work better with charges
-    * cf line 188 -->s check for maxcharges, too
-    * Rework to handle UnitAura payload
-
 * Transition own libs to the new UnitAura payload
 
 * Integrate into SanUI: oUF_Hank? 
