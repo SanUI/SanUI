@@ -672,7 +672,12 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 		elseif unit == "target" or unit == "focus" then power:SetPoint("BOTTOMLEFT", health[3], "BOTTOMRIGHT", 5, 0)
 		elseif unit:find("boss") then power:SetPoint("BOTTOMRIGHT", health[1], "BOTTOMLEFT", -5, 0) end
 
-		if unit == "player" then self:Tag(power, "[ppDetailed]")
+		if unit == "player" then 
+			if playerClass == "DRUID" then
+				self:Tag(power, "[apppDetailed]")
+			else
+				self:Tag(power, "[ppDetailed]")
+			end
 		elseif unit == "target" or unit == "focus" then self:Tag(power, cfg.ShowThreat and "[hpDetailed] || [ppDetailed] [threatPerc]" or "[hpDetailed] || [ppDetailed]")
 		elseif unit:find("boss") then self:Tag(power, cfg.ShowThreat and "[threatBoss] || [perhp]%" or "[perhp]%") end
 
@@ -1301,27 +1306,6 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 			end
 			if updateClassIconAnimation then
 				updateClassIconAnimation(self, current, max)
-			end
-		end
-	end
-
-	if unit == "player" and cfg.AdditionalPower and (playerClass == "DRUID" or playerClass == 'PRIEST' or playerClass == "SHAMAN") then
-		local additionalPower = self:CreateFontString(nil, "OVERLAY")
-		additionalPower:SetFontObject("UFFontMedium")
-		additionalPower:SetPoint("TOPRIGHT", power, "TOPRIGHT", 0, 15)
-		self:Tag(additionalPower, "[apDetailed]")
-		self.additionalPower = additionalPower
-
-		-- Register it with oUF
-		---@class PlayerAdditionalPowerDummyBar: StatusBar
-		local dummyBar = CreateFrame("StatusBar", nil, self)
-		self.AdditionalPower = dummyBar
-
-		dummyBar.PostUpdate = function(_, current, max)
-			if  UnitPowerType(self.unit) ~= 0 then --ADDITIONAL_POWER_BAR_NAME then
-				additionalPower:Show()
-			else
-				additionalPower:Hide()
 			end
 		end
 	end

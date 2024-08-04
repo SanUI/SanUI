@@ -5,8 +5,6 @@
 
 * Transition own libs to the new UnitAura payload
 
-* Fix oUF_Hanks AltPower
-
 * Integrate into SanUI: oUF_Hank? 
 
 * Castbar

@@ -628,12 +628,6 @@ oUF.Tags.Methods["myclassicpower"] = function(unit)
 	local color = {1,1,1}
 	return ("|cFF%.2x%.2x%.2x%s /%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, mini, maxi)
 end
-oUF.Tags.Events["ppDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"]
-oUF.Tags.Methods["ppDetailed"] = function(unit)
-	local _, pType = UnitPowerType(unit)
-	local color = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
-	return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, valShort(UnitPower(unit)), valShort(UnitPowerMax(unit)))
-end
 
 oUF_Hank_hooks.customPowerBar = {
 	sharedStyle = function(self, unit, isSingle)

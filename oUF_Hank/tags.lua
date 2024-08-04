@@ -43,26 +43,44 @@ oUF.Tags.Methods["xpRep"] = function(unit)
 end
 
 -- "163.5k/1.32m"
-oUF.Tags.Events["hpDetailed"] = oUF.Tags.Events["curhp"] .. " " .. oUF.Tags.Events["maxhp"]
+oUF.Tags.Events["hpDetailed"] = oUF.Tags.Events["curhp"] .. " " .. oUF.Tags.Events["maxhp"] .. " UPDATE_SHAPESHIFT_FORM"
 oUF.Tags.Methods["hpDetailed"] = function(unit)
 	return ("%s/%s"):format(valShort(UnitHealth(unit)), valShort(UnitHealthMax(unit)))
 end
 
 -- "23.5k/40.9k"
-oUF.Tags.Events["ppDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"]
-oUF.Tags.Methods["ppDetailed"] = function(unit)
-	local _, pType = UnitPowerType(unit)
-	local color = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
-	return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, valShort(UnitPower(unit)), valShort(UnitPowerMax(unit)))
+local manacolor = cfg.colors.power["MANA"]
+local pMana = Enum.PowerType.Mana
+---@diagnostic disable-next-line: err-esc
+local verbBar = "\|"
+oUF.Tags.Events["apppDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"] .. " UNIT_DISPLAYPOWER"
+oUF.Tags.Methods["apppDetailed"] = function(unit)
+	local pIndex, pType = UnitPowerType(unit)
+	local pColor = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
+
+	if pIndex == pMana then
+		return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(pColor[1] * 255, pColor[2] * 255, pColor[3] * 255, valShort(UnitPower(unit)), valShort(UnitPowerMax(unit)))
+	else
+		local curmana = UnitPower(unit, pMana)
+		local maxmana = UnitPowerMax(unit, pMana)
+
+		if curmana == maxmana then
+			return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(pColor[1] * 255, pColor[2] * 255, pColor[3] * 255, valShort(UnitPower(unit)), valShort(UnitPowerMax(unit)))
+		else
+			return ("|cFF%.2x%.2x%.2x%s/%s|r |cFFFFFFFF"..verbBar.."| |cFF%.2x%.2x%.2x%s/%s|r"):format(
+				manacolor[1] * 255, manacolor[2] * 255, manacolor[3] * 255, valShort(curmana), valShort(maxmana),
+				pColor[1] * 255, pColor[2] * 255, pColor[3] * 255, valShort(UnitPower(unit)), valShort(UnitPowerMax(unit))
+			)
+		end
+	end
 end
 
--- "23.5k/40.9k"
-oUF.Tags.Events["apDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"]
-oUF.Tags.Methods["apDetailed"] = function(unit)
-	local pType = "MANA" --ADDITIONAL_POWER_BAR_NAME
-	local ADDITIONAL_POWER_BAR_INDEX = 0
-	local color = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
-	return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(color[1] * 255, color[2] * 255, color[3] * 255, valShort(UnitPower(unit, ADDITIONAL_POWER_BAR_INDEX)), valShort(UnitPowerMax(unit, ADDITIONAL_POWER_BAR_INDEX)))
+oUF.Tags.Events["ppDetailed"] = oUF.Tags.Events["curpp"] .. " " .. oUF.Tags.Events["maxpp"] .. " UNIT_DISPLAYPOWER"
+oUF.Tags.Methods["ppDetailed"] = function(unit)
+	local _, pType = UnitPowerType(unit)
+	local pColor = cfg.colors.power[pType] or cfg.colors.power["FUEL"]
+
+	return ("|cFF%.2x%.2x%.2x%s/%s|r"):format(pColor[1] * 255, pColor[2] * 255, pColor[3] * 255, valShort(UnitPower(unit)), valShort(UnitPowerMax(unit)))
 end
 
 -- "<Afk>Hankthetank"
