@@ -7,10 +7,7 @@
 
 * Fix oUF_Hanks AltPower
 
-* Integrate all into SanUI: oUF_GCD, oUF_Hank,
-    * Make oUF_GCD use the new spell stuff
-        * https://github.com/BigWigsMods/WoWUI/blob/328956c15b729e025f35dce23d4010b41c858a97/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua#L16
-        * https://github.com/BigWigsMods/WoWUI/blob/328956c15b729e025f35dce23d4010b41c858a97/AddOns/Blizzard_APIDocumentationGenerated/SpellSharedDocumentation.lua#L4        * 
+* Integrate all into SanUI: oUF_Hank, * 
 
 * Castbar
     * Player: Fix  PIPs

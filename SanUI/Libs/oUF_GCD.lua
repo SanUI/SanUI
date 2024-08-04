@@ -38,12 +38,10 @@ local referenceSpells = {
 
 
 local GetTime = GetTime
-local BOOKTYPE_SPELL = BOOKTYPE_SPELL
-local GetSpellCooldown = GetSpellCooldown
-
+local BOOKTYPE_SPELL = Enum.SpellBookSpellBank.Player --BOOKTYPE_SPELL
+local GetSpellCooldown = C_Spell.GetSpellCooldown
 
 local spellid = nil
-
 
 --
 -- find a spell to use.
@@ -53,7 +51,7 @@ local Init = function()
 		for tab = 1, 4 do
 			local _, _, offset, numSpells = GetSpellTabInfo(tab)
 			for i = (1+offset), (offset + numSpells) do
-				local bspell = GetSpellBookItemName(i, BOOKTYPE_SPELL)
+				local bspell = C_SpellBook.GetSpellBookItemName(i, BOOKTYPE_SPELL)
 				if (bspell == spell) then
 					return i
 				end
@@ -79,7 +77,6 @@ local Init = function()
 	return spellid
 end
 
-
 local OnUpdateGCD = function(self)
 	local perc = (GetTime() - self.starttime) / self.duration
 	if perc > 1 then
@@ -88,7 +85,6 @@ local OnUpdateGCD = function(self)
 		self:SetValue(perc)
 	end
 end
-
 
 local OnHideGCD = function(self)
  	self:SetScript('OnUpdate', nil)
@@ -99,7 +95,6 @@ local OnShowGCD = function(self)
 	self:SetScript('OnUpdate', OnUpdateGCD)
 end
 
-
 local Update = function(self, event, unit)
 	if self.GCD then
 		if spellid == nil then
@@ -109,10 +104,12 @@ local Update = function(self, event, unit)
 		end
 
 		-- ... or 0 for luals peace of mind
-		local start, dur = GetSpellCooldown(spellid or 0)
+		local cdinfo = GetSpellCooldown(spellid or 0)
 
+		local start = cdinfo.startTime
 		if (not start) then return end
-		if (not dur) then dur = 0 end
+
+		local dur = cdinfo.duration or 0
 
 		if (dur == 0) then
 			self.GCD:Hide()
