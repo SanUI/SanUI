@@ -7,7 +7,7 @@
 
 * Fix oUF_Hanks AltPower
 
-* Integrate all into SanUI: oUF_Hank, * 
+* Integrate into SanUI: oUF_Hank? 
 
 * Castbar
     * Player: Fix  PIPs
