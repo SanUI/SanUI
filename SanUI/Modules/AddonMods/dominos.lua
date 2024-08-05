@@ -14,7 +14,7 @@ local function maybeShowPetBackdrop()
     end
 end
 
-local function modDomFrames()
+S.modDomFrames = function()
     local domframes = { 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14,  "class", "pet"}
     local backDropFrames  = {[1] = true, [4] = true, [6] = true, pet = true}
 
@@ -56,7 +56,7 @@ local function modDomFrames()
         DominosFrameclass:SetSpacing(-4)
         DominosFrameclass:SetPadding(1)
         DominosFrameclass:SetScale(1.33)
-    
+  
         for _, button in pairs(DominosFrameclass.buttons) do
             local curfontname, curfontheight, curfontflags = button.HotKey:GetFont()
             button.HotKey:ClearAllPoints()
@@ -71,6 +71,6 @@ hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD", function()
     local group = Masque:GetGroupByID("Dominos")
     group:__Set("SkinID", "SanUI")
 
-    modDomFrames()
+    S.modDomFrames()
 end)
 

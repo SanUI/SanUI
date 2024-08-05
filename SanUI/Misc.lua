@@ -29,10 +29,14 @@ function S.misc(self,event,arg)
 
 		S.disableBlizzard()
 
-		S.modCoolLine(event)
+--		00S.modCoolLine(event)
 
 		-- Most important call here
-		S.switch2Mode(SanUIdb["Mode"])
+		-- Need to do it this way b/c mode switching depends on some things, e.g. dominos frames being modded
+		hooksecurefunc(Dominos.ActionButtons,"PLAYER_ENTERING_WORLD", function()
+			S.modDomFrames()
+			S.switch2Mode(SanUIdb["Mode"])
+		end)
 
 		addon.saf.optionspanel:refresh()
 
