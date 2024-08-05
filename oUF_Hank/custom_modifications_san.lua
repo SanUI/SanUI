@@ -313,6 +313,7 @@ sharedStyle = function(self, unit, isSingle)
 	if (unit == "player" or unit == "target" or unit == "focus" or unit:find("boss")) then
 
 		---@class SanUICastBar: StatusBar
+		---@field Backdrop Frame
 		---@field bg Frame
 		local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
 		castbar:SetStatusBarTexture(normTex)
@@ -361,29 +362,10 @@ sharedStyle = function(self, unit, isSingle)
 
 		-- Castbar background
 		if (unit == "player" or unit == "target") then
-			---@class SanUICarBarBG: Frame
-			---@field SetBackdropColor function
-			---@field SetBackdropBorderColor function
-			---@field Time FontString
-			---@field Icon Texture
-			---@field Spark Texture
-			local castBarBG = CreateFrame("Frame",nil,castbar)
-			castBarBG:SetPoint("TOPLEFT",castbar,"TOPLEFT",-Scale(2),Scale(2))
-			castBarBG:SetPoint("BOTTOMRIGHT",castbar,"BOTTOMRIGHT",Scale(2),-Scale(2))
-			S.CreateBackdrop(castBarBG)
-			castBarBG.SetBackdropColor(C.colors.Castbarbg)
-			castBarBG.SetBackdropBorderColor(C.colors.BackdropColor)
-			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
-			castbar:SetFrameLevel(6)
-			castBarBG:SetFrameLevel(5)
-			self.Castbar.bg = castBarBG
+			S.CreateBackdrop(castbar)
 		elseif (unit == "focus") then
 			local castBarBG = CreateFrame("Frame",nil,castbar)
 			castBarBG:SetAllPoints(castbar)
-			--castBarBG:SetBackdrop({
-			--		  bgFile = C.Medias.Normal 
-			--		  })
-			--castBarBG:SetBackdropColor(.1,.1,.1)
 			castBarBG:SetFrameStrata(castbar:GetFrameStrata())
 			castbar:SetFrameLevel(6)
 			castBarBG:SetFrameLevel(5)
@@ -465,9 +447,7 @@ sharedStyle = function(self, unit, isSingle)
 		Spark:SetSize(20, 20)
 		Spark:SetBlendMode("ADD")
 		Spark:SetPoint("CENTER", castbar:GetStatusBarTexture(), "RIGHT", 0, 0)
-
 		castbar.Spark = Spark
-
 
 		-- Add Shield
 		if unit ~= "player" then
@@ -511,24 +491,22 @@ sharedStyle = function(self, unit, isSingle)
 			self.Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 10, -Scale(25))
 		end
 
-		-- if unit == "target" and (select(2, UnitClass("player")) == "ROGUE" or select(2, UnitClass("player")) == "DRUID") then
-			-- self.CPoints[1]:ClearAllPoints()
-			-- self.CPoints[1]:SetPoint("BOTTOMRIGHT", self, "BOTTOMLEFT",0,Scale(5))
-
-			-- for i = 2, MAX_COMBO_POINTS do
-				-- self.CPoints[i]:ClearAllPoints()
-				-- self.CPoints[i]:SetPoint("BOTTOM", self.CPoints[i - 1], "TOP")
-			-- end
-		-- end
-
 		castbar.CreatePip = function(element, stage)
 			---@class SanUICastBarPip: Frame
 			---@field Backdrop BackdropTemplate
-			local f = CreateFrame("Frame", nil)
-			S.CreateBackdrop(f)
-			f:SetHeight(castbar:GetHeight())
-			f:SetWidth(1.2)
-			f.Backdrop:SetBackdropBorderColor(1,1,1)
+			---@field SetBackdropColor function
+			local f = CreateFrame("Frame", nil, castbar, 'CastingBarFrameStagePipTemplate')
+			f.maintex = f:CreateTexture(nil, 'OVERLAY')
+			f.maintex:SetTexture(normTex)
+			f.maintex:SetVertexColor(unpack(C.colors.BorderColor))
+			f.maintex:SetAllPoints()
+			--local arrow = CreateFrame("Frame", nil, f)
+			f.tex = f:CreateTexture(nil, 'OVERLAY')
+			f.tex:SetTexture(C.medias.textures.ArrowUp)
+			f.tex:SetPoint("TOP", f, "BOTTOM", 0, -S.scale1)
+			f.tex:SetWidth(8)
+			f.tex:SetHeight(8)
+			f:SetWidth(S.scale1)
 			return f
 		end
 	end

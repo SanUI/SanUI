@@ -15,6 +15,7 @@ local textures = {
 	StatusbarNormal = [[Interface\Addons\SanUI\Medias\Textures\Flat.tga]],
 	Blank = [[Interface\Addons\SanUI\Medias\Textures\No_Backdrop.tga]],
 	Flat = [[Interface\Addons\SanUI\Medias\Textures\Flat.tga]],
+	ArrowUp = [[Interface\AddOns\WeakAuras\Media\Textures\triangle-border.tga]]
 }
 medias.textures = textures
 
