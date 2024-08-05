@@ -6,7 +6,7 @@
 ## SavedVariablesPerCharacter: SanUIdb
 ## SavedVariables: SanUIGlobaldb
 ## RequiredDeps: tullaCC, WeakAuras
-## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos, BasicMinimap, Masque
+## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos, BasicMinimap, Masque, CooldownTimeline2
 Core\init.lua
 
 Libs\ouF\oUF.xml
@@ -39,7 +39,8 @@ Modules\Unitframes\namedframes.lua
 
 Modules\AddonMods\blizzard.lua
 Modules\AddonMods\minimap.lua
-Modules\AddonMods\coolline.lua
+#Modules\AddonMods\coolline.lua
+Modules\AddonMods\cdtl2.lua
 Modules\AddonMods\bugsack.lua
 Modules\AddonMods\weakauras_displays.lua
 Modules\AddonMods\weakauras.lua
@@ -49,7 +50,7 @@ Modules\AddonMods\dominos.lua
 Modules\Modeswitch\actionbuttons.lua
 Modules\Modeswitch\bossbars.lua
 Modules\Modeswitch\castbar.lua
-Modules\Modeswitch\coolline.lua
+#Modules\Modeswitch\coolline.lua
 Modules\Modeswitch\gcd.lua
 Modules\Modeswitch\classpower.lua
 Modules\Modeswitch\powerbar.lua
