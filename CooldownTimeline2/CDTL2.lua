@@ -13,8 +13,8 @@ CDTL2.LSM = LibStub("LibSharedMedia-3.0")
 local _, _, _, tocversion = GetBuildInfo()
 CDTL2.tocversion = tocversion
 
-CDTL2.version = "2.4"
-CDTL2.noticeVersion = "2.4"
+CDTL2.version = "2.5"
+CDTL2.noticeVersion = "2.5"
 CDTL2.cdUID = 999
 CDTL2.discordlink = "https://discord.gg/4s6xUSq3qQ"
 CDTL2.lanes = {}
@@ -167,6 +167,14 @@ local defaults = {
 				defaultReady = 1,
 				defaultBar = 1,
 				useItemIcon = true,
+			},
+			other = {
+				enabled = true,
+				showByDefault = true,
+				ignoreThreshold = 3600,
+				defaultLane = 1,
+				defaultReady = 1,
+				defaultBar = 1,
 			},
 		},
 	
@@ -2036,6 +2044,8 @@ local defaults = {
 			offensives = {},
 			runes = {},
 			icds = {},
+			custom = {},
+			other = {},
 		},
 	}
 }
@@ -2049,6 +2059,7 @@ function CDTL2:OnInitialize()
 	self.db.RegisterCallback(self, "OnProfileCopied", "RefreshConfig")
 	self.db.RegisterCallback(self, "OnProfileReset", "RefreshConfig")
 	
+	--LibStub("AceConfig-3.0"):RegisterOptionsTable("CDTL2", CDTL2:GetMainOptions(), { "cdtl2", "cooldowntimeline2"})
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("CDTL2", CDTL2:GetMainOptions())
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("CDTL2Lanes", CDTL2:GetLaneOptions())
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("CDTL2Ready", CDTL2:GetReadyOptions())
@@ -2071,7 +2082,7 @@ function CDTL2:OnEnable()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("GROUP_JOINED")
 	self:RegisterEvent("GROUP_LEFT")
-	self:RegisterEvent("SPELLS_CHANGED")
+	--self:RegisterEvent("SPELLS_CHANGED")
 
 	CDTL2:CreateLanes()
 	CDTL2:CreateBarFrames()
@@ -2091,11 +2102,9 @@ function CDTL2:OnEnable()
 	
 	C_Timer.After(5, function()
 		CDTL2:GetCharacterData()
-		if CDTL2.tocversion > 40000 or CDTL2.db.profile.global["dynamicSpellDetection"] then
-			CDTL2:ScanSpellbook()
-		end
 
 		CDTL2:ScanCurrentCooldowns(CDTL2.player["class"], CDTL2.player["race"])
+
 		if CDTL2.player["class"] == "DEATHKNIGHT" then
 			self:RegisterEvent("RUNE_POWER_UPDATE")
 		end
@@ -2116,9 +2125,7 @@ end
 
 function CDTL2:ChatCommand(input)
     if not input or input:trim() == "" then
-        InterfaceOptionsFrame_OpenToCategory(CDTL2.optionsFrame)
-        InterfaceOptionsFrame_OpenToCategory(CDTL2.optionsFrame.profile)
-        InterfaceOptionsFrame_OpenToCategory(CDTL2.optionsFrame)
+        Settings.OpenToCategory("CDTL2")
 	elseif input:trim() == "lock" then
 		CDTL2:ToggleFrameLock()
 	elseif input:trim() == "unlock" then
@@ -2187,9 +2194,7 @@ private.CreateDebugFrame = function()
 	b:SetText("Options")
 	b:SetPoint("TOPLEFT", 5, -50)
 	b:SetScript("OnClick", function()
-		InterfaceOptionsFrame_OpenToCategory(CDTL2.optionsFrame)
-        InterfaceOptionsFrame_OpenToCategory(CDTL2.optionsFrame.profile)
-        InterfaceOptionsFrame_OpenToCategory(CDTL2.optionsFrame)
+		Settings.OpenToCategory("CDTL2")
 	end)
 	
 	local b = CreateFrame("Button", frameName.."_B_UnLock", f, "UIPanelButtonTemplate", BackdropTemplateMixin and "BackdropTemplate" or nil)
@@ -2205,45 +2210,7 @@ private.CreateDebugFrame = function()
 	b:SetText("TestCode1")
 	b:SetPoint("TOPLEFT", 5, -100)
 	b:SetScript("OnClick", function()
-		CDTL2:Print("SPELLBOOK:")
-		--[[for i = 1, GetNumSpellTabs() do
-			CDTL2:Print("    SLOT: "..i)
-			local offset, numSlots = select(3, GetSpellTabInfo(i))
-			for j = offset + 1, offset + numSlots do
-				local spellName, _, spellID = GetSpellBookItemName(j, BOOKTYPE_SPELL)
-				
-				if CDTL2:SearchInTable(CDTL2.spellbook, spellID) then
-					CDTL2:Print("SPELLBOOK: SKIPPING - "..tostring(spellName).." - "..tostring(spellID))
-				else
-					--table.insert(CDTL2.spellbook, spellID)
-					CDTL2:Print("SPELLBOOK: ADDING - "..tostring(spellName).." - "..tostring(spellID))
-				end
-			end
-		end]]--
-
-		for i = 1, C_SpellBook.GetNumSpellBookSkillLines() do
-			local skillLineInfo = C_SpellBook.GetSpellBookSkillLineInfo(i)
-			local offset, numSlots = skillLineInfo.itemIndexOffset, skillLineInfo.numSpellBookItems
-			
-			--local j = 1
-			for j = offset + 1, offset + numSlots do
-			--for j = offset + 1, numSlots do
-				local name, subName = C_SpellBook.GetSpellBookItemName(j, Enum.SpellBookSpellBank.Player)
-
-				if name == "Defile" then
-					local spellID = select(2,C_SpellBook.GetSpellBookItemType(j, Enum.SpellBookSpellBank.Player))
-					CDTL2:Print("SPELLBOOK: "..tostring(name).." - "..spellID)
-				end
-
-				--[[if subName == "Passive" or subName == "Racial Passive" then
-					--CDTL2:Print("SPELLBOOK: PASSIVE - "..tostring(name))
-				else
-					local spellID = select(2,C_SpellBook.GetSpellBookItemType(j, Enum.SpellBookSpellBank.Player))
-					--print(i, j, name, subName, spellID)
-					CDTL2:Print("SPELLBOOK: SPELL - "..tostring(name).." - "..spellID.." - "..subName)
-				end]]--
-			end
-		end
+		-- TEST CODE 1
 	end)
 		
 	local b = CreateFrame("Button", frameName.."_B_TestCode2", f, "UIPanelButtonTemplate", BackdropTemplateMixin and "BackdropTemplate" or nil)
@@ -2251,7 +2218,7 @@ private.CreateDebugFrame = function()
 	b:SetText("TestCode2")
 	b:SetPoint("TOPLEFT", 5, -125)
 	b:SetScript("OnClick", function()
-		
+		-- TEST CODE 2
 	end)
 	
 	-- ON UPDATE
@@ -2566,7 +2533,7 @@ function CDTL2:COMBAT_LOG_EVENT_UNFILTERED()
 							if rcd then
 								rcd.data["id"] = s["id"]
 								rcd.data["name"] = s["name"]
-								rcd.data["rank"] = s["rank"]
+								--rcd.data["rank"] = s["rank"]
 								rcd.data["desc"] = s["desc"]
 								rcd.data["icon"] = s["icon"]
 								
@@ -2582,7 +2549,7 @@ function CDTL2:COMBAT_LOG_EVENT_UNFILTERED()
 								
 								rcd.icon.icon = rcd.data["icon"]
 								rcd.icon.name = rcd.data["name"]
-								rcd.icon.rank = rcd.data["rank"]
+								--rcd.icon.rank = rcd.data["rank"]
 								rcd.icon.lane = rcd.data["lane"]
 								
 								rcd.data["targetID"] = destGUID
@@ -2605,7 +2572,7 @@ function CDTL2:COMBAT_LOG_EVENT_UNFILTERED()
 						end
 					end
 				else
-					local _, _, icon, _, _, _, _ = GetSpellInfo(spellID)
+					local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
 					
 					local s = {
 						id = spellID,
@@ -2700,88 +2667,60 @@ end
 
 function CDTL2:UNIT_SPELLCAST_SUCCEEDED(...)
 	local temp, unitTarget, castGUID, spellID = ...
-	
-	-- Spell ID 836 is a spell that gets cast on login
-	if unitTarget == "player" and spellID ~= 836 then
-		CDTL2:GetCharacterData()
-		
-		local name, rank, icon, _, _, _, _ = GetSpellInfo(spellID)
-		--local subtext = GetSpellSubtext()
-		
+
+	if unitTarget == "player" then
+		local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
+
+		local isKnown = IsSpellKnown(spellID)
+		local isKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown(spellID)
+
 		if CDTL2.db.profile.global["debugMode"] then
-			CDTL2:Print("SPELLCAST: "..castGUID)
-		end
-		
-		-- SPECIAL CASE FOR AUTOSHOT
-		if spellID == 75 then
-			local rSwingTime, _, _, _, _, _ = UnitRangedDamage("player");
-			CDTL2.tracking["rSwingTime"] = rSwingTime
-		end
-		
-		-- STANDARD SPELLS
-		local spellName
-		if CDTL2.tocversion > 40000 or CDTL2.db.profile.global["dynamicSpellDetection"] == true then
-			spellName = name
-		else
-			spellName = CDTL2:GetSpellName(spellID, CDTL2.player["class"], CDTL2.player["race"])
+			CDTL2:Print("SPELLCAST: "..spellName.."-"..castGUID)
 		end
 
-
-		local s = CDTL2:GetSpellSettings(spellName, "spells")
-		if s then
-			if not s["ignored"] then
-				local ef = CDTL2:GetExistingCooldown(s["name"], "spells")
-				if ef then
-					CDTL2:SendToLane(ef)
-					CDTL2:SendToBarFrame(ef)
-					CDTL2:CheckEdgeCases(spellName)
-				else
-					if CDTL2.db.profile.global["spells"]["enabled"] then
-						CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
+		if isKnown or isKnownOrOverridesKnown then
+			local s = CDTL2:GetSpellSettings(spellName, "spells")
+			if s then
+				if not s["ignored"] then
+					local ef = CDTL2:GetExistingCooldown(s["name"], "spells")
+					if ef then
+						CDTL2:SendToLane(ef)
+						CDTL2:SendToBarFrame(ef)
 						CDTL2:CheckEdgeCases(spellName)
-						
-						if CDTL2:IsUsedBy("spells", spellID) then
-							--CDTL2:Print("USEDBY MATCH: "..s["id"])
-						else
-							CDTL2:AddUsedBy("spells", spellID, CDTL2.player["guid"])
+					else
+						if CDTL2.db.profile.global["spells"]["enabled"] then
+							CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
+							CDTL2:CheckEdgeCases(spellName)
+							
+							if CDTL2:IsUsedBy("spells", spellID) then
+								--CDTL2:Print("USEDBY MATCH: "..s["id"])
+							else
+								CDTL2:AddUsedBy("spells", spellID, CDTL2.player["guid"])
+							end
 						end
 					end
 				end
-			end
-		else
-			if CDTL2.tocversion > 40000 or CDTL2.db.profile.global["dynamicSpellDetection"] == true then
-				if CDTL2:SearchIsInSpellBook(spellID) then
-					spellName = name
-					local rdata = {}
-		
-					local _, rank, _, _, _, _, _, originalIcon = GetSpellInfo(spellID)
-					
-					local _, _, _, cooldownDuration, _ = GetSpellCharges(spellID)
-					local _, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
-					local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
-
-					if cooldownDuration ~= nil then
-						cooldownMS = cooldownDuration * 1000
-					end
-		
-					rdata["id"] = spellID
-					rdata["name"] = spellName
-					rdata["rank"] = rank
-					rdata["bCD"] = cooldownMS
-					rdata["type"] = "spells"
-
-					if maxCharges then
-						rdata["charges"] = maxCharges
-						rdata["bCD"] = cooldownMS
-					end
-		
-					s = rdata
-				end
 			else
-				s = CDTL2:GetSpellData(spellID)
-			end
+				s = {}
+				
+				local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+				local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
+		
+				if cooldownDuration ~= nil then
+					cooldownMS = cooldownDuration * 1000
+				end
+		
+				s["id"] = spellID
+				s["name"] = spellName
+				--s["rank"] = rank
+				s["bCD"] = cooldownMS
+				s["type"] = "spells"
+		
+				if maxCharges then
+					s["charges"] = maxCharges
+					s["bCD"] = cooldownMS
+				end
 
-			if s then
 				s["icon"] = icon
 				s["lane"] = CDTL2.db.profile.global["spells"]["defaultLane"]
 				s["barFrame"] = CDTL2.db.profile.global["spells"]["defaultBar"]
@@ -2809,79 +2748,163 @@ function CDTL2:UNIT_SPELLCAST_SUCCEEDED(...)
 						CDTL2:CheckEdgeCases(spellName)
 					end
 				end
+			end
+		else
+			-- ITEM SPELLS
+			local s = nil
+			local is = CDTL2:GetItemSpell(spellID)
+			if is then
+				s = CDTL2:GetSpellSettings(is["itemName"], "items", true)
 			else
-				-- ITEM SPELLS
-				local s = nil
-				local is = CDTL2:GetItemSpell(spellID)
-				if is then
-					s = CDTL2:GetSpellSettings(is["itemName"], "items", true)
-				else
-					s = CDTL2:GetSpellSettings(spellName, "items", true, spellID)
-				end
-				
-				if s then
-					if not s["ignored"] then
-						local ef = CDTL2:GetExistingCooldown(s["name"], "items")
-						if ef then
-							CDTL2:SendToLane(ef)
-							CDTL2:SendToBarFrame(ef)
-						else
-							if CDTL2.db.profile.global["items"]["enabled"] then
-								if not CDTL2:IsUsedBy("items", spellID) then
-									CDTL2:AddUsedBy("items", spellID, CDTL2.player["guid"])
-								end
-								
-								CDTL2:CreateCooldown(CDTL2:GetUID(),"items" , s)
+				s = CDTL2:GetSpellSettings(spellName, "items", true, spellID)
+			end
+			
+			if s then
+				if not s["ignored"] then
+					local ef = CDTL2:GetExistingCooldown(s["name"], "items")
+					if ef then
+						CDTL2:SendToLane(ef)
+						CDTL2:SendToBarFrame(ef)
+					else
+						if CDTL2.db.profile.global["items"]["enabled"] then
+							if not CDTL2:IsUsedBy("items", spellID) then
+								CDTL2:AddUsedBy("items", spellID, CDTL2.player["guid"])
 							end
+							
+							CDTL2:CreateCooldown(CDTL2:GetUID(),"items" , s)
+						end
+					end
+				end
+			else
+				s = is
+				if s then
+					if CDTL2:IsValidItem(s["itemID"]) then
+						s["usedBy"] = { CDTL2.player["guid"] }
+						table.insert(CDTL2.db.profile.tables["items"], s)
+						
+						if CDTL2.db.profile.global["items"]["enabled"] then
+							CDTL2:CreateCooldown(CDTL2:GetUID(),"items" , s)
 						end
 					end
 				else
-					s = is
+					--CDTL2:Print("NOTFOUND: "..spellID)
+
+					-- RECORD 'OTHER' SPELL
+					local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
+					local s = CDTL2:GetSpellSettings(spellName, "other")
 					if s then
-						if CDTL2:IsValidItem(s["itemID"]) then
-							s["usedBy"] = { CDTL2.player["guid"] }
-							table.insert(CDTL2.db.profile.tables["items"], s)
-							
-							if CDTL2.db.profile.global["items"]["enabled"] then
-								CDTL2:CreateCooldown(CDTL2:GetUID(),"items" , s)
-							end
+						if CDTL2.db.profile.global["debugMode"] then
+							CDTL2:Print("OTHER_FOUND: "..spellName.."-"..castGUID)
 						end
 					else
-						--CDTL2:Print("NOTFOUND: "..spellID)
+						local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+						local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
+						
+						if cooldownDuration ~= nil then
+							cooldownMS = cooldownDuration * 1000
+						end
+
+						if CDTL2.db.profile.global["debugMode"] then
+							CDTL2:Print("OTHER_ADDING: "..spellName.." - "..spellID.." - "..cooldownMS)
+						end
+
+						local s = {}
+						
+						s["id"] = spellID
+						s["name"] = spellName
+						--s["rank"] = rank
+						s["bCD"] = cooldownMS
+						s["type"] = "other"
+				
+						if maxCharges then
+							s["charges"] = maxCharges
+							s["bCD"] = cooldownMS
+						end
+
+						s["icon"] = icon
+						s["lane"] = CDTL2.db.profile.global["spells"]["defaultLane"]
+						s["barFrame"] = CDTL2.db.profile.global["spells"]["defaultBar"]
+						s["readyFrame"] = CDTL2.db.profile.global["spells"]["defaultReady"]
+						s["enabled"] = CDTL2.db.profile.global["spells"]["showByDefault"]
+						s["highlight"] = false
+						s["pinned"] = false
+						s["usedBy"] = { CDTL2.player["guid"] }
+						s["setCustomCD"] = false
+						
+						local link, _ = CDTL2:GetSpellLink(spellID)
+						s["link"] = link
+						
+						if s["bCD"] / 1000 > 3 and s["bCD"] / 1000 <= CDTL2.db.profile.global["spells"]["ignoreThreshold"] then
+							s["ignored"] = false
+						else
+							s["ignored"] = true
+						end
+						
+						table.insert(CDTL2.db.profile.tables["other"], s)
+						
+						if not s["ignored"] then
+							if CDTL2.db.profile.global["spells"]["enabled"] then
+								CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
+								CDTL2:CheckEdgeCases(spellName)
+							end
+						end
 					end
 				end
 			end
 		end
 	elseif unitTarget == "pet" then
-		local _, _, icon, _, _, _, _ = GetSpellInfo(spellID)
-		--local subtext = GetSpellSubtext()
+		local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
 		
+		local isKnown = IsSpellKnown(spellID, true)
+		local isKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown(spellID, true)
+
 		if CDTL2.db.profile.global["debugMode"] then
-			CDTL2:Print("PETCAST: "..castGUID)
+			CDTL2:Print("PETCAST: "..spellName.."-"..castGUID)
 		end
-		
-		-- PET SPELLS		
-		local spellName = CDTL2:GetSpellName(spellID, CDTL2.player["class"], CDTL2.player["race"])
-		local s = CDTL2:GetSpellSettings(spellName, "petspells")
-		if s then
-			if not s["ignored"] then
-				local ef = CDTL2:GetExistingCooldown(s["name"], "petspells")
-				if ef then
-					CDTL2:SendToLane(ef)
-					CDTL2:SendToBarFrame(ef)
-				else
-					if CDTL2.db.profile.global["petspells"]["enabled"] then
-						CDTL2:CreateCooldown(CDTL2:GetUID(),"petspells" , s)
-						
-						if not CDTL2:IsUsedBy("petspells", spellID) then
-							CDTL2:AddUsedBy("petspells", spellID, CDTL2.player["guid"])
+
+		if isKnown or isKnownOrOverridesKnown then
+			local s = CDTL2:GetSpellSettings(spellName, "petspells")
+			if s then
+				if not s["ignored"] then
+					local ef = CDTL2:GetExistingCooldown(s["name"], "petspells")
+					if ef then
+						CDTL2:SendToLane(ef)
+						CDTL2:SendToBarFrame(ef)
+						CDTL2:CheckEdgeCases(spellName)
+					else
+						if CDTL2.db.profile.global["petspells"]["enabled"] then
+							CDTL2:CreateCooldown(CDTL2:GetUID(),"petspells" , s)
+							CDTL2:CheckEdgeCases(spellName)
+							
+							if CDTL2:IsUsedBy("petspells", spellID) then
+								--CDTL2:Print("USEDBY MATCH: "..s["id"])
+							else
+								CDTL2:AddUsedBy("petspells", spellID, CDTL2.player["guid"])
+							end
 						end
 					end
 				end
-			end
-		else
-			s = CDTL2:GetSpellData(spellID)
-			if s then
+			else
+				s = {}
+			
+				local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+				local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
+		
+				if cooldownDuration ~= nil then
+					cooldownMS = cooldownDuration * 1000
+				end
+		
+				s["id"] = spellID
+				s["name"] = spellName
+				--s["rank"] = rank
+				s["bCD"] = cooldownMS
+				s["type"] = "petspells"
+		
+				if maxCharges then
+					s["charges"] = maxCharges
+					s["bCD"] = cooldownMS
+				end
+
 				s["icon"] = icon
 				s["lane"] = CDTL2.db.profile.global["petspells"]["defaultLane"]
 				s["barFrame"] = CDTL2.db.profile.global["petspells"]["defaultBar"]
@@ -2906,6 +2929,7 @@ function CDTL2:UNIT_SPELLCAST_SUCCEEDED(...)
 				if not s["ignored"] then
 					if CDTL2.db.profile.global["petspells"]["enabled"] then
 						CDTL2:CreateCooldown(CDTL2:GetUID(),"petspells" , s)
+						CDTL2:CheckEdgeCases(spellName)
 					end
 				end
 			end
@@ -3256,7 +3280,7 @@ end
 
 function CDTL2:SPELLS_CHANGED(...)
     --CDTL2:Print("SPELLSCHANGED: re-scanning...")
-    CDTL2:ScanSpellbook()
+    --CDTL2:ScanSpellbook()
 end
 
 function CDTL2:DetermineOnOff()

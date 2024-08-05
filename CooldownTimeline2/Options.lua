@@ -8,12 +8,15 @@ local private = {}
 function CDTL2:GetChangeLog()
 	local changeLog = ""
 	changeLog = changeLog.."\n"
-	changeLog = changeLog.."Changelog 2.4:\n\n"
-	changeLog = changeLog.."  - Updated for The War Within\n"
-	changeLog = changeLog.."  - There are many API changes that goes along with a new expansion\n"
-	changeLog = changeLog.."  - I have updated and tested where I can, but more issues will likely show up\n"
-	changeLog = changeLog.."  - Due to the number of changes in The War Within, I highly recommend resetting all spell settings\n"
-	changeLog = changeLog.."  - Some issues might arise in Classic, or Classic Era as a result of code changes\n"
+	changeLog = changeLog.."Changelog 2.5:\n\n"
+	changeLog = changeLog.."  - Reworked spell detection completely\n"
+	changeLog = changeLog.."  - This should mean that all (hopefully) player spells are now picked up\n"
+	changeLog = changeLog.."  - In Retail it means that replacement spells, and Sky Riding spells get detected\n"
+	changeLog = changeLog.."  - Testing has been done in all 3 versions of the game without errors, but some might still show up\n"
+	changeLog = changeLog.."  - Let me know on discord if there are any issues\n"
+	changeLog = changeLog.."  - The usual 'reset spell settings and /reload' advice applies if spells dont immediately show up\n"
+	changeLog = changeLog.."  - Fixed an issue the prevented the settings panel not opening correctly\n"
+	changeLog = changeLog.."  - Fixed an issue causing errors when text on icons was disabled\n"
 	changeLog = changeLog.."\n"
 		
 	return changeLog
@@ -177,7 +180,7 @@ function CDTL2:GetMainOptions()
 								CDTL2.db.profile.global["enableTooltip"] = val
 							end,
 					},
-					dynamicSpellDetection = {
+					--[[dynamicSpellDetection = {
 						name = "Use Dynamic Spell Detection",
 						desc = "**Experimental** If selected the mod will attempt to dectect spells dynamically instead of using pre-filled data",
 						order = 400,
@@ -198,7 +201,7 @@ function CDTL2:GetMainOptions()
 								end
 								CDTL2.db.profile.global["dynamicSpellDetection"] = val
 							end,
-					},
+					},]]--
 					detectSharedCD = {
 						name = "Detect Shared Spell Cooldowns",
 						desc = "If selected the mod will attempt to dectect other spells that share a cooldown as the initially cast spell and generate icons/bars for them",
@@ -725,6 +728,7 @@ function CDTL2:GetFilterOptions()
 		petspells = "",
 		runes = "",
 		icds = "",
+		other = "",
 	}
 	CDTL2.currentFilterHidden = {
 		default = true,
@@ -736,6 +740,7 @@ function CDTL2:GetFilterOptions()
 		petspells = true,
 		runes = true,
 		icds = true,
+		other = true,
 	}
 
 	local options = {
@@ -767,6 +772,10 @@ function CDTL2:GetFilterOptions()
 									choices["OFFENSIVES"] = "Offensives"
 									choices["PETSPELLS"] = "Pet Spells"
 									choices["ICDS"] = "ICDs"
+
+									if CDTL2.db.profile.global["debugMode"] then
+										choices["OTHER"] = "Other"
+									end
 									
 								if CDTL2.player["class"] == "DEATHKNIGHT" then
 									choices["RUNES"] = "Runes"
@@ -1195,6 +1204,10 @@ function CDTL2:GetFilterOptions()
 			runes = private.GetFilterSet("runes", 800),
 		}
 	}
+
+	if CDTL2.db.profile.global["debugMode"] then
+		options["args"]["other"] = private.GetFilterSet("other", 900)
+	end
 	
 	return options
 end
@@ -2376,6 +2389,8 @@ private.GetFilterSet = function(t, o)
 							n = "Rune:   "
 						elseif t == "icds" then
 							n = "Proc:   "
+						elseif t == "other" then
+							n = "Name:   "
 						end
 						
 						return n
@@ -2451,6 +2466,8 @@ private.GetFilterSet = function(t, o)
 							n = "Recharge:"
 						elseif t == "icds" then
 							n = "Internal CD:"
+						elseif t == "other" then
+							n = "Cooldown:   "
 						end
 						
 						return n

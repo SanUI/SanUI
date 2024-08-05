@@ -74,7 +74,7 @@ function CDTL2:CreateCooldown(UID, cdType, cdData)
 		if cdData["itemIcon"] then
 			f.data["itemIcon"] = cdData["itemIcon"]
 		else
-			local _, _, icon, _, _, _, _ = GetSpellInfo(f.data["id"])
+			local spellName, icon, originalIcon = CDTL2:GetSpellInfo(f.data["id"])
 			f.data["icon"] = icon
 			
 			local item = Item:CreateFromItemID(f.data["itemID"])
@@ -705,16 +705,18 @@ function CDTL2:RefreshIcon(cd)
 			end
 		end
 	else
-		if f.txt.text1 then
-			f.txt.text1:Hide()
-		end
-		
-		if f.txt.text2 then
-			f.txt.text2:Hide()
-		end
-		
-		if f.txt.text3 then
-			f.txt.text3:Hide()
+		if f.txt then
+			if f.txt.text1 then
+				f.txt.text1:Hide()
+			end
+			
+			if f.txt.text2 then
+				f.txt.text2:Hide()
+			end
+			
+			if f.txt.text3 then
+				f.txt.text3:Hide()
+			end
 		end
 	end
 	
@@ -1402,9 +1404,11 @@ private.IconUpdate = function(f, elapsed)
 			end
 			
 			if ic:GetAlpha() ~= 0 then
-				private.UpdateText(f, ic.txt.text1, s["icons"]["text1"], s["icons"]["text1"]["text"])
-				private.UpdateText(f, ic.txt.text2, s["icons"]["text2"], s["icons"]["text2"]["text"])
-				private.UpdateText(f, ic.txt.text3, s["icons"]["text3"], s["icons"]["text3"]["text"])
+				if ic.txt then
+					private.UpdateText(f, ic.txt.text1, s["icons"]["text1"], s["icons"]["text1"]["text"])
+					private.UpdateText(f, ic.txt.text2, s["icons"]["text2"], s["icons"]["text2"]["text"])
+					private.UpdateText(f, ic.txt.text3, s["icons"]["text3"], s["icons"]["text3"]["text"])
+				end
 			end
 			
 			if CDTL2.db.profile.global["enableTooltip"] then	
