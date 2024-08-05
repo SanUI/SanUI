@@ -10,7 +10,7 @@ local colors = {
 	NormalTexture =[[Interface\AddOns\Tukui\Medias\Textures\Status\Tukui]],
 	RangeAlpha = 0.3,
 	CastingColor = {0.29, 0.77, 0.30},
-	Castbarbg = { 29/255, 63/255, 72/255 },
+	Castbarbg = { 0.11,0.11,0.11}, --29/255, 63/255, 72/255 },
 }
 
 C.colors = colors

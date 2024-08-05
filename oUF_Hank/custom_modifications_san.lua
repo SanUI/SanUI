@@ -345,9 +345,14 @@ sharedStyle = function(self, unit, isSingle)
 		castbar.CustomTimeText = S["UnitFrames"].CustomCastTimeText
 		castbar.CustomDelayText = S["UnitFrames"].CustomCastDelayText
 		--castbar.PostCastStart = S["UnitFrames"].CheckCast
-		castbar.PostCastStart = function(element, unit, name, rank, castid)
+		castbar.PostCastStart = function(element, unit)
 			--S["UnitFrames"].CheckChannel(element, unit)
 			if (element.empowering) then
+				element:SetStatusBarColor(unpack(C.colors.CastingColor))
+			end
+			if element.notInterruptible then
+				element:SetStatusBarColor(0.2, 0.2, 0.2, 1)
+			else
 				element:SetStatusBarColor(unpack(C.colors.CastingColor))
 			end
 		end
@@ -463,6 +468,17 @@ sharedStyle = function(self, unit, isSingle)
 
 		castbar.Spark = Spark
 
+
+		-- Add Shield
+		if unit ~= "player" then
+			local Shield = castbar:CreateTexture(nil, 'OVERLAY')
+			Shield:SetTexture(132360)
+			Shield:SetSize(20, 20)
+			Shield:SetPoint('RIGHT', castbar, 'LEFT')
+			Shield:SetTexCoord(0.03, 0.97, 0.03, 0.97)
+			castbar.Shield = Shield
+		end
+	
 		-- GCD frame for player
 		if (unit == "player") then
 			---@class SanUICastBarGCD: StatusBar
