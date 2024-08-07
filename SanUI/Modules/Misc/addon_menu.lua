@@ -359,3 +359,22 @@ if SanUIButtonOrder["MDT"] then
 		end
 	end
 end
+
+-----CDTL2 Button -------
+if SanUIButtonOrder["CDTL2"] then
+	---@class AddonMenuButton
+	local CDTL2Button = CreateFrame("Frame", "CDTL2Toggle", Menu)
+	CreateButton(CDTL2Button, SanUIButtonOrder["CDTL2"])
+
+	if not IsAddOnLoaded("CooldownTimeline2") then
+		CDTL2Button.title:SetTextColor(0.6, 0.6, 0.6)
+		CDTL2Button.title:SetText("CDTL2 Disabled")
+	else
+		CDTL2Button.title:SetText("CDTL2")
+
+		CDTL2Button:SetScript("OnMouseDown", function()
+			    SlashCmdList.ACECONSOLE_CDTL2()
+				MenuMouseDown()
+		end)
+	end
+end

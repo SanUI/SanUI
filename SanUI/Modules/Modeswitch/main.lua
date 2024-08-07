@@ -69,10 +69,10 @@ S.switch2Mode = function(mode)
 		print("No ActionButtons profile for mode "..mode.."! Can't Switch!")
 	end
 
-	if S["Modes"][mode]["coolline"] and IsAddOnLoaded("CoolLine") then
-		S.switchCoolLine(S["Modes"][mode]["coolline"])
+	if S["Modes"][mode]["cdtl2"] and IsAddOnLoaded("CooldownTimeline2") then
+		S.switchCDTL2(S["Modes"][mode]["cdtl2"])
 	else
-		print("Either you didn't set the cooline profile for mode ".. mode .." or CoolLine is not loaded. Either way, cannot load CoolLine profile!")
+		print("Either you didn't set the cdtl2 profile for mode ".. mode .." or CDTL2 is not loaded. Either way, cannot load CDTL2 profile!")
 	end
 
 	if S["Modes"][mode]["DBM"] and IsAddOnLoaded("DBM-Core") then

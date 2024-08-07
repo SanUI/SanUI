@@ -92,9 +92,9 @@ function S.misc(self,event,arg)
 		end
 	end
 
-	if(event == "PLAYER_TALENT_UPDATE" or event == "ACTIVE_TALENT_GROUP_CHANGED") then
-		S.modCoolLine(event)
-	end
+	--if(event == "PLAYER_TALENT_UPDATE" or event == "ACTIVE_TALENT_GROUP_CHANGED") then
+--		S.modCoolLine(event)
+--	end
 
 end
 

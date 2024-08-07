@@ -1,44 +1,77 @@
 local _, addon = ...
 local S,C = unpack(addon)
 
-S.modCDTL2 = function()
-    local l1 = CDTL2.db.profile.lanes.lane1
-    l1.bgTexture = "Solid"
-    l1.bgTextureColor.r = C.colors.BackdropColor[1]
-    l1.bgTextureColor.b = C.colors.BackdropColor[2]
-    l1.bgTextureColor.g = C.colors.BackdropColor[3]
-    l1.bgTextureColor.a = 1
-    l1.fgTextureColor.a = 0
-    l1.border.style = "1 Pixel"
-    l1.border.size = 1
-    l1.border.color.a = 1
-    l1.border.color.r = C.colors.BorderColor[1]
-    l1.border.color.b = C.colors.BorderColor[2]
-    l1.border.color.g = C.colors.BorderColor[3]
-    l1.icons.bgTextureColor.a = 0
-    l1.icons.bgTexture = nil
-    l1.icons.border.color.a = 0
-    l1.icons.text1.enabled = false
-    l1.icons.text2.enabled = false
-    l1.icons.text3.enabled = true
-    CDTL2:RefreshAllIcons()
-    CDTL2:RefreshLane(1)
+S.overwriteCDTL2Profile = function(pname)
+    local import = S.CDTL2profiles[pname]
+    local db = CDTL2.db
 
-    --S.CreateAnonymousBackdrop(CDTL2_Lane_1_BD)
+    ---@class LibDeflate 
+    ---@field DecodeForPrint function
+    ---@field DecompressDeflate function
+    local LibDeflate = LibStub:GetLibrary("LibDeflate")
+    local unprintable = LibDeflate:DecodeForPrint(import)
+    local inflated = LibDeflate:DecompressDeflate(unprintable)
 
-    for i = 1, 3 do
-        CDTL2.db.profile.ready["ready"..i]["enabled"] = false
-        CDTL2:RefreshReady(i)
+    -- SERIALIZE
+    local LibAceSerializer = LibStub:GetLibrary("AceSerializer-3.0")
+    local success, data = LibAceSerializer:Deserialize(inflated)
 
-        CDTL2.db.profile.barFrames["frame"..i]["enabled"] = false
-        CDTL2:RefreshBarFrame(i)
-    end
+    if success then
+        --CDTL2.db.profile = data
+        db.profile.global = data.global
+        db.profile.lanes = data.lanes
+        db.profile.barFrames = data.barFrames
+        db.profile.ready = data.ready
+        db.profile.holders = data.holders
+        db.profile.tables = data.tables
 
-    for i = 2, 3 do
-        CDTL2.db.profile.lanes["lane"..i]["enabled"] = false
-        CDTL2:RefreshLane(i)
+        CDTL2:RefreshConfig()
+        CDTL2:ToggleFrameLock()	
+        --CDTL2:Print("Data Imported?")
+    else
+        print("Could not load CDTL2 profile '"..pname.."'")
     end
 end
+
+S.createCDTL2Profile = function(pname)
+    local db = CDTL2.db
+
+    db:SetProfile(pname)  
+end
+
+S.switchCDTL2 = function(profile)
+    local db = CDTL2.db
+
+    local profiles = db:GetProfiles()
+
+    for _, v in pairs(profiles) do
+        if v == profile then
+            db:SetProfile(profile)
+            return
+        end
+    end
+
+    -- did not find profile, create and see if we can overwrite the settings
+    S.createCDTL2Profile(profile)
+
+    if S.CDTL2profiles[profile] then
+        S.overwriteCDTL2Profile(profile)
+    end
+end
+
+--[[
+S.modCDTL2 = function()
+    ---@class AceAddon
+    ---@field db table
+    ---@field RefreshAllIcons function
+    ---@field RefreshLane function
+    ---@field RefreshReady function
+    ---@field RefreshBarFrame function
+    local CDTL2 = CDTL2
+
+
+end
+--]]
 
 hooksecurefunc(CDTL2, "PLAYER_ENTERING_WORLD", function()
     ---@class Masque
@@ -50,6 +83,6 @@ hooksecurefunc(CDTL2, "PLAYER_ENTERING_WORLD", function()
        group:__Set("SkinID", "SanUI")
     end
 
-    S.modCDTL2()
+    --S.modCDTL2()
 end)
 
