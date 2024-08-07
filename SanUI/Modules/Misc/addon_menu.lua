@@ -101,9 +101,11 @@ end
 ---@class AddonMenuOpen: Frame
 local AddonMenuOpen = CreateFrame("Frame", "MenuOpen", UIParent)
 S.CreateBackdrop(AddonMenuOpen)
+AddonMenuOpen.origPoint = {"BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(2), 0}
 if AnchorSide == true then
-	AddonMenuOpen:SetSize(S.scale10, S.scale10)
-	AddonMenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
+	AddonMenuOpen:SetSize(C.sizes.minimapbuttons, C.sizes.minimapbuttons)
+	AddonMenuOpen.origsize = C.sizes.minimapbuttons
+	AddonMenuOpen:SetPoint(unpack(AddonMenuOpen.origPoint))
 else
 	AddonMenuOpen:SetSize(Minimap:GetWidth()+S.scale4 , Scale(14))
 	AddonMenuOpen:SetPoint("BOTTOM", Minimap, "TOP", 0, Scale(5 + Offset))
@@ -111,7 +113,8 @@ end
 S.AddonMenuOpen = AddonMenuOpen
 
 local Text = AddonMenuOpen:CreateFontString(nil, "OVERLAY")
-Text:SetFont(font, 10)
+Text:SetFont(font, 12)
+AddonMenuOpen.fontsize = 12
 Text:SetText("a")
 Text:SetJustifyH("CENTER")
 Text:SetJustifyV("MIDDLE")
@@ -147,10 +150,10 @@ local function MenuMouseDown()
 		AddonMenuOpen:SetFrameStrata("MEDIUM")
 		Menu:Hide()
 		S.raidutilities:Show()
-		AddonMenuOpen:SetSize(S.scale10, S.scale10)
+		AddonMenuOpen:SetSize(AddonMenuOpen.origsize, AddonMenuOpen.origsize)
 		AddonMenuOpen:ClearAllPoints()
-		AddonMenuOpen:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), 0)
-		Text:SetFont(font, 10)
+		AddonMenuOpen:SetPoint(unpack(AddonMenuOpen.origPoint))
+		Text:SetFont(font, AddonMenuOpen.fontsize)
 		AddonMenuOpen.text:SetText("a")
 		AddonMenuOpen:Show()
 	else

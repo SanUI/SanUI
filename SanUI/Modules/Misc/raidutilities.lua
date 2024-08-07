@@ -7,8 +7,8 @@ local fontsize = 11
 
 ---@class RaidUtilitiesButton: Frame
 local raidutilities  = CreateFrame("Frame", nil, UIParent)
-raidutilities:SetSize(S.scale10, S.scale10)
-raidutilities:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(3), Scale(28))
+raidutilities:SetSize(C.sizes.minimapbuttons, C.sizes.minimapbuttons)
+raidutilities:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(2), Scale(36))
 S.CreateBackdrop(raidutilities)
 raidutilities:SetFrameStrata("MEDIUM")
 --button:SetParent(Tukui_PetBattleFrameHider)
@@ -17,7 +17,7 @@ S.raidutilities = raidutilities
 local markbarbg
 
 local Text = raidutilities:CreateFontString(nil, "OVERLAY")
-Text:SetFont(font, 10)
+Text:SetFont(font, 12)
 Text:SetText("r")
 Text:SetJustifyH("CENTER")
 Text:SetJustifyV("MIDDLE")

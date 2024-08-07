@@ -20,6 +20,7 @@ local sizes = {
 	minimap = 160,
 	minimappanelsheight = 19,
 	datatextfontsize = 12,
+	minimapbuttons = 15,
 	scales = {
 	},
 	raidframes = {
