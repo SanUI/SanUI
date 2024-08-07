@@ -7,7 +7,8 @@ local fonts = {
 	Font = [[Interface\AddOns\WeakAuras\Media\Fonts\FiraSans-Medium.ttf]],
 	sharednames = {
 		Font = "Fira Sans Medium",
-	}
+	},
+	Hankfont = [[Interface/AddOns/WeakAuras/Media/Fonts/FiraSansCondensed-Medium.ttf]],
 }
 medias.fonts = fonts
 

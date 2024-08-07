@@ -1,4 +1,6 @@
 local oUF = SanUI.oUF
+local S, C = unpack(SanUI)
+local font = C.medias.fonts.Hankfont
 
 oUF_Hank_config = {
 
@@ -103,17 +105,17 @@ colors = setmetatable({
 -- If you use fontain (http://www.wowace.com/addons/fontain/), please change "UFFonts" under "Single font overrides"
 
 -- Target name
-FontStyleBig = {[[Interface\AddOns\Tukui\Medias\Fonts\Expressway.ttf]], 26, "OUTLINE"},
+FontStyleBig = { font, 26, "OUTLINE"},
 -- Power, absolute health
-FontStyleMedium = {[[Interface\AddOns\Tukui\Medias\Fonts\Expressway.ttf]], 14, "OUTLINE"},
+FontStyleMedium = {font, 16, "OUTLINE"},
 -- ToT, TToT, pet
-FontStyleSmall = {[[Interface\AddOns\Tukui\Medias\Fonts\Expressway.ttf]], 14, "OUTLINE"},
+FontStyleSmall = {font, 14, "OUTLINE"},
 -- Castbar: Time text, focus spell name
-CastBarBig = {[[Interface\AddOns\Tukui\Medias\Fonts\Expressway.ttf]], 15, "OUTLINE"},
+CastBarBig = {font, 15, "OUTLINE"},
 -- Castbar: Spell name (player, target)
-CastBarMedium = {[[Interface\AddOns\Tukui\Medias\Fonts\Expressway.ttf]], 9, "OUTLINE"},
+CastBarMedium = {font, 9, "OUTLINE"},
 -- Castbar: Latency
-CastBarSmall = {[[Interface\AddOns\Tukui\Medias\Fonts\Expressway.ttf]], 8, "OUTLINE"},
+CastBarSmall = {font, 8, "OUTLINE"},
 
 ---------------------- Castbar ------------------------------
 -------------------------------------------------------------
