@@ -19,7 +19,7 @@ Masque:AddSkin("SanUI", {
 		Width = othersize,
 		Height = othersize,
 		Color = {1,0,0,0},
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Backdrop]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Backdrop]],
 	},
 	Icon = {
 		Width = bsize,
@@ -30,7 +30,7 @@ Masque:AddSkin("SanUI", {
 		Width = othersize,
 		Height = othersize,
 		Color = {1, 1, 1, 0.5},
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Flash]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Flash]],
 	},
 	Cooldown = {
 		Width = othersize,
@@ -40,14 +40,14 @@ Masque:AddSkin("SanUI", {
 		Width = othersize,
 		Height = othersize,
 		Color = {1, 0.8, 0.0, 0.25},
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Flash]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Flash]],
 	},
 	Normal = {
 		Width = othersize,
 		Height = othersize,
 		Static = true,
 		Color = {0,0,0,0},--C.colors.BorderColor,
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Normal]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Normal]],
 	},
 	Disabled = {
 		Hide = true,
@@ -57,7 +57,7 @@ Masque:AddSkin("SanUI", {
 		Height = othersize,
 		BlendMode = "ADD",
 		Color = {1, 1, 1, 1},
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Border]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Border]],
 	},
 	Border = {
 		Width = othersize,
@@ -66,7 +66,7 @@ Masque:AddSkin("SanUI", {
 		Color = C.colors.BorderColor, --{0, 0, 0, 1},
 		OffsetX = -6,
 		OffsetY = -6,
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Border]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Border]],
 	},
 	Gloss = {
 		Hide = true,
@@ -83,7 +83,7 @@ Masque:AddSkin("SanUI", {
 		Height = othersize,
 		BlendMode = "ADD",
 		Color = {1, 1, 1, 0.25},
-		Texture = [[Interface\AddOns\Masque_ElvUI\Textures\Highlight]],
+		Texture = [[Interface\AddOns\SanUI\Medias\Textures\Highlight]],
 	},
 	Name = {
 		Width = othersize,
