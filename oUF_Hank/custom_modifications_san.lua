@@ -260,7 +260,7 @@ sharedStyle = function(self, unit, isSingle)
 		text:SetPoint(unpack(spell.pos))
 
 		text.anyCaster = spell.anyCaster
-		text.format = spell.format
+		text.formatstr = spell.formatstr
 		text.res = 0.3
 		text.timers = spell.timers
 
