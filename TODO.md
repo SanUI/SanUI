@@ -1,5 +1,3 @@
-* Transition own libs to the new UnitAura payload
-
 * Integrate into SanUI: oUF_Hank? 
 
 * Powerbar

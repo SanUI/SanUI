@@ -275,7 +275,7 @@ local function Shared(self, unit)
 		local icon = CreateFrame("Frame", nil, auras)
 		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
-		icon.spellID = spell.spellID
+		icon.spellId = spell.spellId
 		icon.anyCaster = spell.anyCaster
 		icon.timers = spell.timers
 		icon.cooldownAnim = spell.cooldownAnim
@@ -307,7 +307,7 @@ local function Shared(self, unit)
 		icon.tex = tex
 		icon.color = spell.color
 
-		auras.Icons[spell.spellID] = icon
+		auras.Icons[spell.spellId] = icon
 		icon:Hide()
 	end
 
@@ -361,8 +361,8 @@ local function Shared(self, unit)
 
 	turtle_icon:Hide()
 
-	for _, spellID in pairs(S["UnitFrames"].RaidBuffsTracking["ALL"]) do
-		auras.Icons[spellID] = turtle_icon
+	for _, spellId in pairs(S["UnitFrames"].RaidBuffsTracking["ALL"]) do
+		auras.Icons[spellId] = turtle_icon
 	end
 
 	for _, spell in ipairs(S["UnitFrames"].TextAuras[S.MyClass] or {}) do
@@ -372,18 +372,18 @@ local function Shared(self, unit)
 		text:SetPoint(unpack(spell.pos))
 
 		text.anyCaster = spell.anyCaster
-		text.format = spell.format
+		text.formatstr = spell.formatstr
 		text.res = 0.3
 		text.timers = spell.timers
 
-		if type(spell.spellID == "table") then
-			for _, id in ipairs(spell.spellID) do
+		if type(spell.spellId == "table") then
+			for _, id in ipairs(spell.spellId) do
 				auras.Texts[id] = text
 			end
-			text.spellIDs = spell.spellID
+			text.spellIds = spell.spellId
 		else
-			auras.Texts[spell.spellID] = text
-			text.spellID = spell.spellID
+			auras.Texts[spell.spellId] = text
+			text.spellId = spell.spellId
 		end
 		text:Hide()
 	end
@@ -394,11 +394,10 @@ local function Shared(self, unit)
 		auras.Icons[8936]:SetFrameLevel(auras.Icons[18562]:GetFrameLevel()+1)
 	end
 
-	self.NotAuraTrack = auras
-
 	-- oUF_NotRaidDebuffs
 	local raiddebuffs = S["UnitFrames"].RaidDebuffs
-	self.NotRaidDebuffs = { } --forceShow = true }
+	local notraiddebuffs = { } --forceShow = true }
+	
 	for i = 1,2 do
 		---@class SanUIRaidFramesRaidDebuffs: Frame
 		local rd = CreateFrame("Frame", nil, self)
@@ -430,19 +429,18 @@ local function Shared(self, unit)
 		rd.cd:SetReverse(true)
 
 		rd.count = rd:CreateFontString(nil, "OVERLAY")
-		rd.count:SetFont(font2, 9, "THINOUTLINE")
+		rd.count:SetFont(font2, 10, "THINOUTLINE")
 		rd.count:SetPoint("BOTTOMRIGHT", rd, "BOTTOMRIGHT", 0, S.scale2)
 		rd.count:SetTextColor(1, .9, 0)
 
 		rd.Debuffs = raiddebuffs
-
-		self.NotRaidDebuffs[i] = rd
+		notraiddebuffs[i] = rd
 	end
 
 	local ORD = addon.oUF_NotRaidDebuffs
 	--ORD.ShowDispelableDebuff = true
 	--ORD.FilterDispellableDebuff = true
-	ORD.MatchBySpellName = true
+	--ORD.MatchBySpellName = true
 	--ORD.SetDebuffTypeColor = RaidDebuffs.SetBorderColor
 
 	ORD:ResetDebuffData()
@@ -454,6 +452,10 @@ local function Shared(self, unit)
 		ORD:RegisterDebuffs(raiddebuffs)
 		ORD.RegisteredSanUI = true
 	end
+
+	auras.NotRaidDebuffs = notraiddebuffs
+
+	self.NotAuraTrack = auras
 
 	return self
 end

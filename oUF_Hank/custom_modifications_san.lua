@@ -224,7 +224,7 @@ sharedStyle = function(self, unit, isSingle)
 		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
 
-		icon.spellID = spell.spellID
+		icon.spellId = spell.spellId
 		icon.anyCaster = spell.anyCaster
 		icon.timers = spell.timers
 		icon.cooldownAnim = spell.cooldownAnim
@@ -249,7 +249,7 @@ sharedStyle = function(self, unit, isSingle)
 		icon.tex = tex
 		icon.color = spell.color
 
-		auras.Icons[spell.spellID] = icon
+		auras.Icons[spell.spellId] = icon
 		icon:Hide()
 	end
 
@@ -264,14 +264,14 @@ sharedStyle = function(self, unit, isSingle)
 		text.res = 0.3
 		text.timers = spell.timers
 
-		if type(spell.spellID == "table") then
-			for _, id in ipairs(spell.spellID) do
+		if type(spell.spellId == "table") then
+			for _, id in ipairs(spell.spellId) do
 				auras.Texts[id] = text
 			end
-			text.spellIDs = spell.spellID
+			text.spellIds = spell.spellId
 		else
-			auras.Texts[spell.spellID] = text
-			text.spellID = spell.spellID
+			auras.Texts[spell.spellId] = text
+			text.spellId = spell.spellId
 		end
 		text:Hide()
 	end

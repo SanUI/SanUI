@@ -288,7 +288,7 @@ local function CreateUnitFrame(self, unit)
 	local buffs = {
 	-- Rejuvenation
 	{
-		spellID = 774,
+		spellId = 774,
 		pos = {"TOPLEFT"},
 		color = {0.4, 0.8, 0.2},
 		anyCaster = false,
@@ -297,7 +297,7 @@ local function CreateUnitFrame(self, unit)
 	  },
 	-- Germination
 	{
-		spellID = 155777,
+		spellId = 155777,
 		pos = {"TOPRIGHT"},
 		color = {0.4, 0.8, 0.2},
 		anyCaster = false,
@@ -305,7 +305,7 @@ local function CreateUnitFrame(self, unit)
 	  },
 	-- Wild Growth
 	{
-		spellID = 48438,
+		spellId = 48438,
 		pos = {"BOTTOMRIGHT"},
 		color = {0, 1, 1},
 		anyCaster = false,
@@ -313,7 +313,7 @@ local function CreateUnitFrame(self, unit)
 	  },
 	-- Regrowth
 	{
-		spellID = 8936,
+		spellId = 8936,
 		pos = {"BOTTOMLEFT"},
 		color = {0.4, 0.8, 0.2},
 		anyCaster = false,
@@ -323,10 +323,10 @@ local function CreateUnitFrame(self, unit)
 
 	local bufftexts = {
 		{
-			spellID = {33763, 33778, 43421, 188550, 290754, 186371},
+			spellId = {33763, 33778, 43421, 188550, 290754, 186371},
 			pos = {"CENTER"},
 			textsize = 10,
-			format = "|cFF00FF00%u|r",
+			formatstr = "|cFF00FF00%u|r",
 			timers = { { 2, "|cFFFF0000%.1f|r", 0.05}, { 4.5, "|cFFFFFF00%u|r", 0.3} },
 			anyCaster = false,
 		},
@@ -339,7 +339,7 @@ local function CreateUnitFrame(self, unit)
 		spell.pos[2] = auras
 		icon:SetPoint(unpack(spell.pos))
 
-		icon.spellID = spell.spellID
+		icon.spellId = spell.spellId
 		icon.anyCaster = spell.anyCaster
 		icon.timers = spell.timers
 		icon.cooldownAnim = spell.cooldownAnim
@@ -371,7 +371,7 @@ local function CreateUnitFrame(self, unit)
 		icon.tex = tex
 		icon.color = spell.color
 
-		auras.Icons[spell.spellID] = icon
+		auras.Icons[spell.spellId] = icon
 		icon:Hide()
 	end
 
@@ -382,18 +382,18 @@ local function CreateUnitFrame(self, unit)
 		text:SetPoint(unpack(spell.pos))
 
 		text.anyCaster = spell.anyCaster
-		text.format = spell.format
+		text.formatstr = spell.formatstr
 		text.res = 0.3
 		text.timers = spell.timers
 
-		if type(spell.spellID == "table") then
-			for _, id in ipairs(spell.spellID) do
+		if type(spell.spellId == "table") then
+			for _, id in ipairs(spell.spellId) do
 				auras.Texts[id] = text
 			end
-			text.spellIDs = spell.spellID
+			text.spellIds = spell.spellId
 		else
-			auras.Texts[spell.spellID] = text
-			text.spellID = spell.spellID
+			auras.Texts[spell.spellId] = text
+			text.spellId = spell.spellId
 		end
 		text:Hide()
 	end
@@ -408,7 +408,7 @@ oUF:RegisterStyle("oUF_BossBars", CreateUnitFrame)
 
 oUF:SetActiveStyle("oUF_BossBars")
 
-local boss1 = oUF:Spawn("player", "oUF_Boss1")
+local boss1 = oUF:Spawn("boss1", "oUF_Boss1")
 boss1:SetPoint("TOPRIGHT",UIParent,"TOP",-5,-5)
 S.unitFrames.boss1 = boss1
 

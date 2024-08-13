@@ -12,7 +12,7 @@ if not S["UnitFrames"].RaidBuffsTracking then
 end
 
 -- Cornerbuffs:
--- .spellID The spells ID
+-- .spellId The spells ID
 -- .pos Table. The position, unpacked into arguments to SetPoint, relative inside the auras frame
 -- .color The standard color to apply to the texture (leave nil for images, probably)
 -- .anyCaster If truthy, show regardless of caster. If falsy, show only if the player was the caster
@@ -23,7 +23,7 @@ end
 S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   -- Rejuvenation
 	{
-    spellID = 774,
+    spellId = 774,
     pos = {"CENTER", nil, "CENTER", -Scale(14), 0},
     color = {0.4, 0.8, 0.2},
     anyCaster = false,
@@ -32,7 +32,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   },
   -- Germination
 	{
-    spellID = 155777,
+    spellId = 155777,
     pos = {"CENTER", nil, "CENTER", -Scale(14), -Scale(9)},
     color = {0.4, 0.8, 0.2},
     anyCaster = false,
@@ -40,7 +40,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   },
   -- Wild Growth
 	{
-    spellID = 48438,
+    spellId = 48438,
     pos = {"CENTER", nil, "CENTER", -Scale(5), 0},
     color = {0, 1, 1},
     anyCaster = false,
@@ -48,7 +48,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   },
   -- Regrowth
 	{
-    spellID = 8936,
+    spellId = 8936,
     pos = {"CENTER", nil, "CENTER", Scale(3), 0},
     color = {0.4, 0.8, 0.2},
     anyCaster = false,
@@ -56,7 +56,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   },
 	--[[ swiftmend -- SPECIAL DON'T CHANGE THIS (commenting out is ok)
 	{
-		spellID = 18562,
+		spellId = 18562,
 		pos = {"TOPLEFT",0,-Scale(7)},
 		color = {1,1,1},
 		anyCaster = false,
@@ -64,7 +64,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
 	--]]
 	-- adaptive swarm necro
 	{
-	  spellID = 325748,
+	  spellId = 325748,
     pos = {"CENTER", nil, "CENTER", Scale(12), 0},
     color = {153/255, 102/255, 0},
     anyCaster = false,
@@ -74,7 +74,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
   },
   	-- adaptive swarm talent
 	{
-	  spellID = 391891,
+	  spellId = 391891,
     pos = {"LEFT", nil, "CENTER", Scale(12), 0},
     color = {153/255, 102/255, 0},
     anyCaster = false,
@@ -87,7 +87,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
 S["UnitFrames"].RaidBuffsTracking["Priest"] = {
 	{
 		-- Atonement
-		spellID = 194384,
+		spellId = 194384,
 		pos = {"TOP", nil, "TOP", 0, -2 },
 		color = { 1, 1, 1},
 		anyCaster = false,
@@ -95,7 +95,7 @@ S["UnitFrames"].RaidBuffsTracking["Priest"] = {
 	},
 	{
 		-- PWS
-		spellID = 17,
+		spellId = 17,
 		pos = {"TOP", nil, "TOP", 8, -2 },
 		color = { 219/255, 163/255, 7/255},
 		anyCaster = false,
@@ -103,7 +103,7 @@ S["UnitFrames"].RaidBuffsTracking["Priest"] = {
 	},
 	{
 		-- Renew
-		spellID = 139,
+		spellId = 139,
 		pos = {"CENTER", nil, "CENTER", 0, 0 },
 		color = {0.4, 0.8, 0.2},
 		anyCaster = false,
@@ -120,16 +120,16 @@ S["UnitFrames"].TextAuras["Druid"] = S["UnitFrames"].TextAuras["Druid"] or {}
 table.insert(
 	S["UnitFrames"].TextAuras["Druid"],
 	{
-		spellID = {33763, 33778, 43421, 188550, 290754, 186371},
+		spellId = {33763, 33778, 43421, 188550, 290754, 186371},
 		pos = {"TOP",0,1},
 		textsize = 10,
-		format = "|cFF00FF00%u|r",
+		formatstr = "|cFF00FF00%u|r",
 		timers = { { 2, "|cFFFF0000%.1f|r", 0.05}, { 4.5, "|cFFFFFF00%u|r", 0.3} },
 		anyCaster = false,
 	}
 )
 
--- Defensive cooldowns: Simple list of spellIDs
+-- Defensive cooldowns: Simple list of spellIds
 S["UnitFrames"].RaidBuffsTracking["ALL"] = {
 	1022, -- Blessing of Protection
 	102342, -- Ironbark

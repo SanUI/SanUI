@@ -89,7 +89,7 @@ local function formatTime(s)
 	end
 end
 
-local function OnUpdate(self, elapsed)
+local function OnTextUpdate(self, elapsed)
 	self.elapsed = (self.elapsed or 0) + elapsed
 	if self.elapsed >= 0.1 then
 		local timeLeft = self.endTime - GetTime()
@@ -149,7 +149,7 @@ local function UpdateDebuffs(self, data)
 				if duration and (duration > 0) then
 					f.endTime = endTime
 					f.nextUpdate = 0
-					f:SetScript('OnUpdate', OnUpdate)
+					f:SetScript('OnUpdate', OnTextUpdate)
 					f.time:Show()
 				else
 					f:SetScript('OnUpdate', nil)
