@@ -49,7 +49,7 @@ S.switchActionBars.main = function(profile)
 end
 
 S.switchActionBars.roc = function()
-	DominosFrame5:SetNumButtons(8)
+	DominosFrame5:SetNumButtons(5)
 	DominosFrame5:ClearAllPoints()
 	DominosFrame5:SetPoint("BOTTOMRIGHT", DominosFrame6, "TOPRIGHT", 0, 0)
 end

@@ -17,6 +17,7 @@ end
 local sizes = {
 	actionbuttons = 32,
 	actionbuttonspacing = 4,
+	actionbuttonhotkey = 12,
 	minimap = 160,
 	minimappanelsheight = 19,
 	datatextfontsize = 12,

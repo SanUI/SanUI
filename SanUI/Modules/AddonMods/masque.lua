@@ -100,7 +100,7 @@ Masque:AddSkin("SanUI", {
 	},
 	HotKey = {
 		Width = othersize,
-		Height = 10,
+		Height = 12,
 		OffsetX = 0,
 		OffsetY = 0,
 		Point = "TOPRIGHT",

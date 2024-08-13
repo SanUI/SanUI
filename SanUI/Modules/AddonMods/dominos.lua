@@ -5,6 +5,7 @@ local Masque = LibStub("Masque", true)
 if not Masque then return end
 
 Dominos.db.profile.showEmptyButtons = true
+local fontsize = C.sizes.actionbuttonhotkey
 
 local function maybeShowPetBackdrop()
     if DominosPetActionButton1 and DominosPetActionButton1:IsShown() then
@@ -12,6 +13,12 @@ local function maybeShowPetBackdrop()
     else
         DominosFramepet.Backdrop:Hide()
     end
+end
+
+S.modButtonHotKeyFont = function(button, scale)
+    scale = scale or 1
+    local curfontname, _, curfontflags = button.HotKey:GetFont()
+    button.HotKey:SetFont(curfontname, scale * fontsize, curfontflags)
 end
 
 S.modDomFrames = function()
@@ -39,6 +46,7 @@ S.modDomFrames = function()
         button.HotKey:ClearAllPoints()
         button.HotKey:SetPoint("TOPRIGHT", button.icon, "TOPRIGHT", S.scale2, -S.scale1)
         button.HotKey:SetJustifyH("RIGHT")
+        S.modButtonHotKeyFont(button)
         S.CreateAnonymousBackdrop(button.icon, "Transparent")
     end
 
@@ -58,10 +66,9 @@ S.modDomFrames = function()
         DominosFrameclass:SetScale(1.33)
   
         for _, button in pairs(DominosFrameclass.buttons) do
-            local curfontname, curfontheight, curfontflags = button.HotKey:GetFont()
             button.HotKey:ClearAllPoints()
             button.HotKey:SetJustifyH("RIGHT")
-            button.HotKey:SetFont(curfontname, curfontheight * 0.75, curfontflags)
+            S.modButtonHotKeyFont(button, 1)
             button.HotKey:SetPoint("TOPRIGHT", button.icon, "TOPRIGHT", S.scale2, -S.scale1)
         end
     end
