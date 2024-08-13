@@ -209,12 +209,16 @@ oUF_Hank_hooks.FocusAuras = {
 sharedStyle = function(self, unit, isSingle)
 	if unit ~= "focus" then return end
 
-	---@class SanUIFocusAuras: Frame
-	local auras = CreateFrame("Frame", nil, self)
-	auras:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, S.scale1)
-	auras:SetScale(1/cfg.FocusFrameScale)
-	auras:SetSize(36, 14)
-	S.CreateBackdrop(auras)
+	local auraHolder = CreateFrame("Frame", nil, self)
+	auraHolder:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, S.scale1)
+	auraHolder:SetScale(1/cfg.FocusFrameScale)
+	auraHolder:SetSize(36, 20)
+	S.CreateBackdrop(auraHolder)
+
+	---@class SanUIFocusAuras:Frame
+	local auras = CreateFrame("Frame", nil, auraHolder)
+	auras:SetPoint("TOP")
+	auras:SetSize(36, 30)
 	auras.Icons = {}
 	auras.Texts = {}
 
