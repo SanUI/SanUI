@@ -49,7 +49,8 @@ local spellid = nil
 local Init = function()
 	local FindInSpellbook = function(spell)
 		for tab = 1, 4 do
-			local _, _, offset, numSpells = GetSpellTabInfo(tab)
+			local skillLineInfo = C_SpellBook.GetSpellBookSkillLineInfo(tab)
+			local offset, numSpells = skillLineInfo.itemIndexOffset, skillLineInfo.numSpellBookItems
 			for i = (1+offset), (offset + numSpells) do
 				local bspell = C_SpellBook.GetSpellBookItemName(i, BOOKTYPE_SPELL)
 				if (bspell == spell) then
@@ -61,7 +62,7 @@ local Init = function()
 	end
 
 	for _, lspell in pairs(referenceSpells) do
-		local na = GetSpellInfo (lspell)
+		local na = C_Spell.GetSpellName(lspell)
 		local x = FindInSpellbook(na)
 		if x ~= nil then
 			spellid = lspell

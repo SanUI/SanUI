@@ -4,8 +4,8 @@ local S, C = unpack(addon)
 S.switchPowerbar = function(profile)
 	local player = S.unitFrames.player
 
-  local wrathname = GetSpellInfo(190984)
-  local starfirename = GetSpellInfo(194153)
+  local wrathname = C_Spell.GetSpellName(190984)
+  local starfirename = C_Spell.GetSpellName(194153)
 
   local Power = player.Power
   Power.update_surge = function(self, event, unit)
@@ -50,7 +50,7 @@ S.switchPowerbar = function(profile)
 				Power:SetStatusBarColor(0.5,1,0)
 			else
 				local _, _, _, _, _, _, _, _, spellID = UnitCastingInfo(unit)
-				local spellname = GetSpellInfo(spellID) or ""
+				local spellname = C_Spell.GetSpellName(spellID) or ""
 
 				if spellname == wrathname and cur + 6 >= 30 then
 					Power:SetStatusBarColor(0.5,1,0)

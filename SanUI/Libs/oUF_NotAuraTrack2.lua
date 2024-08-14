@@ -88,7 +88,7 @@ local DispelColor = {
 
 local function add_debuff(spell, priority, stackThreshold)
 	if type(spell) == 'number' then
-		spell = GetSpellInfo(spell)
+		spell = C_Spell.GetSpellName(spell)
 	end
 
 	if spell then
