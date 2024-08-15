@@ -128,7 +128,7 @@ S.position_tooltip_default = function(self, parent)
 	local f = ChatFrame1Tab
 	if (f and f:IsShown()) then
 		self:ClearAllPoints()
-		self:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 0, 0)
+		self:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 0, 34)
 	else
 		self:ClearAllPoints()
 		self:SetPoint("BOTTOMRIGHT", S.panels.bottomrighttextbox , 0, 2)
