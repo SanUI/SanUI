@@ -4,7 +4,6 @@ local S,C = unpack(addon)
 local Scale = S.Scale
 
 local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
---local GetSpellName = function(id) return select(1,GetSpellInfo(id)) end
 
 function S.weakAurasDialog(new_version, old_version)
 	---@class WeakAurasDialog: Frame
