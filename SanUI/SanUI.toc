@@ -6,7 +6,7 @@
 ## SavedVariablesPerCharacter: SanUIdb
 ## SavedVariables: SanUIGlobaldb
 ## RequiredDeps: tullaCC, WeakAuras
-## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos, BasicMinimap, Masque, CooldownTimeline2
+## OptionalDeps: Tukui, BugSack, Details, DBM-Core,BigWigs, REHack, MythicDungeonTools, Dominos, BasicMinimap, Masque, CooldownTimeline2, ls_Glass
 Core\init.lua
 
 Libs\ouF\oUF.xml
@@ -46,6 +46,7 @@ Modules\AddonMods\weakauras_displays.lua
 Modules\AddonMods\weakauras.lua
 Modules\AddonMods\masque.lua
 Modules\AddonMods\dominos.lua
+Modules\AddonMods\lsglass.lua
 
 Modules\Modeswitch\actionbuttons.lua
 Modules\Modeswitch\bossbars.lua
