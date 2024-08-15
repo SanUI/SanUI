@@ -2082,6 +2082,7 @@ function CDTL2:OnEnable()
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("GROUP_JOINED")
 	self:RegisterEvent("GROUP_LEFT")
+	--self:RegisterEvent("PLAYER_TALENT_UPDATE")
 	--self:RegisterEvent("SPELLS_CHANGED")
 
 	CDTL2:CreateLanes()
@@ -2703,10 +2704,11 @@ function CDTL2:UNIT_SPELLCAST_SUCCEEDED(...)
 			else
 				s = {}
 				
-				local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+				--local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+				local currentCharges, maxCharges, cooldownDuration = CDTL2:GetSpellCharges(spellID)
 				local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
 		
-				if cooldownDuration ~= nil then
+				if cooldownDuration ~= nil and cooldownDuration ~= 0 then
 					cooldownMS = cooldownDuration * 1000
 				end
 		
@@ -2797,10 +2799,11 @@ function CDTL2:UNIT_SPELLCAST_SUCCEEDED(...)
 							CDTL2:Print("OTHER_FOUND: "..spellName.."-"..castGUID)
 						end
 					else
-						local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+						--local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+						local currentCharges, maxCharges, cooldownDuration = CDTL2:GetSpellCharges(spellID)
 						local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
 						
-						if cooldownDuration ~= nil then
+						if cooldownDuration ~= nil and cooldownDuration ~= 0 then
 							cooldownMS = cooldownDuration * 1000
 						end
 
@@ -2887,10 +2890,11 @@ function CDTL2:UNIT_SPELLCAST_SUCCEEDED(...)
 			else
 				s = {}
 			
-				local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+				--local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+				local currentCharges, maxCharges, cooldownDuration = CDTL2:GetSpellCharges(spellID)
 				local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
 		
-				if cooldownDuration ~= nil then
+				if cooldownDuration ~= nil and cooldownDuration ~= 0 then
 					cooldownMS = cooldownDuration * 1000
 				end
 		
@@ -3229,23 +3233,21 @@ function CDTL2:RUNE_POWER_UPDATE(...)
 end
 
 function CDTL2:ACTIVE_TALENT_GROUP_CHANGED()
-	if CDTL2.db.profile.global["debugMode"] then
-		CDTL2:Print("SPEC CHANGE")
-	end
+	C_Timer.After(2, function()
+		CDTL2:OnTalentChanges()
+	end)
+end
 
-	for _, cd in pairs(CDTL2.cooldowns) do    
-		local spellID = cd.data and cd.data["id"]
-		if spellID and IsSpellKnown(spellID) then
-			--local start, duration, enabled, _ = GetSpellCooldown(spellID)
-			local start, duration, enabled = CDTL2:GetSpellCooldown(spellID)
-			if duration and duration > 1.5 then
-			CDTL2:SendToLane(cd)
-			CDTL2:SendToBarFrame(cd)
-			end
-		elseif cd.data and cd.data["currentCD"] then
-			cd.data["currentCD"] = 0
-		end
-	end
+function CDTL2:TRAIT_CONFIG_UPDATED()
+	C_Timer.After(2, function()
+		CDTL2:OnTalentChanges()
+	end)
+end
+
+function CDTL2:RUNE_UPDATED()
+	C_Timer.After(2, function()
+		CDTL2:OnTalentChanges()
+	end)
 end
 
 function CDTL2:PLAYER_ENTERING_WORLD()	
@@ -3319,9 +3321,15 @@ function CDTL2:TurnOn()
 		CDTL2:RegisterEvent("PLAYER_REGEN_ENABLED")
 		CDTL2:RegisterEvent("UNIT_POWER_FREQUENT")
 		CDTL2:RegisterEvent("UNIT_POWER_UPDATE")
+
+		CDTL2:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		
-		if CDTL2.tocversion >= 20000 then
-			CDTL2:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		if CDTL2.tocversion >= 110000 then
+			--CDTL2:RegisterEvent("TRAIT_CONFIG_UPDATED")
+		end
+
+		if CDTL2.tocversion < 20000 then
+			CDTL2:RegisterEvent("RUNE_UPDATED")
 		end
 		
 		CDTL2.enabled = true
@@ -3341,8 +3349,16 @@ function CDTL2:TurnOff()
 		CDTL2:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		CDTL2:UnregisterEvent("UNIT_POWER_FREQUENT")
 		CDTL2:UnregisterEvent("UNIT_POWER_UPDATE")
-		
+
 		CDTL2:UnregisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		
+		if CDTL2.tocversion >= 110000 then
+			--CDTL2:UnregisterEvent("TRAIT_CONFIG_UPDATED")
+		end
+
+		if CDTL2.tocversion < 20000 then
+			CDTL2:UnregisterEvent("RUNE_UPDATED")
+		end
 		
 		CDTL2.enabled = false
 	end

@@ -21,8 +21,10 @@ end
 
 function CDTL2:AuraExists(unit, aura)
 	for i = 1, 40, 1 do
-		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, "HELPFUL")
+		--local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, "HELPFUL")
 		
+		local name, spellID, duration, icon, count, expirationTime = CDTL2:GetUnitAura(unit, i, "HELPFUL")
+
 		if name then
 			if aura == name then
 				local s = {
@@ -41,15 +43,17 @@ function CDTL2:AuraExists(unit, aura)
 	end
 	
 	for i = 1, 40, 1 do
-		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, "HARMFUL")
+		--local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, "HARMFUL")
 		
+		local name, spellID, duration, icon, count, expirationTime = CDTL2:GetUnitAura(unit, i, "HARMFUL")
+
 		if name then
 			if aura == name then
 				local s = {
 					id = spellId,
 					bCD = duration * 1000,
 					name = name,
-					type = "buffs",
+					type = "debuffs",
 					icon = icon,
 					stacks = count,
 					endTime = expirationTime,
@@ -824,6 +828,26 @@ function CDTL2:GetSpellInfo(id)
 	return name, icon, originalIcon
 end
 
+function CDTL2:GetSpellCharges(id)
+	local currentCharges = 0
+	local maxCharges = 0
+	local cooldownDuration = 0
+
+	if CDTL2.tocversion >= 110000 then
+    	local data = C_Spell.GetSpellCharges(id)
+
+		if data then
+			currentCharges = data["currentCharges"]
+			maxCharges = data["maxCharges"]
+			cooldownDuration = data["cooldownDuration"]
+		end
+	else
+		currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(id)
+	end
+	
+	return currentCharges, maxCharges, cooldownDuration
+end
+
 function CDTL2:GetSpellCooldown(id)
 	local start = ""
 	local duration = 0
@@ -885,6 +909,34 @@ end
 function CDTL2:GetUID()
 	CDTL2.cdUID = CDTL2.cdUID + 1
 	return CDTL2.cdUID
+end
+
+function CDTL2:GetUnitAura(unit, i, filter)
+	--local name, spellID, duration, icon, count, expirationTime = CDTL2:GetUnitAura(unit, i, "HELPFUL")
+
+	local name = ""
+	local spellID = 0
+	local duration = 0
+	local icon = 0
+	local count = 0
+	local expirationTime = 0
+
+	if CDTL2.tocversion >= 110000 then
+    	local data = C_Spell.GetSpellCooldown(unit, i, filter)
+
+		if data then
+			name = data["name"]
+			spellID = data["spellId"]
+			duration = data["duration"]
+			icon = data["icon"]
+			count = data["applications"]
+			expirationTime = data["expirationTime"]
+		end
+	else
+		name, icon, count, _, duration, expirationTime, _, _, _, spellId = UnitAura(unit, i, filter)
+	end
+	
+	return name, spellID, duration, icon, count, expirationTime
 end
 
 function CDTL2:GetValidChildren(f)
@@ -1008,6 +1060,38 @@ function CDTL2:LoadFilterList(type, specialCase)
 	end
 	
 	return list
+end
+
+function CDTL2:OnTalentChanges()
+	if CDTL2.db.profile.global["debugMode"] then
+		if CDTL2.tocversion >= 110000 then
+			CDTL2:Print("RETAIL TALENT CHANGE")
+		else
+			CDTL2:Print("CLASSIC/ERA TALENT/RUNE CHANGE")
+		end
+	end
+
+	for _, cd in pairs(CDTL2.cooldowns) do    
+		local spellID = cd.data and cd.data["id"]
+		local isKnown = IsSpellKnown(spellID)
+		local isKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown(spellID)
+
+		if spellID then
+			local isKnown = IsSpellKnown(spellID)
+			local isKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown(spellID)
+
+			if isKnown or isKnownOrOverridesKnown then
+				--local start, duration, enabled, _ = GetSpellCooldown(spellID)
+				local start, duration, enabled = CDTL2:GetSpellCooldown(spellID)
+				if duration and duration > 1.5 then
+					CDTL2:SendToLane(cd)
+					CDTL2:SendToBarFrame(cd)
+				end
+			elseif cd.data and cd.data["currentCD"] then
+				cd.data["currentCD"] = 0
+			end
+		end
+	end
 end
 
 function CDTL2:RecycleOffensiveCD()
@@ -1194,7 +1278,8 @@ function CDTL2:ScanCurrentCooldowns(class, race)
 					
 						local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
 						
-						local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+						--local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+						local currentCharges, maxCharges, cooldownDuration = CDTL2:GetSpellCharges(spellID)
 						local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
 				
 						if cooldownDuration ~= nil then
@@ -1248,82 +1333,85 @@ function CDTL2:ScanCurrentCooldowns(class, race)
 			local offset, numSlots = select(3, GetSpellTabInfo(i))
 			for j = offset + 1, offset + numSlots do
 				local spellName, _, spellID = GetSpellBookItemName(j, BOOKTYPE_SPELL)
-				local start, duration, enabled = CDTL2:GetSpellCooldown(spellID)
+				if spellID then
+					local start, duration, enabled = CDTL2:GetSpellCooldown(spellID)
 
-				if duration > 1.5 then
-					if CDTL2.db.profile.global["debugMode"] then
-						CDTL2:Print("COOLINGDOWN: "..tostring(spellName).." - "..spellID)
-					end
+					if duration > 1.5 then
+						if CDTL2.db.profile.global["debugMode"] then
+							CDTL2:Print("COOLINGDOWN: "..tostring(spellName).." - "..spellID)
+						end
 
-					local s = CDTL2:GetSpellSettings(spellName, "spells")
-					if s then
-						if not s["ignored"] then
-							local ef = CDTL2:GetExistingCooldown(s["name"], "spells")
-							if ef then
-								CDTL2:SendToLane(ef)
-								CDTL2:SendToBarFrame(ef)
-								CDTL2:CheckEdgeCases(spellName)
-							else
-								if CDTL2.db.profile.global["spells"]["enabled"] then
-									CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
+						local s = CDTL2:GetSpellSettings(spellName, "spells")
+						if s then
+							if not s["ignored"] then
+								local ef = CDTL2:GetExistingCooldown(s["name"], "spells")
+								if ef then
+									CDTL2:SendToLane(ef)
+									CDTL2:SendToBarFrame(ef)
 									CDTL2:CheckEdgeCases(spellName)
-									
-									if CDTL2:IsUsedBy("spells", spellID) then
-										--CDTL2:Print("USEDBY MATCH: "..s["id"])
-									else
-										CDTL2:AddUsedBy("spells", spellID, CDTL2.player["guid"])
+								else
+									if CDTL2.db.profile.global["spells"]["enabled"] then
+										CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
+										CDTL2:CheckEdgeCases(spellName)
+										
+										if CDTL2:IsUsedBy("spells", spellID) then
+											--CDTL2:Print("USEDBY MATCH: "..s["id"])
+										else
+											CDTL2:AddUsedBy("spells", spellID, CDTL2.player["guid"])
+										end
 									end
 								end
 							end
-						end
-					else
-						s = {}
-					
-						local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
-						
-						local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
-						local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
-				
-						if cooldownDuration ~= nil then
-							cooldownMS = cooldownDuration * 1000
-						end
-				
-						s["id"] = spellID
-						s["name"] = spellName
-						--s["rank"] = rank
-						s["bCD"] = cooldownMS
-						s["type"] = "spells"
-				
-						if maxCharges then
-							s["charges"] = maxCharges
-							s["bCD"] = cooldownMS
-						end
-
-						s["icon"] = icon
-						s["lane"] = CDTL2.db.profile.global["spells"]["defaultLane"]
-						s["barFrame"] = CDTL2.db.profile.global["spells"]["defaultBar"]
-						s["readyFrame"] = CDTL2.db.profile.global["spells"]["defaultReady"]
-						s["enabled"] = CDTL2.db.profile.global["spells"]["showByDefault"]
-						s["highlight"] = false
-						s["pinned"] = false
-						s["usedBy"] = { CDTL2.player["guid"] }
-						s["setCustomCD"] = false
-						
-						local link, _ = CDTL2:GetSpellLink(spellID)
-						s["link"] = link
-						
-						if s["bCD"] / 1000 > 3 and s["bCD"] / 1000 <= CDTL2.db.profile.global["spells"]["ignoreThreshold"] then
-							s["ignored"] = false
 						else
-							s["ignored"] = true
-						end
+							s = {}
 						
-						table.insert(CDTL2.db.profile.tables["spells"], s)
-						
-						if not s["ignored"] then
-							if CDTL2.db.profile.global["spells"]["enabled"] then
-								CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
-								CDTL2:CheckEdgeCases(spellName)
+							local spellName, icon, originalIcon = CDTL2:GetSpellInfo(spellID)
+							
+							--local currentCharges, maxCharges, _, cooldownDuration, _ = GetSpellCharges(spellID)
+							local currentCharges, maxCharges, cooldownDuration = CDTL2:GetSpellCharges(spellID)
+							local cooldownMS, gcdMS = GetSpellBaseCooldown(spellID)
+					
+							if cooldownDuration ~= nil then
+								cooldownMS = cooldownDuration * 1000
+							end
+					
+							s["id"] = spellID
+							s["name"] = spellName
+							--s["rank"] = rank
+							s["bCD"] = cooldownMS
+							s["type"] = "spells"
+					
+							if maxCharges then
+								s["charges"] = maxCharges
+								s["bCD"] = cooldownMS
+							end
+
+							s["icon"] = icon
+							s["lane"] = CDTL2.db.profile.global["spells"]["defaultLane"]
+							s["barFrame"] = CDTL2.db.profile.global["spells"]["defaultBar"]
+							s["readyFrame"] = CDTL2.db.profile.global["spells"]["defaultReady"]
+							s["enabled"] = CDTL2.db.profile.global["spells"]["showByDefault"]
+							s["highlight"] = false
+							s["pinned"] = false
+							s["usedBy"] = { CDTL2.player["guid"] }
+							s["setCustomCD"] = false
+							
+							local link, _ = CDTL2:GetSpellLink(spellID)
+							s["link"] = link
+							
+							if s["bCD"] / 1000 > 3 and s["bCD"] / 1000 <= CDTL2.db.profile.global["spells"]["ignoreThreshold"] then
+								s["ignored"] = false
+							else
+								s["ignored"] = true
+							end
+							
+							table.insert(CDTL2.db.profile.tables["spells"], s)
+							
+							if not s["ignored"] then
+								if CDTL2.db.profile.global["spells"]["enabled"] then
+									CDTL2:CreateCooldown(CDTL2:GetUID(),"spells" , s)
+									CDTL2:CheckEdgeCases(spellName)
+								end
 							end
 						end
 					end

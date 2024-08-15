@@ -1048,7 +1048,8 @@ private.CalcTransitionIndicator = function(f, s)
 						bWidth = bWidth - s["height"]
 					end
 					
-					position = (ms["max"] / f.data["baseCD"]) * bWidth
+					--position = (ms["max"] / f.data["baseCD"]) * bWidth
+					position = f.data["baseCD"] > 0 and (ms["max"] / f.data["baseCD"]) * bWidth or bWidth
 				elseif style == "REGION" then
 					local percent = ms["max"] / f.data["baseCD"]
 					

@@ -18,6 +18,14 @@ function CDTL2:GetChangeLog()
 	changeLog = changeLog.."  - Fixed an issue the prevented the settings panel not opening correctly\n"
 	changeLog = changeLog.."  - Fixed an issue causing errors when text on icons was disabled\n"
 	changeLog = changeLog.."\n"
+	changeLog = changeLog.."Changelog 2.5r1:\n\n"
+	changeLog = changeLog.."  - Updated for Retail 11.0.2\n"
+	changeLog = changeLog.."  - Updated detection of spec/talent changes for all versions\n"
+	changeLog = changeLog.."  - Updated detection of rune changes in SoD\n"
+	changeLog = changeLog.."  - Fixed a divide-by-zero issue\n"
+	changeLog = changeLog.."  - Fixed an issue in which scanning flyout spells (Hunter pet management spells for example) would procuce an error\n"
+	changeLog = changeLog.."  - Cooldowns for spells in the flyout may not be detected (for now)\n"
+	changeLog = changeLog.."\n"
 		
 	return changeLog
 end
