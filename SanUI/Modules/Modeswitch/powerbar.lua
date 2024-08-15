@@ -50,7 +50,11 @@ S.switchPowerbar = function(profile)
 				Power:SetStatusBarColor(0.5,1,0)
 			else
 				local _, _, _, _, _, _, _, _, spellID = UnitCastingInfo(unit)
-				local spellname = C_Spell.GetSpellName(spellID) or ""
+				local spellname
+
+				if spellID then
+					spellname = C_Spell.GetSpellName(spellID)
+				end
 
 				if spellname == wrathname and cur + 6 >= 30 then
 					Power:SetStatusBarColor(0.5,1,0)
