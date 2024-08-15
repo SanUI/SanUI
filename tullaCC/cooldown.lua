@@ -3,7 +3,7 @@ local _, Addon = ...
 
 local GCD_SPELL_ID = 61304
 local COOLDOWN_TYPE_LOSS_OF_CONTROL = COOLDOWN_TYPE_LOSS_OF_CONTROL
-local GetSpellCooldown = GetSpellCooldown
+local GetSpellCooldown = C_Spell.GetSpellCooldown
 local GetTime = GetTime
 local cooldowns = {}
 
@@ -45,7 +45,7 @@ function Cooldown:CanShow()
     end
 
     -- filter GCD
-    local gcdStart, gcdDuration = GetSpellCooldown(GCD_SPELL_ID)
+    local gcdStart, gcdDuration = unpack(GetSpellCooldown(GCD_SPELL_ID))
     if start == gcdStart and duration == gcdDuration then
         return false
     end
