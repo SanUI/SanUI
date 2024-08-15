@@ -6,3 +6,5 @@
 
 * /sanui buffs does not work anymore
     * Bug in wow api, can't open subcategory
+
+* See if we can load weak auras by string
