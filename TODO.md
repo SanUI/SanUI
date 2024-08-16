@@ -8,3 +8,6 @@
     * Bug in wow api, can't open subcategory
 
 * See if we can load weak auras by string
+
+* Improve oUF_GCD by checking fgor spell ID 61304, see
+  https://warcraft.wiki.gg/wiki/API_GetSpellCooldown
