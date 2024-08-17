@@ -6,6 +6,3 @@
 
 * /sanui buffs does not work anymore
     * Bug in wow api, can't open subcategory
-
-* Improve oUF_GCD by checking fgor spell ID 61304, see
-  https://warcraft.wiki.gg/wiki/API_GetSpellCooldown
