@@ -77,22 +77,24 @@ S.weakAurasDialog = function(new_version)
 
 end
 
+local function makeLoader(k, fun)
+	local k = k
+	local fun = fun
+
+	return function()
+		print("Loading "..k)
+		WeakAuras.Import(S.weakAuras[k], nil, fun)
+	end
+end
+
 S.addWeakAuras = function()
 	if not IsAddOnLoaded("WeakAuras") then print("WeakAuras not loaded!") return end
 
-	local importfun = function()
-		WeakAuras.Import(S.weakAuras.Buffs, nil, function()
-			WeakAuras.Import(S.weakAuras.ChickenDots, nil, function()
-				WeakAuras.Import(S.weakAuras.Urgent, nil, function()
-					WeakAuras.Import(S.weakAuras.BearMitigation, nil, function()
-						WeakAuras.Import(S.weakAuras.TargetDebuffs, nil, function()
-							WeakAuras.Import(S.weakAuras.ChickenBar)
-						end)
-					end)
-				end)
-			end)
-		end)
+	local fun
+
+	for k, _ in pairs(S.weakAuras) do
+		fun = makeLoader(k, fun)
 	end
 
-	importfun()
+	fun()
 end
