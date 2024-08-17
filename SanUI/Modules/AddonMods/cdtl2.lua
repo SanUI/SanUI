@@ -1,6 +1,9 @@
 local _, addon = ...
 local S,C = unpack(addon)
 
+local oldprint = CDTL2.Print
+CDTL2.Print = function() end
+
 S.overwriteCDTL2Profile = function(pname)
     local import = S.CDTL2profiles[pname]
     local db = CDTL2.db
@@ -27,7 +30,6 @@ S.overwriteCDTL2Profile = function(pname)
 
         CDTL2:RefreshConfig()
         CDTL2:ToggleFrameLock()	
-        --CDTL2:Print("Data Imported?")
     else
         print("Could not load CDTL2 profile '"..pname.."'")
     end
@@ -59,20 +61,6 @@ S.switchCDTL2 = function(profile)
     end
 end
 
---[[
-S.modCDTL2 = function()
-    ---@class AceAddon
-    ---@field db table
-    ---@field RefreshAllIcons function
-    ---@field RefreshLane function
-    ---@field RefreshReady function
-    ---@field RefreshBarFrame function
-    local CDTL2 = CDTL2
-
-
-end
---]]
-
 hooksecurefunc(CDTL2, "PLAYER_ENTERING_WORLD", function()
     ---@class Masque
     ---@field Group function
@@ -83,6 +71,6 @@ hooksecurefunc(CDTL2, "PLAYER_ENTERING_WORLD", function()
        group:__Set("SkinID", "SanUI")
     end
 
-    --S.modCDTL2()
+    CDTL2.Print = oldprint
 end)
 
