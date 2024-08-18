@@ -10,7 +10,7 @@ S.createSpellbookDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("Spells")
+	text:SetText("Spell")
 	
 	frame.Text = text
 		
@@ -21,7 +21,7 @@ S.createSpellbookDT = function(frame)
 			return
 		end
 		
-		ToggleSpellBook(BOOKTYPE_SPELL)
+		PlayerSpellsUtil.ToggleSpellBookFrame()
 	end)
 end
 
@@ -31,7 +31,7 @@ S.createTalentDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("Talents")
+	text:SetText("Talent")
 	
 	frame.Text = text
 		
@@ -42,7 +42,7 @@ S.createTalentDT = function(frame)
 			return
 		end
 		
-		ToggleTalentFrame()
+		PlayerSpellsUtil.ToggleClassTalentOrSpecFrame();
 	end)
 end
 
@@ -52,7 +52,7 @@ S.createQuestDT = function(frame)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("MIDDLE")
 	text:SetFont(font, fontsize)
-	text:SetText("Quests")
+	text:SetText("Quest")
 	
 	frame.Text = text
 		
@@ -151,3 +151,23 @@ S.createFriendsDT = function(frame)
 	end)
 end
 
+S.createProfessionsDT = function(frame)
+	local text = frame:CreateFontString(nil, "OVERLAY")
+	text:SetPoint("CENTER", frame, "CENTER", 0, -S.scale1)
+	text:SetJustifyH("CENTER")
+	text:SetJustifyV("MIDDLE")
+	text:SetFont(font, fontsize)
+	text:SetText("Profs")
+	
+	frame.Text = text
+		
+	frame:SetScript("OnMouseDown", function(self, button)
+
+		if InCombatLockdown() then
+			print("In combat - not opening professions frame")
+			return
+		end
+		
+		ToggleProfessionsBook();
+	end)
+end
