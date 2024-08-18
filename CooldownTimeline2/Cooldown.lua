@@ -1470,7 +1470,8 @@ private.IconUpdate = function(f, elapsed)
 	
 	if CDTL2.db.profile.global["notUsableTint"] then
 		if f.data["type"] == "spells" or f.data["type"] == "petspells" then
-			if not IsUsableSpell(f.data["id"]) then
+			local usable, noPower = CDTL2:IsUsableSpell(f.data["id"])
+			if noPower then
 				if CDTL2.db.profile.global["notUsableDesaturate"] then
 					ic.tx:SetDesaturated(1)
 				else

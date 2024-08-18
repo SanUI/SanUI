@@ -26,6 +26,10 @@ function CDTL2:GetChangeLog()
 	changeLog = changeLog.."  - Fixed an issue in which scanning flyout spells (Hunter pet management spells for example) would procuce an error\n"
 	changeLog = changeLog.."  - Cooldowns for spells in the flyout may not be detected (for now)\n"
 	changeLog = changeLog.."\n"
+	changeLog = changeLog.."Changelog 2.5r2:\n\n"
+	changeLog = changeLog.."  - Fixed error when scanning for active cooldowns\n"
+	changeLog = changeLog.."  - Fixed issue preventing buffs and debuffs being detected\n"
+	changeLog = changeLog.."  - Fixed issue that causes errors when tinting unusable Cooldown icons\n"
 		
 	return changeLog
 end

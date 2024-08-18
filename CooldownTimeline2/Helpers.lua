@@ -21,8 +21,6 @@ end
 
 function CDTL2:AuraExists(unit, aura)
 	for i = 1, 40, 1 do
-		--local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, "HELPFUL")
-		
 		local name, spellID, duration, icon, count, expirationTime = CDTL2:GetUnitAura(unit, i, "HELPFUL")
 
 		if name then
@@ -43,8 +41,6 @@ function CDTL2:AuraExists(unit, aura)
 	end
 	
 	for i = 1, 40, 1 do
-		--local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, "HARMFUL")
-		
 		local name, spellID, duration, icon, count, expirationTime = CDTL2:GetUnitAura(unit, i, "HARMFUL")
 
 		if name then
@@ -922,7 +918,7 @@ function CDTL2:GetUnitAura(unit, i, filter)
 	local expirationTime = 0
 
 	if CDTL2.tocversion >= 110000 then
-    	local data = C_Spell.GetSpellCooldown(unit, i, filter)
+    	local data = C_UnitAuras.GetAuraDataByIndex(unit, i, filter)
 
 		if data then
 			name = data["name"]
@@ -952,6 +948,19 @@ function CDTL2:GetValidChildren(f)
 	end
 	
 	return validChildren
+end
+
+function CDTL2:IsUsableSpell(id)
+	local usable = true
+	local noPower = false
+
+	if CDTL2.tocversion >= 110000 then
+    	usable, noPower = C_Spell.IsSpellUsable(id)
+	else
+		usable, noPower = IsUsableSpell(id)
+	end
+
+	return usable, noPower
 end
 
 function CDTL2:IsUsedBy(type, id, specialCase)
@@ -1297,7 +1306,7 @@ function CDTL2:ScanCurrentCooldowns(class, race)
 							s["bCD"] = cooldownMS
 						end
 
-						s["icon"] = info["originalIconID"]
+						s["icon"] = icon
 						s["lane"] = CDTL2.db.profile.global["spells"]["defaultLane"]
 						s["barFrame"] = CDTL2.db.profile.global["spells"]["defaultBar"]
 						s["readyFrame"] = CDTL2.db.profile.global["spells"]["defaultReady"]
