@@ -281,6 +281,9 @@ end
 
 local function setTimedIconColor(icon)
     local data = icon.data
+
+    if not data then return end
+    
     local now = GetTime()
     local timeleft = data.expirationTime - now
     local timers = icon.timers
