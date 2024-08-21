@@ -120,7 +120,7 @@ S["Modes"] = {
 		["powerbar"] = "Hidden",
 		["gcd"] = "SanCat",
 		["bossbars"] = "SanHeal",
-		["cdtl2"] = "SanCat",
+		["cdtl2"] = "SanChicken",
 		["ActionButtons"] = "SanHeal",
 		["DBM"] = "SanHeal",
 	},
