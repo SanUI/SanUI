@@ -1,4 +1,4 @@
-## Interface: 100002
+## Interface: 110002
 ## Title: oUF_Hank
 ## Author: Hank
 ## Maintainer: Gwyd

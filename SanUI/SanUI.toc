@@ -1,6 +1,6 @@
-﻿## Interface: 100002
+﻿## Interface: 110002
 ## Author: Tavore of EU-Kargath
-## Version: 10.0.5.0
+## Version: 11.0.2.0
 ## Title: SanUI
 ## Notes: Druid UI based on Tukui.
 ## SavedVariablesPerCharacter: SanUIdb
