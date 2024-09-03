@@ -79,7 +79,7 @@ end
 S.PostUpdateHealthRaid = function(health, unit, min, max)
 	-- doing this here to force friendly unit (vehicle or pet) very far away from you to update color correcly
 	-- because if vehicle or pet is too far away, unitreaction return nil and color of health bar is white.
-	if not UnitIsPlayer(unit) and UnitIsFriend(unit, "player") and C["UnitFrames"].unicolor ~= true then
+	if not UnitIsPlayer(unit) and UnitIsFriend(unit, "player") then
 		local c = S.Colors.reaction[5]
 		local r, g, b = c[1], c[2], c[3]
 		health:SetStatusBarColor(r, g, b)
@@ -150,7 +150,7 @@ local function Shared(self, unit)
 	self:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE", updateThreat)
 
 	-- highlight
-	local glowBorder = {edgeFile = C["Medias"].Blank, edgeSize = 1}
+	local glowBorder = {normTex, edgeSize = 1}
 	---@class SanUINamedHighlightTarget: Frame, BackdropTemplate
 	local HighlightTarget = CreateFrame("Frame", nil, self.Health, "BackdropTemplate")
 
@@ -178,7 +178,7 @@ local function Shared(self, unit)
 
 	local Dead = HighlightTarget:CreateFontString(nil, "OVERLAY")
 	Dead:SetPoint("TOPRIGHT",HighlightTarget,"TOPRIGHT",0,0) -- -S.scale1,0)
-	Dead:SetFont(C["Medias"].Font, 11)
+	Dead:SetFont(font1, 11)
 	self:Tag(Dead, "[status]")
 	self.Dead = Dead
 
@@ -215,7 +215,7 @@ local function Shared(self, unit)
 	SummonIndicator:SetDrawLayer("OVERLAY", 7)
 	self.SummonIndicator = SummonIndicator
 
-	local range = {insideAlpha = 1, outsideAlpha = C["Raid"].RangeAlpha}
+	local range = {insideAlpha = 1, outsideAlpha =  C.colors.RangeAlpha}
 	range.PostUpdate = function(self, object, inRange, checkedRange, connected)
 		if not connected then
 			object:SetAlpha(self.outsideAlpha)
@@ -296,7 +296,7 @@ local function Shared(self, unit)
 
 		local tex = icon:CreateTexture(nil, "OVERLAY")
 		tex:SetAllPoints(icon)
-		tex:SetTexture(C.Medias.Blank)
+		tex:SetTexture(normTex)
 		tex:SetVertexColor(unpack(spell.color))
 
 		icon.tex = tex
@@ -383,9 +383,10 @@ local function Shared(self, unit)
 
 	-- oUF_NotRaidDebuffs
 	local raiddebuffs = S["UnitFrames"].RaidDebuffs
-	self.NotRaidDebuffs = { } --forceShow = true }
+	local notraiddebuffs = { } --forceShow = true }
+	
 	for i = 1,2 do
-		---@class SanUINamedRaidDebuffs: Frame
+		---@class SanUIRaidFramesRaidDebuffs: Frame
 		local rd = CreateFrame("Frame", nil, self)
 		rd:SetHeight(rfsizes.raiddebuffs)
 		rd:SetWidth(rfsizes.raiddebuffs)
@@ -401,13 +402,13 @@ local function Shared(self, unit)
 
 		S.CreateBackdrop(rd)
 
-		---@class SanUINamedRaidDebuffsIcon: Texture
+		---@class SanUIRaidFramesRaiddebuffsIcon: Texture
 		rd.icon = rd:CreateTexture(nil, "OVERLAY")
 		rd.icon:SetTexCoord(.1,.9,.1,.9)
 		rd.icon:SetPoint("CENTER")
 		rd.icon:SetSize(rfsizes.raiddebuffsicon, rfsizes.raiddebuffsicon)
 
-		---@class SanUINamedRaidDebuffsIconCD: Cooldown
+		---@class SanUIRaidFramesRaiddebuffsIconCD: Cooldown
 		rd.cd = CreateFrame("Cooldown", nil, rd,"CooldownFrameTemplate")
 		rd.cd:SetAllPoints(rd.icon)
 		rd.cd.noOCC = true -- remove this line if you want cooldown number on it
@@ -415,30 +416,26 @@ local function Shared(self, unit)
 		rd.cd:SetReverse(true)
 
 		rd.count = rd:CreateFontString(nil, "OVERLAY")
-		rd.count:SetFont(font2, 9, "THINOUTLINE")
+		rd.count:SetFont(font2, 10, "THINOUTLINE")
 		rd.count:SetPoint("BOTTOMRIGHT", rd, "BOTTOMRIGHT", 0, S.scale2)
 		rd.count:SetTextColor(1, .9, 0)
 
 		rd.Debuffs = raiddebuffs
-
-		self.NotRaidDebuffs[i] = rd
+		notraiddebuffs[i] = rd
 	end
 
 	local ORD = addon.oUF_NotRaidDebuffs
-	--ORD.ShowDispelableDebuff = true
-	--ORD.FilterDispellableDebuff = true
-	ORD.MatchBySpellName = true
-	--ORD.SetDebuffTypeColor = RaidDebuffs.SetBorderColor
 
 	ORD:ResetDebuffData()
 	ORD:RegisterDebuffs(raiddebuffs)
 
 	if not ORD.RegisteredSanUI then
-		S["UnitFrames"].Debuffs.PvE.spells = raiddebuffs
 		ORD:ResetDebuffData()
 		ORD:RegisterDebuffs(raiddebuffs)
 		ORD.RegisteredSanUI = true
 	end
+
+	auras.NotRaidDebuffs = notraiddebuffs
 
 	return self
 end
@@ -527,7 +524,7 @@ S.removePlayerFromNamedFrames = function()
 	end
 end
 
-if S.MyClass == "EVOKER" then
+if S.MyClass == "Evoker" then
 	oUF:RegisterStyle("SanUINamed", Shared)
 	oUF:SetActiveStyle("SanUINamed")
 	local evoframes = oUF:SpawnHeader(GetEvoFrameAttributes())
