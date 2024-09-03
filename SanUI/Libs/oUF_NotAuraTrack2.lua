@@ -388,6 +388,62 @@ local function processDebuffData(data, unit)
     end
 end
 
+--[[
+local realplayer
+local isfirst = true
+local function log(self, msg, removedIDs, added, updatedIDs)
+    if not SanUIdb.nat2log then
+        SanUIdb.nat2log = {}
+    end
+
+    if isfirst then
+        wipe(SanUIdb.nat2log)
+        isfirst = false
+    end
+
+    local logt = {}
+
+    if not UnitIsUnit(self.unit, "player") then
+        return
+    end
+
+    local nat = self.NotAuraTrack
+    realplayer = self
+    local showingt = nat.showing.texts
+
+    for k, v in pairs(showingt) do
+        logt.showing = {}
+        tinsert(logt.showing, tostring(k)..": "..tostring(v))
+    end
+
+    local texts = nat.Texts
+
+    logt.texts = {}
+    local sid, text = next(texts)
+    logt.texts[tostring(text).. " - "..tostring(sid)] = {}
+    local t = logt.texts[tostring(text).. " - "..tostring(sid)]
+    if text.data then
+        tinsert(t,"data: "..tostring(text.data.auraInstanceID))
+    end
+    
+    t.candidates = {}
+    for instanceid, data in pairs(text.candidates) do
+        tinsert(t.candidates, "(key "..tostring(instanceid).."): "..tostring(data.auraInstanceID)..", "..tostring(data.name))
+    end
+
+    logt.removedIDs = removedIDs
+    logt.updatedIDs = updatedIDs
+    logt.added = {}
+
+    for _, data in ipairs(added or {}) do
+        if nat.Texts[data.spellId] then
+            tinsert(logt.added, tostring(data.auraInstanceID).." - "..tostring(data.name))
+        end
+    end
+    tinsert(SanUIdb.nat2log, {msg, logt})
+end
+--]]
+
 local Update = function(self, event, unit, updateInfo)
 	if self.unit ~= unit then
 		return
@@ -401,6 +457,7 @@ local Update = function(self, event, unit, updateInfo)
     local isFullUpdate = not updateInfo or updateInfo.isFullUpdate
 
     if isFullUpdate then
+        --log(self, "FullUpdatePre")
         for _, icon in pairs(showing_icons) do
             icon.data = nil
             wipe(icon.candidates)
@@ -469,40 +526,41 @@ local Update = function(self, event, unit, updateInfo)
         for _, text in pairs(showing_texts) do
             UpdateBuffText(text, nat, nat.lastUpdate)
         end
+        --log(self, "FullUpdatePost")
     else
+        --log(self, "PartialPre", updateInfo.removedAuraInstanceIDs or {}, updateInfo.addedAuras or {}, updateInfo.updatedAuraInstanceIDs or {})
         for _, removedId in ipairs(updateInfo.removedAuraInstanceIDs or {}) do
             local icon = showing_icons[removedId]
+            local text = showing_texts[removedId]
+            local notraiddebuffs = nat.NotRaidDebuffs
+
             if icon then
+                --tinsert(SanUIdb.nat2log, {"Removing Icon "..tostring(removedId) })
                 showing_icons[removedId] = nil
                 if icon.data and icon.data.auraInstanceID == removedId then
                     icon.data = nil
                     UpdateBuffIcon(icon, nat)
                 elseif icon.candidates[removedId] then
                     icon.candidates[removedId] = nil
+                    showing_icons[removedId] = nil
                 end
-                break
-            end
-
-            local text = showing_texts[removedId]
-            if text then
+            elseif text then
+                --tinsert(SanUIdb.nat2log, {"Removing Text "..tostring(removedId) })
                 showing_texts[removedId] = nil
                 if text.data and text.data.auraInstanceID == removedId then
                     text.data = nil
                     UpdateBuffText(text, nat, nat.lastUpdate)
                 elseif text.candidates[removedId] then
                     text.candidates[removedId] = nil
+                    showing_texts[removedId] = nil
                 end
-                break
-            end
-
-            local notraiddebuffs = nat.NotRaidDebuffs
-            if notraiddebuffs then
+            elseif notraiddebuffs then
                 local rdcands = notraiddebuffs.candidates
-                local rdshowing = notraiddebuffs.showing
+
                 if rdcands[removedId] then
                     rdcands[removedId] = nil
 
-                    for _, data in ipairs(rdshowing) do
+                    for _, data in ipairs(notraiddebuffs.showing) do
                         if data.auraInstanceID == removedId then
                             recomputeRaidDebuffsShowing(notraiddebuffs)
                             UpdateRaidDebuffs(notraiddebuffs)
@@ -550,40 +608,25 @@ local Update = function(self, event, unit, updateInfo)
         end
 
         for _, updatedId in ipairs(updateInfo.updatedAuraInstanceIDs or {}) do
-            local found = false
+            local icon = showing_icons[updatedId]
+            local text = showing_texts[updatedId]
+            local notraiddebuffs = nat.NotRaidDebuffs
 
-            for _, icon in pairs(showing_icons) do
+            if icon then
                 if icon.data and icon.data.auraInstanceID == updatedId then
                     icon.data = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                     UpdateBuffIcon(icon, nat)
-                    found = true
-                    break
                 elseif icon.candidates[updatedId] then
                     icon.candidates[updatedId] = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
-                    found = true
-                    break
                 end
-            end
-
-            if found then break end
-
-            for _, text in pairs(showing_texts) do
+            elseif text then
                 if text.data and text.data.auraInstanceID == updatedId then
                     text.data = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                     UpdateBuffText(text, nat, nat.lastUpdate)
-                    found = true
-                    break
                 elseif text.candidates[updatedId] then
                     text.candidates[updatedId] = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
-                    found = true
-                    break
                 end
-            end
-
-            if found then break end
-
-            local notraiddebuffs = nat.NotRaidDebuffs
-            if notraiddebuffs then
+            elseif notraiddebuffs then
                 local rdcands = notraiddebuffs.candidates
 
                 ---@class DebuffData: AuraData
@@ -607,6 +650,7 @@ local Update = function(self, event, unit, updateInfo)
                 end
             end
         end
+        --log(self, "PartialPost", updateInfo.removedAuraInstanceIDs or {}, updateInfo.addedAuras or {}, updateInfo.updatedAuraInstanceIDs or {})
     end
 end
 
@@ -653,6 +697,14 @@ local function Enable(self)
         return true
     end
 end
+
+--[[
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_DEAD")
+f:SetScript("OnEvent", function() 
+    log(realplayer, "DEATH", {}, {}, {})
+end)
+--]]
 
 local function Disable(self)
 	local nat = self.NotAuraTrack
