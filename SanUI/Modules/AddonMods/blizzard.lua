@@ -5,9 +5,25 @@ local function Noop() end
 
 local hide = function(self) self:Hide() end
 
-function S.disableBlizzard()
-	local i
+S.disableMicroMenu = function()
+    for _, button in ipairs({
+        CharacterMicroButton, SpellbookMicroButton, TalentMicroButton, 
+        QuestLogMicroButton, GuildMicroButton, LFDMicroButton, 
+        EJMicroButton, StoreMicroButton, MainMenuMicroButton,
+        CollectionsMicroButton, HelpMicroButton, AchievementMicroButton
+    }) do
+		hooksecurefunc(button, "Show", hide)
+        button:SetShown(false)
+		button:Hide()
+    end
+    
+    -- Specifically handle the StoreMicroButton (Shop button)
+	hooksecurefunc(StoreMicroButton:GetParent(), "Show", hide)
+    StoreMicroButton:GetParent():SetShown(false)
+	StoreMicroButton:GetParent():Hide()
+end
 
+function S.disableBlizzard()
 	for i = 1, MAX_BOSS_FRAMES do
 		local Boss = _G["Boss"..i.."TargetFrame"]
 		local Health = _G["Boss"..i.."TargetFrame".."HealthBar"]
@@ -37,20 +53,17 @@ function S.disableBlizzard()
 		UIParent:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		CompactRaidFrameManager_SetSetting("IsShown", "0")
 	end
+
+	-- disable xp thingy
+	StatusTrackingBarManager:UnregisterAllEvents()
+	StatusTrackingBarManager:Hide()
 	
-    for _, button in ipairs({
-        CharacterMicroButton, SpellbookMicroButton, TalentMicroButton, 
-        QuestLogMicroButton, GuildMicroButton, LFDMicroButton, 
-        EJMicroButton, StoreMicroButton, MainMenuMicroButton,
-        CollectionsMicroButton, HelpMicroButton, AchievementMicroButton
-    }) do
-		hooksecurefunc(button, "Show", hide)
-        button:SetShown(false)
-		button:Hide()
-    end
-    
-    -- Specifically handle the StoreMicroButton (Shop button)
-	hooksecurefunc(StoreMicroButton:GetParent(), "Show", hide)
-    StoreMicroButton:GetParent():SetShown(false)
-	StoreMicroButton:GetParent():Hide()
+	S.disableMicroMenu()
 end
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_LOSES_VEHICLE_DATA")
+f:RegisterEvent("PET_BATTLE_CLOSE")
+f:SetScript("OnEvent", function()
+	S.disableMicroMenu()
+end)
