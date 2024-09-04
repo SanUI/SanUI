@@ -38,14 +38,18 @@ S.switchCastbar = function(profile)
 			cb:SetWidth(288)
 			cb.button:ClearAllPoints()
 			cb.button:SetSize(Scale(40), Scale(40))
-			cb:SetPoint("CENTER",UIParent,"CENTER",0,-208)
+			cb:SetPoint("CENTER",UIParent,"CENTER",0,-250)
 			cb.button:SetPoint("TOP",cb,"BOTTOM",0,-12)
 			cb.time:ClearAllPoints()
-			cb.time:SetPoint("BOTTOM", cb, "TOP", 0, 12)
-			local name, height, flags = cb.time:GetFont()
+			cb.time:SetPoint("CENTER", cb.button, "CENTER", 0, 0)
+			local name, _, flags = cb.time:GetFont()
+			name = name or C.UnitFrames.Font
+			cb.time:SetFont(name, 22, flags)
+		else
+			local name, _, flags = cb.time:GetFont()
 			name = name or C.UnitFrames.Font
 			cb.time:SetFont(name, 16, flags)
-		else
+
 			cb:ClearAllPoints()
 			cb.button:ClearAllPoints()
 			cb:SetWidth(Scale(150))

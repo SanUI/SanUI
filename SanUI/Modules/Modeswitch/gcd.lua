@@ -14,8 +14,8 @@ S.switchGCD =  function (profile)
 		player.GCD:SetAlpha(1)
 	elseif profile == "ToviAug" then
 		player.GCD:ClearAllPoints()
-		player.GCD:SetPoint('TOPLEFT',_G["DominosActionButton1"], 'BOTTOMLEFT', 0, -S.scale4)
-		player.GCD:SetPoint('TOPRIGHT',_G["DominosActionButton8"], 'BOTTOMRIGHT', 0, -S.scale4)
+		player.GCD:SetPoint('TOPLEFT',_G["DominosActionButton7Icon"], 'BOTTOMLEFT', 0, -S.scale4)
+		player.GCD:SetPoint('TOPRIGHT',_G["DominosActionButton12Icon"], 'BOTTOMRIGHT', 0, -S.scale4)
 		player.GCD:SetAlpha(1)
 	else
 		local castbar = player.Castbar
