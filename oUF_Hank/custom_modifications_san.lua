@@ -384,21 +384,6 @@ sharedStyle = function(self, unit, isSingle)
 			castbar.SafeZone = castbar.safezone
 		end
 
-		--Castbar time string
-		castbar.time = castbar:CreateFontString(nil, "OVERLAY")
-		--castbar.time:SetFontObject(font2)
-		if(unit ~= "focus") then
-			castbar.time:SetFont(font2, 12, "OUTLINE")
-		else
-			castbar.time:SetFont(font2, 16, "OUTLINE")
-		end
-		castbar.time:SetPoint("RIGHT", castbar, "RIGHT", Scale(-4), 0)
-		castbar.time:SetTextColor(0.84, 0.75, 0.65)
-		castbar.time:SetShadowOffset(0.8,-0.8)
-		castbar.time:SetJustifyH("RIGHT")
-
-		castbar.Time = castbar.time
-
 		--Castbar text string
 		if(unit ~= "focus") then
 			castbar.Text = S.SetFontString(castbar,font2, 12,"OUTLINE")
@@ -445,6 +430,21 @@ sharedStyle = function(self, unit, isSingle)
 			castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 			castbar.SafeZone = castbar.safezone
 		end
+
+		--Castbar time string
+		castbar.time = castbar.button:CreateFontString(nil, "OVERLAY")
+		--castbar.time:SetFontObject(font2)
+		if(unit ~= "focus") then
+			castbar.time:SetFont(font2, 12, "OUTLINE")
+		else
+			castbar.time:SetFont(font2, 16, "OUTLINE")
+		end
+		castbar.time:SetPoint("RIGHT", castbar, "RIGHT", Scale(-4), 0)
+		castbar.time:SetTextColor(0.84, 0.75, 0.65)
+		castbar.time:SetShadowOffset(0.8,-0.8)
+		castbar.time:SetJustifyH("RIGHT")
+
+		castbar.Time = castbar.time
 
 		--castbar Spark
 		local Spark = castbar:CreateTexture(nil, "OVERLAY")
