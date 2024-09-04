@@ -57,6 +57,9 @@ function S.disableBlizzard()
 	-- disable xp thingy
 	StatusTrackingBarManager:UnregisterAllEvents()
 	StatusTrackingBarManager:Hide()
+
+	UIParent:UnregisterEvent("TALKINGHEAD_REQUESTED")	
+	TalkingHeadFrame:UnregisterAllEvents()
 	
 	S.disableMicroMenu()
 end
