@@ -21,6 +21,9 @@ S.switchCastbar = function(profile)
 			cb.button:SetSize(Scale(40), Scale(40))
 			cb:SetPoint("CENTER",UIParent,"CENTER",0,-265)
 			cb.button:SetPoint("TOP",cb,"BOTTOM",0,-10)
+			local name, height, flags = cb.time:GetFont()
+			name = name or C.medias.fonts.Font
+			cb.time:SetFont(name, 12, flags)
 		elseif profile == "ToviDam" then
 			cb:ClearAllPoints()
 			cb:SetWidth(288)
@@ -31,8 +34,8 @@ S.switchCastbar = function(profile)
 			cb.time:ClearAllPoints()
 			cb.time:SetPoint("BOTTOM", player.GCD, "TOP", 0, 12)
 			local name, height, flags = cb.time:GetFont()
-			name = name or C.UnitFrames.Font
-			cb.time:SetFont(name, 16, flags)
+			name = name or C.medias.fonts.Font
+			cb.time:SetFont(name, 12, flags)
 		elseif profile == "ToviAug" then
 			cb:ClearAllPoints()
 			cb:SetWidth(288)
@@ -43,12 +46,12 @@ S.switchCastbar = function(profile)
 			cb.time:ClearAllPoints()
 			cb.time:SetPoint("CENTER", cb.button, "CENTER", 0, 0)
 			local name, _, flags = cb.time:GetFont()
-			name = name or C.UnitFrames.Font
+			name = name or C.medias.fonts.Font
 			cb.time:SetFont(name, 22, flags)
 		else
 			local name, _, flags = cb.time:GetFont()
-			name = name or C.UnitFrames.Font
-			cb.time:SetFont(name, 16, flags)
+			name = name or C.medias.fonts.Font
+			cb.time:SetFont(name, 12, flags)
 
 			cb:ClearAllPoints()
 			cb.button:ClearAllPoints()
