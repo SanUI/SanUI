@@ -383,6 +383,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[334748] = List(), -- Drain Fluids
 	[333489] = List(), -- Necrotic Breath
 	[320717] = List(), -- Blood Hunger
+	[320200] = List(), -- Stitchneedle
 -- Siege of Boralus
 	[257168] = List(), -- Cursed Slash
 	[272588] = List(), -- Rotting Wounds
@@ -482,10 +483,11 @@ S["UnitFrames"].RaidDebuffs = {
 	[454311] = List(), -- Barbed Webs
 	[438773] = List(), -- Shattered Shell
 	[438355] = List(), -- Cataclysmic Entropy
-	[438656] = List(), -- Venomous Rain
+	--[438656] = List(), -- Venomous Rain
 	[441772] = List(), -- Void Bolt
 	[441788] = List(), -- Web Vortex
 	[440001] = List(), -- Binding Webs
 -- Queen Ansurek
 	-- TODO: No raid testing available for this boss
+	-- [449960] = List(), for test, the carves at light's Blooming in Hallowfall do this
 }
