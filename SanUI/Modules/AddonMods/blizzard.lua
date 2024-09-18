@@ -5,22 +5,28 @@ local function Noop() end
 
 local hide = function(self) self:Hide() end
 
+local hooked = false
 S.disableMicroMenu = function()
     for _, button in ipairs({
         CharacterMicroButton, SpellbookMicroButton, TalentMicroButton, 
         QuestLogMicroButton, GuildMicroButton, LFDMicroButton, 
-        EJMicroButton, StoreMicroButton, MainMenuMicroButton,
         CollectionsMicroButton, HelpMicroButton, AchievementMicroButton
     }) do
-		hooksecurefunc(button, "Show", hide)
+		if not hooked then
+			hooksecurefunc(button, "Show", hide)
+		end
         button:SetShown(false)
 		button:Hide()
     end
     
     -- Specifically handle the StoreMicroButton (Shop button)
-	hooksecurefunc(StoreMicroButton:GetParent(), "Show", hide)
+	if not hooked then
+		hooksecurefunc(StoreMicroButton:GetParent(), "Show", hide)
+	end
     StoreMicroButton:GetParent():SetShown(false)
 	StoreMicroButton:GetParent():Hide()
+
+	if not hooked then hooked = true end
 end
 
 function S.disableBlizzard()
@@ -67,6 +73,9 @@ end
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOSES_VEHICLE_DATA")
 f:RegisterEvent("PET_BATTLE_CLOSE")
+f:RegisterEvent("ZONE_CHANGED")
+f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+f:RegisterEvent("ZONE_CHANGED_INDOORS")
 f:SetScript("OnEvent", function()
 	S.disableMicroMenu()
 end)
