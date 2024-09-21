@@ -384,6 +384,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[333489] = List(), -- Necrotic Breath
 	[320717] = List(), -- Blood Hunger
 	[320200] = List(), -- Stitchneedle
+	[320596] = List(), -- Heaving Retch
 -- Siege of Boralus
 	[257168] = List(), -- Cursed Slash
 	[272588] = List(), -- Rotting Wounds
@@ -399,6 +400,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[272834] = List(), -- Viscous Slobber
 	[257169] = List(), -- Terrifying Roar
 	[272713] = List(), -- Crushing Slam
+	[454439] = List(), -- Azerite Charge
 -- Grim Batol
 	[449885] = List(), -- Shadow Gale 1
 	[461513] = List(), -- Shadow Gale 2
