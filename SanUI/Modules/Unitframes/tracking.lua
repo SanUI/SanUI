@@ -401,6 +401,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[257169] = List(), -- Terrifying Roar
 	[272713] = List(), -- Crushing Slam
 	[454439] = List(), -- Azerite Charge
+	[463182] = List(), -- Fiery Ricochet
 -- Grim Batol
 	[449885] = List(), -- Shadow Gale 1
 	[461513] = List(), -- Shadow Gale 2
