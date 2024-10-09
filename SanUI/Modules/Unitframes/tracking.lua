@@ -236,6 +236,7 @@ local function List(priority)
 end
 
 S["UnitFrames"].RaidDebuffs = {
+	[440313] = List(), -- Void Rift (Xal'atath's Bargain: Devour)
 	----------------------------------------------------------
 	---------------- The War Within Dungeons -----------------
 	----------------------------------------------------------
@@ -296,7 +297,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[450055] = List(), -- Gutburst
 	[450783] = List(), -- Perfume Toss
 -- The Dawnbreaker (Season 1)
-	[463428] = List(), -- Lingering Erosion
+	--[463428] = List(), -- Lingering Erosion
 	[426736] = List(), -- Shadow Shroud
 	[434096] = List(), -- Sticky Webs
 	[453173] = List(), -- Collapsing Night
@@ -435,7 +436,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[438012] = List(), -- Hungering Bellows
 -- The Bloodbound Horror
 	--[442604] = List(), -- Goresplatter
-	[445570] = List(), -- Unseeming Blight
+	--[445570] = List(), -- Unseeming Blight
 	[443612] = List(), -- Baneful Shift
 	[443042] = List(), -- Grasp From Beyond
 -- Sikran
