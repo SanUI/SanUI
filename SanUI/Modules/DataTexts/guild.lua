@@ -26,9 +26,10 @@ S.createGuildDT = function(frame)
 	end)
 	
 	local update = function(event)
-		local guildmembers = select(3, GetNumGuildMembers())
+		C_GuildInfo.GuildRoster()
+		local guildmembers = select(2, GetNumGuildMembers())
 		
-		text:SetText("Guild: "..guildmembers) 
+		text:SetText("Guild: "..(guildmembers or "N/A")) 
 	end
 	
 	frame:SetScript("OnEvent", update)
