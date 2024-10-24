@@ -465,7 +465,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[442660] = List(), -- Rupture
 	[440421] = List(), -- Experimental Dosage
 	[442250] = List(), -- Fixate
-	[442437] = List(), -- Violent Discharge
+	--[442437] = List(), -- Violent Discharge
 	[443274] = List(), -- Reverberation
 -- Nexus-Princess Ky'veza
 	[440377] = List(), -- Void Shredders
