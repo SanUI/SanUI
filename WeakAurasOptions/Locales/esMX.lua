@@ -728,6 +728,10 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = "Ocurrencia d
 	L["Regions of type \"%s\" are not supported."] = "Las regiones del tipo \"%s\" no son compatibles."
 	L["Remaining Time"] = "Tiempo restante"
 	L["Remove"] = "Eliminar"
+	--[[Translation missing --]]
+	L["Remove All Sounds"] = "Remove All Sounds"
+	--[[Translation missing --]]
+	L["Remove All Text To Speech"] = "Remove All Text To Speech"
 	L["Remove this display from its group"] = "Elimina esta visualización de su grupo."
 	L["Remove this property"] = "Eliminar esta propiedad"
 	L["Rename"] = "Renombrar"
@@ -789,8 +793,12 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = "Ocurrencia d
 	L["Show Model"] = "Mostrar modelo"
 	L["Show model of unit "] = "Mostrar modelo de la unidad"
 	L["Show On"] = "Mostrar en"
+	--[[Translation missing --]]
+	L["Show Sound Setting"] = "Show Sound Setting"
 	L["Show Spark"] = "Mostrar chispa"
 	L["Show Text"] = "Mostrar texto"
+	--[[Translation missing --]]
+	L["Show Text To Speech Setting"] = "Show Text To Speech Setting"
 	L["Show this group's children"] = "Mostrar hijos de este grupo"
 	L["Show Tick"] = "Mostrar tic"
 	L["Shows a 3D model from the game files"] = "Muestra un modelo 3D directamente de los ficheros de WoW"
@@ -944,11 +952,9 @@ Upgrade your version of WeakAuras or wait for next release before installing thi
 	L["Unit Count"] = "Recuento de unidad"
 	L["Unit Frames"] = "Marcos de unidad"
 	L["Unknown"] = "Desconocido"
-	--[[Translation missing --]]
-	L["Unknown Encounter's Spell Id"] = "Unknown Encounter's Spell Id"
+	L["Unknown Encounter's Spell Id"] = "ID de hechizo de encuentro desconocido"
 	L["Unknown property '%s' found in '%s'"] = "Propiedad desconocida '%s' encontrada en '%s'"
-	--[[Translation missing --]]
-	L["Unknown Spell"] = "Unknown Spell"
+	L["Unknown Spell"] = "Hechizo desconocido"
 	L["Unlike the start or finish animations, the main animation will loop over and over until the display is hidden."] = "Ignorar animaciones de inicio y final: la animación principal se repetirá hasta que el aura se oculte."
 	L["Update"] = "Actualizar"
 	L["Update Auras"] = "Actualizar auras"

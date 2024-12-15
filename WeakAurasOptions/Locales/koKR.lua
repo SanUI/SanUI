@@ -151,7 +151,7 @@ Enable this setting if you want this timer to be hidden, or when using a WeakAur
 	L["Affected Unit Filters and Info"] = "오라에 걸린 유닛의 필터와 정보"
 	L["Align"] = "정렬"
 	L["Alignment"] = "정렬"
-	L["All maintainers of the libraries we use, especially:"] = "특히 우리가 사용하는 라이브러리의 모든 유지 관리자:"
+	L["All maintainers of the libraries we use, especially:"] = "특히 우리가 사용중인 라이브러리를 관리하시는 모든 분들:"
 	L["All of"] = "모두 만족"
 	L["Allow Full Rotation"] = "전체 회전 허용"
 	L["Alpha"] = "투명도"
@@ -392,7 +392,7 @@ UNIT_POWER_UPDATE:player, UNIT_AURA:nameplate:group PLAYER_TARGET_CHANGED CLEU:S
 	L["End Angle"] = "종료 각도"
 	L["End of %s"] = "%s의 끝"
 	L["Enemy nameplate(s) found"] = "적 이름표 발견"
-	L["Enter a Spell ID. You can use the addon idTip to determine spell ids."] = "주문 ID를 입력하세요. 주문 id 확인은 idTip 애드온으로 할 수 있습니다."
+	L["Enter a Spell ID. You can use the addon idTip to determine spell ids."] = "주문 ID를 입력하세요. 주문 ID 확인은 idTip 애드온으로 할 수 있습니다."
 	L["Enter an Aura Name, partial Aura Name, or Spell ID. A Spell ID will match any spells with the same name."] = "오라 이름, 오라 이름의 일부 또는 주문 ID를 입력하세요. 주문 ID는 이름이 같은 모든 주문을 가져옵니다."
 	L["Enter Author Mode"] = "제작자 모드 시작"
 	L["Enter in a value for the tick's placement."] = "틱의 배치 값을 입력합니다."
@@ -431,7 +431,7 @@ UNIT_POWER_UPDATE:player, UNIT_AURA:nameplate:group PLAYER_TARGET_CHANGED CLEU:S
 	L["Fetch Tooltip Information"] = "툴팁 정보 가져오기"
 	L["File Height"] = "파일 높이"
 	L["File Width"] = "파일 너비"
-	L["Filter based on the spell Name string."] = "주문 이름 문자열 기반으로 필터링합니다."
+	L["Filter based on the spell Name string."] = "주문 이름 문자열을 필터링 합니다."
 	L["Filter by Arena Spec"] = "투기장 전문화별 필터"
 	L["Filter by Class"] = "직업별 필터"
 	L["Filter by Group Role"] = "그룹 역할별 필터"
@@ -446,7 +446,8 @@ Supports multiple entries, separated by commas
 Can use \ to escape -.]=] ] = [=[필터 형식: '이름', '이름-서버', '-서버'. 여러 항목을 지원하며, 각 항목은 쉼표로 구분합니다.
 -는 앞에 \를 사용해서 이스케이프 처리를 할 수 있습니다.]=]
 	L[ [=[Filter to only dispellable de/buffs of the given type(s)
-Bleed classification via LibDispel]=] ] = "LibDispel을 통해 출혈로 분류된 버프/디버프만 인식합니다"
+Bleed classification via LibDispel]=] ] = [=[선택한 종류의 버프/디버프 중 해제 가능한 것만 인식합니다
+출혈은 LibDispel을 통해 분류됩니다]=]
 	L["Find Auras"] = "위크오라 구하기"
 	L["Finish"] = "종료"
 	L["Finishing..."] = "완료중..."
@@ -722,7 +723,7 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = [=[위크오�
 	L["or %s"] = "or %s"
 	L["Orange Rune"] = "주황색 룬"
 	L["Orientation"] = "진행 방향"
-	L["Our translators (too many to name)"] = "번역가(일일이 열거하기 힘들 정도로 많음)"
+	L["Our translators (too many to name)"] = "번역해주신 분들 (일일이 열거하기 힘들 정도로 많음)"
 	L["Outer"] = "외부"
 	L["Outline"] = "외곽선"
 	L["Overflow"] = "텍스트 넘침"
@@ -772,6 +773,10 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = [=[위크오�
 	L["Regions of type \"%s\" are not supported."] = "\"%s\" 종류의 Region은 지원하지 않습니다."
 	L["Remaining Time"] = "남은 시간"
 	L["Remove"] = "제거"
+	--[[Translation missing --]]
+	L["Remove All Sounds"] = "Remove All Sounds"
+	--[[Translation missing --]]
+	L["Remove All Text To Speech"] = "Remove All Text To Speech"
 	L["Remove this display from its group"] = "이 디스플레이를 그룹에서 제거합니다"
 	L["Remove this property"] = "이 속성 제거"
 	L["Rename"] = "이름 변경"
@@ -833,8 +838,12 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = [=[위크오�
 	L["Show Model"] = "모델 표시"
 	L["Show model of unit "] = "유닛의 모델 표시"
 	L["Show On"] = "표시 조건"
+	--[[Translation missing --]]
+	L["Show Sound Setting"] = "Show Sound Setting"
 	L["Show Spark"] = "섬광 표시"
 	L["Show Text"] = "텍스트 표시"
+	--[[Translation missing --]]
+	L["Show Text To Speech Setting"] = "Show Text To Speech Setting"
 	L["Show this group's children"] = "이 그룹의 자식 위크오라를 표시합니다"
 	L["Show Tick"] = "틱 표시"
 	L["Shows a 3D model from the game files"] = "게임 파일내 3D 모델을 표시합니다"
@@ -928,8 +937,8 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = [=[위크오�
 	L["There are several special codes available to make this text dynamic. Click to view a list with all dynamic text codes."] = "이 텍스트를 동적으로 만들 수 있는 여러 특수 코드가 있습니다. 클릭하면 모든 동적 텍스트 코드가 표시됩니다."
 	L["Thickness"] = "굵기"
 	L["This adds %raidMark as text replacements."] = "이 옵션을 켜면 텍스트에서 %raidMark 대체 코드가 추가됩니다."
-	L["This adds %role, %roleIcon as text replacements. Does nothing if the unit is not a group member."] = "이 옵션은 텍스트 대체 코드에 %role, %roleIcon을 추가합니다. 유닛이 같은 그룹에 있지 않으면 작동하지 않습니다."
-	L["This adds %tooltip, %tooltip1, %tooltip2, %tooltip3 and %tooltip4 as text replacements and also allows filtering based on the tooltip content/values."] = "이 옵션은 텍스트 대체 코드로 %tooltip, %tooltip1, %tooltip2, %tooltip3, %tooltip4를 추가하여 툴팁 콘텐트/값 정보를 필터링 할 수 있습니다."
+	L["This adds %role, %roleIcon as text replacements. Does nothing if the unit is not a group member."] = "이 옵션을 켜면 텍스트 대체 코드에 %role, %roleIcon이 추가됩니다. 유닛이 그룹에 없으면 작동하지 않습니다."
+	L["This adds %tooltip, %tooltip1, %tooltip2, %tooltip3 and %tooltip4 as text replacements and also allows filtering based on the tooltip content/values."] = "이 옵션을 켜면 텍스트 대체 코드에 %tooltip, %tooltip1, %tooltip2, %tooltip3, %tooltip4를 추가해서 툴팁 내용/수치 정보를 추출할 수 있게 해줍니다."
 	L[ [=[This aura contains custom Lua code.
 Make sure you can trust the person who sent it!]=] ] = "이 위크오라는 사용자 정의 Lua 코드를 포함하고 있습니다. 보낸 사람이 믿을만한지 확인하세요!"
 	L["This aura is marked as an update to an aura '%s', but cannot be used to update that aura. This usually happens if an aura is moved out of a group."] = "이 위크오라는 '%s' 위크오라의 업데이트로 표시됐지만 업데이트를 할 수 없었습니다. 보통 이런 현상은 그룹에서 위크오라가 빠져있을 때 발생합니다."
@@ -986,11 +995,9 @@ Upgrade your version of WeakAuras or wait for next release before installing thi
 	L["Unit Count"] = "유닛 수"
 	L["Unit Frames"] = "유닛 프레임"
 	L["Unknown"] = "알 수 없음"
-	--[[Translation missing --]]
-	L["Unknown Encounter's Spell Id"] = "Unknown Encounter's Spell Id"
+	L["Unknown Encounter's Spell Id"] = "알 수 없는 보스 주문 ID"
 	L["Unknown property '%s' found in '%s'"] = "'%2$s'에 알 수 없는 속성 '%1$s'|1이;가; 있음"
-	--[[Translation missing --]]
-	L["Unknown Spell"] = "Unknown Spell"
+	L["Unknown Spell"] = "알 수 없는 주문"
 	L["Unlike the start or finish animations, the main animation will loop over and over until the display is hidden."] = "시작 또는 종료 애니메이션과 달리 메인 애니메이션은 디스플레이가 숨겨질 때까지 계속 반복됩니다."
 	L["Update"] = "업데이트"
 	L["Update Auras"] = "위크오라 업데이트"
@@ -1041,7 +1048,7 @@ Upgrade your version of WeakAuras or wait for next release before installing thi
 	L["You are about to delete a trigger. |cFFFF0000This cannot be undone!|r Would you like to continue?"] = "이 활성 조건을 삭제하려고 합니다. |cFFFF0000이는 되돌릴 수 없습니다!|r 계속할까요?"
 	L[ [=[You can add a comma-separated list of state values here that (when changed) WeakAuras should also run the Anchor Code on.
 
-WeakAuras will always run custom anchor code if you include 'changed' in this list, or when a region is added, removed, or re-ordered.]=] ] = "이곳에 스테이트 값 목록을 쉼표 구분자를 넣어 추가할 수 있으며 (changed 발동시) WeakAuras도 앵커 코드를 이곳에서 실행합니다. WeakAuras는 언제나 이 목록에 'changed'가 들어있거나 region이 추가, 삭제, 재정렬시 사용자 정의 앵커 코드를 실행합니다."
+WeakAuras will always run custom anchor code if you include 'changed' in this list, or when a region is added, removed, or re-ordered.]=] ] = "이곳에 스테이트 값들의 목록을 쉼표로 구분해서 넣을 수 있으며 (changed가 발동하면) WeakAuras는 앵커 코드를 실행할 것입니다. WeakAuras는 이 목록에 'changed'가 들어있거나 region이 추가, 삭제, 재정렬시 항상 사용자 정의 앵커 코드를 실행합니다."
 	L[ [=[You can add a comma-separated list of state values here that (when changed) WeakAuras should also run the Grow Code on.
 
 WeakAuras will always run custom grow code if you include 'changed' in this list, or when a region is added, removed, or re-ordered.]=] ] = "이곳에 스테이트 값 목록을 쉼표 구분자를 넣어 추가할 수 있으며 (changed 발동시) WeakAuras도 Grow 코드를 이곳에서 실행합니다. WeakAuras는 언제나 이 목록에 'changed'가 들어있거나 region이 추가, 삭제, 재정렬시 사용자 정의 Grow 코드를 실행합니다."
