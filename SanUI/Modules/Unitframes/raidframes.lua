@@ -486,8 +486,8 @@ local function GetRaidFrameAttributes()
 	"yOffset", scales[-2],
 	"point", point,
 	"groupFilter", "1,2,3,4,5,6,7,8",
-	"groupingOrder", "1,2,3,4,5,6,7,8",
-	"groupBy", "GROUP",
+	"groupingOrder", "HEAL, TANK, DAMAGER", --"1,2,3,4,5,6,7,8",
+	"groupBy", "ROLE",
 	"maxColumns", 8,
 	"unitsPerColumn", 5,
 	"columnSpacing", scales[2],
@@ -527,11 +527,13 @@ oUF:Factory(function(self)
 	raid:SetParent(SanUI_PetBattleFrameHider)
 	raid:ClearAllPoints()
 	raid:SetPoint("CENTER",UIParent,0,-195)
+	raid:SetFrameStrata("MEDIUM")
 	S.unitFrames.raid = raid
 
 	local pets = oUF:SpawnHeader(GetPetFrameAttributes())
 	pets:SetParent(SanUI_PetBattleFrameHider)
 	pets:SetPoint(pa1, raid, pa2, Scale(px), Scale(py))
+	pets:SetFrameStrata("MEDIUM")
 	S.unitFrames.pets = pets
 
 	-- Max number of group according to Instance max players
