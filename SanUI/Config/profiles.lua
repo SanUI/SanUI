@@ -22,6 +22,10 @@ S["profiles"] = {
 	modes = {"JhessDisc","JhessHoly","JhessShadow"},
 	AddonMenu = {DBM=1, WorldFrame=2, CDTL2=3},
  },
+ ["Lolgas"] = {
+	modes = { "LolgasTank" },
+	AddonMenu = {BigWigs=1,  Hack=2, MDT=3, CDTL2=4},
+ },
  ["DEFAULT"] = {
  	modes = {"Heal","Tank", "Damage" },
 	AddonMenu = {DBM=1,  WorldFrame=2, CDTL2=3},
@@ -167,6 +171,17 @@ S["Modes"] = {
 		["cdtl2"] = "SanHeal",
 		["ActionButtons"] = "SanHeal",
 		["DBM"] = "JhessShadow",
+	},
+	["LolgasTank"] = {
+		["raidframes"] = "SanChicken",
+		["SimpleAuraFilter"] = "Lolgas",
+		["castbar"] = "SanBear",
+		["powerbar"] = "SanBear",
+		["gcd"] = "SanBear",
+		["bossbars"] = "SanChicken",
+		["cdtl2"] = "SanBear",
+		["ActionButtons"] = "SanBear",
+		["DBM"] = "SanBear",
 	},
 }
 
