@@ -481,17 +481,19 @@ S["UnitFrames"].RaidDebuffs = {
 -- The Silken Court
 	[450129] = List(), -- Entropic Desolation
 	[449857] = List(), -- Impaled
-	[438749] = List(), -- Scarab Fixation
+	--[438749] = List(), -- Scarab Fixation
 	[438708] = List(), -- Stinging Swarm
 	[438218] = List(), -- Piercing Strike
 	[454311] = List(), -- Barbed Webs
 	[438773] = List(), -- Shattered Shell
 	[438355] = List(), -- Cataclysmic Entropy
 	--[438656] = List(), -- Venomous Rain
-	[441772] = List(), -- Void Bolt
+	--[441772] = List(), -- Void Bolt
 	[441788] = List(), -- Web Vortex
 	[440001] = List(), -- Binding Webs
 -- Queen Ansurek
 	-- TODO: No raid testing available for this boss
+
 	-- [449960] = List(), for test, the carves at light's Blooming in Hallowfall do this
+	[437592] = List(), -- Reactive Toxin
 }
