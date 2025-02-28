@@ -1,34 +1,54 @@
-# [5.17.4](https://github.com/WeakAuras/WeakAuras2/tree/5.17.4) (2024-10-30)
+# [5.19.4](https://github.com/WeakAuras/WeakAuras2/tree/5.19.4) (2025-02-26)
 
-[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.17.3...5.17.4)
+[Full Changelog](https://github.com/WeakAuras/WeakAuras2/compare/5.19.3...5.19.4)
 
 ## Highlights
 
-- New: You can now shift-click spells into the BuffTrigger options
-- New: We added a context menu item to remove all sounds from an aura
-- Changed: Template updates for 11.0.5
-- Changed: Update version for Cata Classic
+Update for The War Within 11.1
+
+New in this version:
+
+- models now have an alpha slider to set transparency
+- TSU-type custom triggers have some new convenience functions available. Documentation is avaliable at https://github.com/WeakAuras/WeakAuras2/wiki/Trigger-State-Updater-(TSU)#all-states-
+helper-methods
+  - this is unlikely to matter, but note that the choice of plumbing used means this is techni
+cally a breaking change if you ever created a state with the "__changed" key.
+
+Fixes:
+
+- x-realm transfer of auras should fail less often
+- improve performance
+cally a breaking change if you ever created a state with the "__changed" key.
+
+Fixes:
+
+- x-realm transfer of auras should fail less often
+- improve performance
+- large, deply nested groups should load significantly faster (i.e. https://wago.io/twwdungeons should be less prone to throw errors when you start an encounter)
+- "Hide Cooldown Text" condition property remembered how to function
+- x-realm data transfer (for sharing auras) should be more likely to actually succeed now
 
 ## Commits
 
-InfusOnWoW (4):
+InfusOnWoW (6):
 
-- Sound Aura Warning: Add a context menu to remove all sounds from an aura
-- Templates: Stormbringer, Flurry Strikes, Dark Ranger, Deathbringer
-- Update Atlas File List from wago.tools
-- Update Discord List
+- Use Chomp for cross-realm transfer
+- Fix EnsureRegion repeately creating parents
+- Group: Don't calculate group size if not needed
+- Fix Hide Cooldown Text condition
+- Models: Fix Alpha animations
+- Be extra picky on noValidation spell inputs
 
 Stanzilla (1):
 
-- Update WeakAurasModelPaths from wago.tools
+- chore(toc): bump version for retail
 
-emptyrivers (2):
+emptyrivers (1):
 
-- teach BT2 how to interpret hyperlinks
-- move history updates to background task
+- put the mixins in private exec_env too
 
 mrbuds (2):
 
-- add printOnConsole error warning for CLEU without filters
-- update toc files for cataclysm 4.4.1
+- cache buildup optimization for 11.1
+- Add alpha setting for model region
 
