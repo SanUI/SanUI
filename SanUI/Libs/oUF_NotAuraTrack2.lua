@@ -361,6 +361,9 @@ local function UpdateBuffIcon(icon, nat)
         end
 
         local color = icon.color
+        if color then
+            icon.tex:SetVertexColor(unpack(color))
+        end
         if icon.timers then
             setTimedIconColor(icon)
             --[[
@@ -374,9 +377,6 @@ local function UpdateBuffIcon(icon, nat)
             --]]
         end
 
-        if color then
-            icon.tex:SetVertexColor(unpack(color))
-        end
         icon:Show()
         -- TODO is this needed? icon.auraInstanceID = data.auraInstanceID
     else
