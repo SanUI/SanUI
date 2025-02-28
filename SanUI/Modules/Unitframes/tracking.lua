@@ -27,7 +27,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
     pos = {"CENTER", nil, "CENTER", -Scale(14), 0},
     color = {0.4, 0.8, 0.2},
     anyCaster = false,
-    timers = { {2, {1, 0, 0}}, {4.5, {1, 1, 0}} },
+    timers = { {2, {1, 0, 0}}, {5.1, {1, 1, 0}} },
 
   },
   -- Germination
@@ -36,7 +36,7 @@ S["UnitFrames"].RaidBuffsTracking["Druid"] = {
     pos = {"CENTER", nil, "CENTER", -Scale(14), -Scale(9)},
     color = {0.4, 0.8, 0.2},
     anyCaster = false,
-    timers = { {2, {1, 0, 0}}, {4.5, {1, 1, 0}} }
+    timers = { {2, {1, 0, 0}}, {5.1, {1, 1, 0}} }
   },
   -- Wild Growth
 	{
