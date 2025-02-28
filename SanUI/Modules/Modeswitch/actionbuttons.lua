@@ -28,7 +28,7 @@ S.switchActionBars.main = function(profile)
 	if profile == "SanBear" then
 		DominosFrame1:ClearAllPoints()
 		DominosFrame1:SetPoint("CENTER", UIParent, "CENTER", 0, -185)
-		DominosFrame1.Backdrop:SetAlpha(0)
+		--DominosFrame1.Backdrop:SetAlpha(0)
 		DominosFrame1:SetColumns(6)
 
 		DominosFrame6:ClearAllPoints()
@@ -43,7 +43,7 @@ S.switchActionBars.main = function(profile)
 		DominosFrame6:SetPoint("BOTTOMRIGHT", S.panels.bottomrighttextbox, "BOTTOMLEFT", -6, 0)
 		DominosFrame6:SetColumns(12)
 
-		DominosFrame1.Backdrop:SetAlpha(1)
+		--DominosFrame1.Backdrop:SetAlpha(1)
 	end
 
 end
