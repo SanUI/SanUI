@@ -166,3 +166,8 @@ for id = 1, NUM_ACTIONBAR_BUTTONS do
     disableActionButton(('MultiBarBottomRightButton%d'):format(id))
     disableActionButton(('MultiBarBottomLeftButton%d'):format(id))
 end
+
+-- container offsets are a bit broken when using Dominos for action bars in 1.15.4
+-- this prevents the UIParent position manager from updating them, dynamically
+UIPARENT_MANAGED_FRAME_POSITIONS.CONTAINER_OFFSET_X = nil
+UIPARENT_MANAGED_FRAME_POSITIONS.CONTAINER_OFFSET_Y = nil

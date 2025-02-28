@@ -1,5 +1,30 @@
 # Dominos Changelog
 
+## 11.1.0
+
+* Adjust KeyRingButton test to hopefully avoid some errors
+
+## 11.0.9
+
+* Update TOCs for 11.1.0, 4.4.2 and 1.15.6
+* (Classic) Add experimental support for the extra ability bar
+
+## 11.0.8
+
+* Update TOCs for 1.15.5
+
+## 11.0.7
+
+* (Classic) Fix tooltip issues when enabling all Blizzard action bars
+
+## 11.0.6
+
+* Update TOCs for 11.0.7 and 11.0.5
+
+## 11.0.5
+
+* (Vanilla) Fix tooltip issues when enabling all Blizzard action bars
+
 ## 11.0.4
 
 * Add a new slider for row spacing (contributed by [Xiaoyang-Huang](https://github.com/Xiaoyang-Huang))
