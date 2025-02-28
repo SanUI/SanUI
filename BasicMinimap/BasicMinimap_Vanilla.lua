@@ -12,7 +12,8 @@ local blizzButtonNicknames = {
 	zoomOut = MinimapZoomOut,
 	mail = MiniMapMailFrame,
 	pvp = MiniMapBattlefieldFrame,
-	lfg = MiniMapLFGFrame,
+	--lfg = LFGMinimapFrame, -- loads on PLAYER_ENTERING_WORLD
+	tracking = MiniMapTracking,
 }
 frame.blizzButtonNicknames = blizzButtonNicknames
 
@@ -125,6 +126,7 @@ local function Init(self)
 				mail = 20,
 				pvp = 210,
 				lfg = 215,
+				tracking = 150,
 			},
 		},
 	}
@@ -624,16 +626,17 @@ local function Login(self)
 	end
 
 	-- World map button
-	self.SetParent(MiniMapWorldMapButton, self)
+	--self.SetParent(MiniMapWorldMapButton, self) -- Not on classic era
 
 	-- Tracking button
 	--self.SetParent(MiniMapTracking, self)
 
+	self.SetParent(MiniMapTracking, Minimap)
 	-- On classic (vanilla) only, when reloading UI, there's a bug where the tracking icon doesn't re-show.
 	local icon = GetTrackingTexture()
 	if icon then
 		MiniMapTrackingIcon:SetTexture(icon)
-		MiniMapTrackingFrame:Show()
+		MiniMapTracking:Show()
 	end
 
 	-- Classic
@@ -667,9 +670,8 @@ local function Login(self)
 	--	self.SetParent(GarrisonLandingPageMinimapButton, self)
 	--end
 
-	-- PvE/PvP Queue button
+	-- PvP Queue button
 	self.SetParent(MiniMapBattlefieldFrame, Minimap) -- QueueStatusMinimapButton (Retail) > MiniMapBattlefieldFrame (Classic)
-	self.SetParent(MiniMapLFGFrame, Minimap) -- Special LFG button for classic/TBC
 
 	-- Update all blizz button positions
 	for nickName, button in next, blizzButtonNicknames do
@@ -713,12 +715,12 @@ local function Login(self)
 	self.SetScript(Minimap, "OnMouseUp", function(minimapFrame, btn)
 		--if btn == frame.db.profile.calendarBtn then
 		--	GameTimeFrame:Click()
-		if btn == frame.db.profile.trackingBtn then
-			ToggleDropDownMenu(1, nil, MiniMapTrackingDropDown, minimapFrame)
+		--elseif btn == frame.db.profile.trackingBtn then
+		--	ToggleDropDownMenu(1, nil, MiniMapTrackingDropDown, minimapFrame)
 		--elseif btn == frame.db.profile.missionsBtn then
 		--	GarrisonLandingPageMinimapButton:Click()
-		elseif btn == frame.db.profile.mapBtn then
-			MiniMapWorldMapButton:Click()
+		if btn == frame.db.profile.mapBtn then
+			ToggleWorldMap()
 		elseif btn == "LeftButton" then
 			Minimap_OnClick(minimapFrame)
 		end
@@ -771,6 +773,12 @@ function frame:LOADING_SCREEN_DISABLED(event)
 	CreateCoords(self)
 	local fullMinimapSize = self.db.profile.size + self.db.profile.borderSize
 	CreateZoneText(self, fullMinimapSize)
+	if LFGMinimapFrame then -- Classic era only, loads after PLAYER_ENTERING_WORLD
+		blizzButtonNicknames.lfg = LFGMinimapFrame
+		self.SetParent(LFGMinimapFrame, Minimap) -- Special LFG button for classic era
+		self.ClearAllPoints(LFGMinimapFrame)
+		ldbi:SetButtonToPosition(LFGMinimapFrame, self.db.profile.blizzButtonLocation.lfg)
+	end
 end
 frame:RegisterEvent("LOADING_SCREEN_DISABLED")
 
