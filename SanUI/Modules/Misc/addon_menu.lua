@@ -323,8 +323,8 @@ if SanUIButtonOrder["Hack"] then
 		HackButton.title:SetText("Hack")
 
 		HackButton:SetScript("OnMouseDown", function()
-				REHack:Toggle()
-				MenuMouseDown()
+			REHack_Toggle()
+			MenuMouseDown()
 		end)
 	end
 end
