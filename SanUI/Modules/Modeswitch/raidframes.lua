@@ -49,6 +49,7 @@ local function SetAttributeByProxy(frame,name, value)
     frame:SetAttribute(name, value)
 end
 
+--[[
 local function showRaidPets(show)
 	local pets = S.unitFrames.pets
 
@@ -63,6 +64,7 @@ local function showRaidPets(show)
 	pets:SetAttribute("showRaid",show)
 	pets:SetAttribute("showPlayer",show)
 end
+--]]
 
 S.ModRaidButton = function(button,unit,size,auras)
 	button:SetHeight(Scale(size))
@@ -86,14 +88,14 @@ local function changeRaidButtons(size,auras)
 		i = i+1
 		frame =  _G["SanUIRaidUnitButton" .. i]
 	end
-
+--[[
 	frame = _G["SanUIRaidPetsUnitButton1"]
 	while frame do
 		S.ModRaidButton(frame,"raidpet"..i,size,auras)
 		i = i+1
 		frame =  _G["SanUIRaidUnitButton" .. i]
 	end
-
+--]]
 end
 
 local function changeRaid(numRaid) end
@@ -144,10 +146,10 @@ end)
 
 S.switchRaidFrames = function(profile)
 	local frame = S.unitFrames.raid
-	local pets = S.unitFrames.pets
+	--local pets = S.unitFrames.pets
 
-	if not frame or not pets then
-		print("Don't have Raid or Pet frames, can't switch to profile "..profile.."!")
+	if not frame then --or not pets then
+		print("Don't have Raid frames, can't switch to profile "..profile.."!")
 		return
 	end
 
@@ -162,22 +164,24 @@ S.switchRaidFrames = function(profile)
 		SetAttributeByProxy(frame,"unitsPerColumn", 5)
 		SetAttributeByProxy(frame,"point","LEFT")
 
+		--[[
 		SetAttributeByProxy(pets,"columnAnchorPoint","TOP")
 		pets:SetPoint("TOPLEFT",frame,"BOTTOMLEFT",0,-S.scale4)
 		pets:SetAttribute("maxColumns", 8)
 		SetAttributeByProxy(pets,"unitsPerColumn", 5)
 		SetAttributeByProxy(pets,"point","LEFT")
+		--]]
 
 		changeRaid = function(numraid) --executed when raid roster etc changes, supposed to deal with raid size 40
 			if numraid > 25 then
-				showRaidPets(false)
+				--showRaidPets(false)
 				frame:SetAttribute("initial-height", smallheight)
-				pets:SetAttribute("initial-height", smallheight)
+				--pets:SetAttribute("initial-height", smallheight)
 				changeRaidButtons(smallheight)
 			elseif  numraid < 26 then
-				showRaidPets(true)
+				--showRaidPets(true)
 				frame:SetAttribute("initial-height", height)
-				pets:SetAttribute("initial-height", height)
+				--pets:SetAttribute("initial-height", height)
 				changeRaidButtons(height)
 			end
 		end
@@ -202,21 +206,21 @@ S.switchRaidFrames = function(profile)
 		SetAttributeByProxy(frame,"unitsPerColumn", 25)
 		SetAttributeByProxy(frame,"point","TOP")
 
-		showRaidPets(false)
+		--showRaidPets(false)
 
 		changeRaid = function(numraid) --executed when raid roster etc changes, supposed to deal with raid size 40
 			if numraid > 25 then
 				frame:SetAttribute("maxColumns",2)
 				SetAttributeByProxy(frame,"unitsPerColumn",20)
 				frame:SetAttribute("initial-height", 23)
-				pets:SetAttribute("initial-height", 23)
+				--pets:SetAttribute("initial-height", 23)
 				changeRaidButtons(23,{18562})
 			elseif numraid < 26 then
 				frame:SetAttribute("maxColumns",1)
 				SetAttributeByProxy(frame,"unitsPerColumn", 25)
 				SetAttributeByProxy(frame,"point","TOP")
 				frame:SetAttribute("initial-height", 23)
-				pets:SetAttribute("initial-height", 23)
+				--pets:SetAttribute("initial-height", 23)
 				changeRaidButtons(23,{18562})
 			end
 		end

@@ -530,11 +530,11 @@ oUF:Factory(function(self)
 	raid:SetFrameStrata("MEDIUM")
 	S.unitFrames.raid = raid
 
-	local pets = oUF:SpawnHeader(GetPetFrameAttributes())
-	pets:SetParent(SanUI_PetBattleFrameHider)
-	pets:SetPoint(pa1, raid, pa2, Scale(px), Scale(py))
-	pets:SetFrameStrata("MEDIUM")
-	S.unitFrames.pets = pets
+	--local pets = oUF:SpawnHeader(GetPetFrameAttributes())
+	--pets:SetParent(SanUI_PetBattleFrameHider)
+	--pets:SetPoint(pa1, raid, pa2, Scale(px), Scale(py))
+	--pets:SetFrameStrata("MEDIUM")
+	--S.unitFrames.pets = pets
 
 	-- Max number of group according to Instance max players
 	local ten = "1,2"
@@ -571,10 +571,10 @@ oUF:Factory(function(self)
 
 		if inInstance and instanceType == "raid" then
 			raid:SetAttribute("groupFilter", filter)
-			pets:SetAttribute("groupFilter", filter)
+			--pets:SetAttribute("groupFilter", filter)
 		else
 			raid:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
-			pets:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
+			--pets:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
 		end
 	end)
 end)
