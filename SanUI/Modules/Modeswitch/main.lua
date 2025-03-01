@@ -69,12 +69,6 @@ S.switch2Mode = function(mode)
 		print("No ActionButtons profile for mode "..mode.."! Can't Switch!")
 	end
 
-	if S["Modes"][mode]["cdtl2"] and IsAddOnLoaded("CooldownTimeline2") then
-		S.switchCDTL2(S["Modes"][mode]["cdtl2"])
-	else
-		print("Either you didn't set the cdtl2 profile for mode ".. mode .." or CDTL2 is not loaded. Either way, cannot load CDTL2 profile!")
-	end
-
 	if S["Modes"][mode]["DBM"] and IsAddOnLoaded("DBM-Core") then
 		DBM:ApplyProfile(S["Modes"][mode]["DBM"])
 	end

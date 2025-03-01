@@ -40,7 +40,6 @@ Modules\Unitframes\namedframes.lua
 
 Modules\AddonMods\blizzard.lua
 Modules\AddonMods\minimap.lua
-Modules\AddonMods\cdtl2.lua
 Modules\AddonMods\bugsack.lua
 Modules\AddonMods\weakauras_displays.lua
 Modules\AddonMods\weakauras.lua
