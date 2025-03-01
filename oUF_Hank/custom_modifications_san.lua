@@ -347,8 +347,17 @@ sharedStyle = function(self, unit, isSingle)
 
 		castbar.place()
 
-		castbar.CustomTimeText = S["UnitFrames"].CustomCastTimeText
-		castbar.CustomDelayText = S["UnitFrames"].CustomCastDelayText
+		castbar.CustomTimeText = function(self, duration)
+			---@diagnostic disable-next-line: undefined-field
+			local Value = format("%.1f / %.1f", self.channeling and duration or self.max - duration, self.max)
+			self.Time:SetText(Value)
+		end
+		
+		castbar.CustomDelayText = function(self, duration)
+			---@diagnostic disable-next-line: undefined-field
+			local Value = format("%.1f |cffaf5050%s %.1f|r", self.channeling and duration or self.max - duration, self.channeling and "- " or "+", self.delay)
+			self.Time:SetText(Value)
+		end
 		--castbar.PostCastStart = S["UnitFrames"].CheckCast
 		castbar.PostCastStart = function(element, unit)
 			--S["UnitFrames"].CheckChannel(element, unit)
