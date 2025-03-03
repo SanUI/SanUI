@@ -105,6 +105,7 @@ AddonMenuOpen.origPoint = {"BOTTOMLEFT", Minimap, "BOTTOMRIGHT", Scale(2), 0}
 if AnchorSide == true then
 	AddonMenuOpen:SetSize(C.sizes.minimapbuttons, C.sizes.minimapbuttons)
 	AddonMenuOpen.origsize = C.sizes.minimapbuttons
+---@diagnostic disable-next-line: param-type-mismatch
 	AddonMenuOpen:SetPoint(unpack(AddonMenuOpen.origPoint))
 else
 	AddonMenuOpen:SetSize(Minimap:GetWidth()+S.scale4 , Scale(14))
@@ -152,6 +153,7 @@ local function MenuMouseDown()
 		S.raidutilities:Show()
 		AddonMenuOpen:SetSize(AddonMenuOpen.origsize, AddonMenuOpen.origsize)
 		AddonMenuOpen:ClearAllPoints()
+        ---@diagnostic disable-next-line: param-type-mismatch
 		AddonMenuOpen:SetPoint(unpack(AddonMenuOpen.origPoint))
 		Text:SetFont(font, AddonMenuOpen.fontsize)
 		AddonMenuOpen.text:SetText("a")
