@@ -352,9 +352,118 @@ S["UnitFrames"].RaidDebuffs = {
 	[434083] = List(), -- Ambush
 	[433843] = List(), -- Erupting Webs
 -- The Rookery (Season 2)
+	[429493] = List(), -- Unstable Corruption
+	[424739] = List(), -- Chaotic Corruption
+	[433067] = List(), -- Seeping Corruption
+	[426160] = List(), -- Dark Gravity
+	[1214324] = List(), -- Crashing Thunder
+	[424966] = List(), -- Lingering Void
+	[467907] = List(), -- Festering Void
+	[458082] = List(), -- Stormrider's Charge
+	[472764] = List(), -- Void Extraction
+	[427616] = List(), -- Energized Barrage
+	[430814] = List(), -- Attracting Shadows
+	[430179] = List(), -- Seeping Corruption
+	[1214523] = List(), -- Feasting Void
 -- Priory of the Sacred Flame (Season 2)
+	[424414] = List(), -- Pierce Armor
+	[423015] = List(), -- Castigator's Shield
+	[447439] = List(), -- Savage Mauling
+	[425556] = List(), -- Sanctified Ground
+	[428170] = List(), -- Blinding Light
+	[448492] = List(), -- Thunderclap
+	[427621] = List(), -- Impale
+	[446403] = List(), -- Sacrificial Flame
+	[451764] = List(), -- Radiant Flame
+	[424426] = List(), -- Lunging Strike
+	[448787] = List(), -- Purification
+	[435165] = List(), -- Blazing Strike
+	[448515] = List(), -- Divine Judgment
+	[427635] = List(), -- Grievous Rip
+	[427897] = List(), -- Heat Wave
+	[424430] = List(), -- Consecration
+	[453461] = List(), -- Caltrops
+	[427900] = List(), -- Molten Pool
 -- Cinderbrew Meadery (Season 2)
+	[441397] = List(), -- Bee Venom
+	[431897] = List(), -- Rowdy Yell
+	[442995] = List(), -- Swarming Surprise
+	[437956] = List(), -- Erupting Inferno
+	[441413] = List(), -- Shredding Sting
+	[434773] = List(), -- Mean Mug
+	[438975] = List(), -- Shredding Sting
+	[463220] = List(), -- Volatile Keg
+	[449090] = List(), -- Reckless Delivery
+	[437721] = List(), -- Boiling Flames
+	[441179] = List(), -- Oozing Honey
+	[440087] = List(), -- Oozing Honey
+	[434707] = List(), -- Cinderbrew Toss
+	[445180] = List(), -- Crawling Brawl
+	[442589] = List(), -- Beeswax
+	[435789] = List(), -- Cindering Wounds
+	[440134] = List(), -- Honey Marinade
+	[432182] = List(), -- Throw Cinderbrew
+	[436644] = List(), -- Burning Ricochet
+	[436624] = List(), -- Cash Cannon
+	[436640] = List(), -- Burning Ricochet
+	[439325] = List(), -- Burning Fermentation
+	[432196] = List(), -- Hot Honey
+	[439586] = List(), -- Fluttering Wing
+	[440141] = List(), -- Honey Marinade
 -- Darkflame Cleft (Season 2)
+	[426943] = List(), -- Rising Gloom
+	[427015] = List(), -- Shadowblast
+	[420696] = List(), -- Throw Darkflame
+	[422648] = List(), -- Darkflame Pickaxe
+	[1218308] = List(), -- Enkindling Inferno
+	[422245] = List(), -- Rock Buster
+	[423693] = List(), -- Luring Candleflame
+	[421638] = List(), -- Wicklighter Barrage
+	[421817] = List(), -- Wicklighter Barrage
+	[424223] = List(), -- Incite Flames
+	[421146] = List(), -- Throw Darkflame
+	[427180] = List(), -- Fear of the Gloom
+	[424322] = List(), -- Explosive Flame
+	[422807] = List(), -- Candlelight
+	[420307] = List(), -- Candlelight
+	[422806] = List(), -- Smothering Shadows
+	[469620] = List(), -- Creeping Shadow
+	[443694] = List(), -- Crude Weapons
+	[425555] = List(), -- Crude Weapons
+	[428019] = List(), -- Flashpoint
+	[423501] = List(), -- Wild Wallop
+	[426277] = List(), -- One-Hand Headlock
+	[423654] = List(), -- Ouch!
+	[421653] = List(), -- Cursed Wax
+	[421067] = List(), -- Molten Wax
+	[426883] = List(), -- Bonk!
+	[440653] = List(), -- Surging Flamethrower
+	-- Operation: Floodgate (Season 2)
+	[462737] = List(), -- Black Blood Wound
+	[1213803] = List(), -- Nailed
+	[468672] = List(), -- Pinch
+	[468616] = List(), -- Leaping Spark
+	[469799] = List(), -- Overcharge
+	[469811] = List(), -- Backwash
+	[468680] = List(), -- Crabsplosion
+	[473051] = List(), -- Rushing Tide
+	[474351] = List(), -- Shreddation Sawblade
+	[465830] = List(), -- Warp Blood
+	[468723] = List(), -- Shock Water
+	[474388] = List(), -- Flamethrower
+	[472338] = List(), -- Surveyed Ground
+	[462771] = List(), -- Surveying Beam
+	[472819] = List(), -- Razorchoke Vines
+	[473836] = List(), -- Electrocrush
+	[468815] = List(), -- Gigazap
+	[470022] = List(), -- Barreling Charge
+	[470038] = List(), -- Razorchoke Vines
+	[473713] = List(), -- Kinetic Explosive Gel
+	[468811] = List(), -- Gigazap
+	[466188] = List(), -- Thunder Punch
+	[460965] = List(), -- Barreling Charge
+	[472878] = List(), -- Sludge Claws
+	[473224] = List(), -- Sonic Boom
 ----------------------------------------------------------
 --------------- The War Within (Season 1) ----------------
 ----------------------------------------------------------
@@ -430,6 +539,68 @@ S["UnitFrames"].RaidDebuffs = {
 	[451241] = List(), -- Shadowflame Slash
 	[451965] = List(), -- Molten Wake
 	[451224] = List(), -- Enveloping Shadowflame
+----------------------------------------------------------
+--------------- The War Within (Season 2) ----------------
+----------------------------------------------------------
+	-- The MOTHERLODE
+	[263074] = List(), -- Festering Bite
+	[280605] = List(), -- Brain Freeze
+	[257337] = List(), -- Shocking Claw
+	[270882] = List(), -- Blazing Azerite
+	[268797] = List(), -- Transmute: Enemy to Goo
+	[259856] = List(), -- Chemical Burn
+	[269302] = List(), -- Toxic Blades
+	[280604] = List(), -- Iced Spritzer
+	[257371] = List(), -- Tear Gas
+	[257544] = List(), -- Jagged Cut
+	[268846] = List(), -- Echo Blade
+	[262794] = List(), -- Energy Lash
+	[262513] = List(), -- Azerite Heartseeker
+	[260829] = List(), -- Homing Missle (travelling)
+	[260838] = List(), -- Homing Missle (exploded)
+	[263637] = List(), -- Clothesline
+-- Theater of Pain
+	[333299] = List(), -- Curse of Desolation 1
+	[333301] = List(), -- Curse of Desolation 2
+	[319539] = List(), -- Soulless
+	[326892] = List(), -- Fixate
+	[321768] = List(), -- On the Hook
+	[323825] = List(), -- Grasping Rift
+	[342675] = List(), -- Bone Spear
+	[323831] = List(), -- Death Grasp
+	[330608] = List(), -- Vile Eruption
+	[330868] = List(), -- Necrotic Bolt Volley
+	[323750] = List(), -- Vile Gas
+	[323406] = List(), -- Jagged Gash
+	[330700] = List(), -- Decaying Blight
+	[319626] = List(), -- Phantasmal Parasite
+	[324449] = List(), -- Manifest Death
+	[341949] = List(), -- Withering Blight
+-- Operation Mechagon: Workshop
+	[291928] = List(), -- Giga-Zap
+	[292267] = List(), -- Giga-Zap
+	[302274] = List(), -- Fulminating Zap
+	[298669] = List(), -- Taze
+	[295445] = List(), -- Wreck
+	[294929] = List(), -- Blazing Chomp
+	[297257] = List(), -- Electrical Charge
+	[294855] = List(), -- Blossom Blast
+	[291972] = List(), -- Explosive Leap
+	[285443] = List(), -- 'Hidden' Flame Cannon
+	[291974] = List(), -- Obnoxious Monologue
+	[296150] = List(), -- Vent Blast
+	[298602] = List(), -- Smoke Cloud
+	[296560] = List(), -- Clinging Static
+	[297283] = List(), -- Cave In
+	[291914] = List(), -- Cutting Beam
+	[302384] = List(), -- Static Discharge
+	[294195] = List(), -- Arcing Zap
+	[299572] = List(), -- Shrink
+	[300659] = List(), -- Consuming Slime
+	[300650] = List(), -- Suffocating Smog
+	[301712] = List(), -- Pounce
+	[299475] = List(), -- B.O.R.K
+	[293670] = List(), -- Chain Blade
 ---------------------------------------------------------
 ------------------- Nerub'ar Palace ---------------------
 ---------------------------------------------------------
@@ -497,5 +668,29 @@ S["UnitFrames"].RaidDebuffs = {
 
 	-- [449960] = List(), for test, the carves at light's Blooming in Hallowfall do this
 	[437592] = List(), -- Reactive Toxin
-	[438976] = List(), -- Royal Condemnationukk
+	[438976] = List(), -- Royal Condemnation
+	
+	---------------------------------------------------------
+	--------------- Liberation of Undermine -----------------
+	---------------------------------------------------------
+	-- Vexie and the Geargrinders
+	[465865] = List(), -- Tank Buster
+	[459669] = List(), -- Spew Oil
+	-- Cauldron of Carnage
+	[1213690] = List(), -- Molten Phlegm
+	-- Rik Reverb
+	[1217122] = List(), -- Lingering Voltage
+	-- Stix Bunkjunker
+	[461536] = List(), -- Rolling Rubbish
+	[1217954] = List(), -- Meltdown
+	[465346] = List(), -- Sorted
+	-- Sprocketmonger Lockenstock
+	[1218342] = List(), -- Unstable Shrapnel
+	[465917] = List(), -- Gravi-Gunk
+	-- The One-Armed Bandit
+	[471927] = List(), -- Withering Flames
+	[460420] = List(), -- Crushed!
+	-- Mug'Zee, Heads of Security
+	[4664769] = List(), -- Frostshatter Boots
+	-- Chrome King Gallywix
 }
