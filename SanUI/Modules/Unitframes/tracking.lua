@@ -21,6 +21,13 @@ end
 --         is colored by SetVertexColor(r, g, b) if the remaining duration of the buff is <time. The first one matching wins.
 -- .count Table { size } where size is fontsize
 S["UnitFrames"].RaidBuffsTracking["Druid"] = {
+	-- Insurance! 11.1 setbonus
+	{
+	spellId = 1215502,
+	pos = {"CENTER", nil, "CENTER", -Scale(14), 0},
+	color = {1, 0, 1},
+	anyCaster = false,
+	},
   -- Rejuvenation
 	{
     spellId = 774,

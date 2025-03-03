@@ -394,6 +394,11 @@ local function Shared(self, unit)
 		auras.Icons[8936]:SetFrameLevel(auras.Icons[18562]:GetFrameLevel()+1)
 	end
 
+	-- special: Showing rejuvenation (774) AND 4pc setbonus 11.1 (1215502), so put
+	-- reju's icon above the setbonus
+	if auras.Icons[774] and auras.Icons[1215502] then
+		auras.Icons[774]:SetFrameLevel(auras.Icons[1215502]:GetFrameLevel()+1)
+	end
 	-- oUF_NotRaidDebuffs
 	local raiddebuffs = S["UnitFrames"].RaidDebuffs
 	local notraiddebuffs = { } --forceShow = true }
