@@ -531,7 +531,7 @@ oUF:Factory(function(self)
 	local raid = oUF:SpawnHeader(GetRaidFrameAttributes())
 	raid:SetParent(SanUI_PetBattleFrameHider)
 	raid:ClearAllPoints()
-	raid:SetPoint("CENTER",UIParent,0,-195)
+	raid:SetPoint("CENTER",UIParent,0,-255)
 	raid:SetFrameStrata("MEDIUM")
 	S.unitFrames.raid = raid
 
@@ -582,4 +582,32 @@ oUF:Factory(function(self)
 			--pets:SetAttribute("groupFilter", "1,2,3,4,5,6,7,8")
 		end
 	end)
+
+	-- Special Stuff for some Weak Auras thingies
+	S.setRaidAnchorFrameHeight = function()
+		if not S.RaidAnchorFrame then
+		    S.RaidAnchorFrame = CreateFrame("Frame", "SanUIRaidAnchorFrame", UIParent) 
+		    --S.CreateBackdrop(S.RaidAnchorFrame)
+			local f  = S.RaidAnchorFrame
+			f:ClearAllPoints()
+			f:SetPoint("TOPLEFT", SanUIRaid, "TOPLEFT", -3, 0)
+			f:SetPoint("TOPRIGHT", SanUIRaid, "TOPRIGHT", 3, 0)
+			f:RegisterEvent("GROUP_ROSTER_UPDATE")
+			f:RegisterEvent("PLAYER_ENTERING_WORLD")
+			f:SetScript("OnEvent", S.setRaidAnchorFrameHeight)
+		end
+		
+		local num = GetNumGroupMembers()
+		if num == 0 then num = 1 end
+		--print("Num: "..tostring(num))
+		local rows = math.ceil(num/5)
+		--print("Rows: "..tostring(rows))
+		local buttonheight = SanUIRaidUnitButton1:GetHeight() or rfsizes.height
+		local yoff = (SanUIRaid and SanUIRaid:GetAttribute("yOffset")) or 0
+		S.RaidAnchorFrame:SetHeight(rows*(buttonheight) + (rows-1)*yoff) -- damned if I know where the 4 comes from
+		
+		return f
+	  end
+
+	  S.setRaidAnchorFrameHeight()
 end)
