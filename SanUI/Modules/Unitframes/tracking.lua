@@ -387,7 +387,7 @@ S["UnitFrames"].RaidDebuffs = {
 -- Cinderbrew Meadery (Season 2)
 	[441397] = List(), -- Bee Venom
 	[431897] = List(), -- Rowdy Yell
-	[442995] = List(), -- Swarming Surprise
+	--[442995] = List(), -- Swarming Surprise
 	[437956] = List(), -- Erupting Inferno
 	[441413] = List(), -- Shredding Sting
 	[434773] = List(), -- Mean Mug
@@ -424,8 +424,8 @@ S["UnitFrames"].RaidDebuffs = {
 	[421146] = List(), -- Throw Darkflame
 	[427180] = List(), -- Fear of the Gloom
 	[424322] = List(), -- Explosive Flame
-	[422807] = List(), -- Candlelight
-	[420307] = List(), -- Candlelight
+	--[422807] = List(), -- Candlelight
+	--[420307] = List(), -- Candlelight
 	[422806] = List(), -- Smothering Shadows
 	[469620] = List(), -- Creeping Shadow
 	[443694] = List(), -- Crude Weapons
@@ -559,6 +559,7 @@ S["UnitFrames"].RaidDebuffs = {
 	[260829] = List(), -- Homing Missle (travelling)
 	[260838] = List(), -- Homing Missle (exploded)
 	[263637] = List(), -- Clothesline
+	[262347] = List(), -- Static Pulse
 -- Theater of Pain
 	[333299] = List(), -- Curse of Desolation 1
 	[333301] = List(), -- Curse of Desolation 2
@@ -576,6 +577,9 @@ S["UnitFrames"].RaidDebuffs = {
 	[319626] = List(), -- Phantasmal Parasite
 	[324449] = List(), -- Manifest Death
 	[341949] = List(), -- Withering Blight
+	[333861] = List(), -- Ricocheting Blade
+	[330532] = List(), -- Jagged Quarrel
+	[1222949] = List(), -- Well of Darkness
 -- Operation Mechagon: Workshop
 	[291928] = List(), -- Giga-Zap
 	[292267] = List(), -- Giga-Zap
@@ -676,21 +680,33 @@ S["UnitFrames"].RaidDebuffs = {
 	-- Vexie and the Geargrinders
 	[465865] = List(), -- Tank Buster
 	[459669] = List(), -- Spew Oil
+	[459974] = List(), -- Bomb Voyage
+	--[468147] = List(), -- Exhaust Fumes
 	-- Cauldron of Carnage
 	[1213690] = List(), -- Molten Phlegm
+	[1214009] = List(), -- Voltaic Image
 	-- Rik Reverb
 	[1217122] = List(), -- Lingering Voltage
+	[468119] = List(), -- Resonant Echoes
+	[467044] = List(), -- Faulty Zap
 	-- Stix Bunkjunker
 	[461536] = List(), -- Rolling Rubbish
 	[1217954] = List(), -- Meltdown
 	[465346] = List(), -- Sorted
+	[466748] = List(), -- Infected Bite
 	-- Sprocketmonger Lockenstock
-	[1218342] = List(), -- Unstable Shrapnel
+	--[1218342] = List(), -- Unstable Shrapnel
 	[465917] = List(), -- Gravi-Gunk
+	[471308] = List(), -- Blisterizer Mk. II
 	-- The One-Armed Bandit
 	[471927] = List(), -- Withering Flames
 	[460420] = List(), -- Crushed!
 	-- Mug'Zee, Heads of Security
 	[4664769] = List(), -- Frostshatter Boots
+	[466509] = List(), -- Stormfury Finger Gun
+	[1215488] = List(), -- Disintegration Beam (Actually getting beamed)
 	-- Chrome King Gallywix
+	[466154] = List(4), -- Blast Burns
+	[466834] = List(6), -- Shock Barrage
+	[469362] = List(6), -- Charged Giga Bomb (Carrying)
 }
