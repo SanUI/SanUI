@@ -560,6 +560,8 @@ S["UnitFrames"].RaidDebuffs = {
 	[260838] = List(), -- Homing Missle (exploded)
 	[263637] = List(), -- Clothesline
 	[262347] = List(), -- Static Pulse
+	[1215411] = List(), -- Puncture
+	[1213141] = List(), -- Heavy Slash
 -- Theater of Pain
 	[333299] = List(), -- Curse of Desolation 1
 	[333301] = List(), -- Curse of Desolation 2
@@ -709,4 +711,6 @@ S["UnitFrames"].RaidDebuffs = {
 	[466154] = List(4), -- Blast Burns
 	[466834] = List(6), -- Shock Barrage
 	[469362] = List(6), -- Charged Giga Bomb (Carrying)
+	[1220761] = List(6), -- Mechengineer's Canisters
+	[1220290] = List(), -- Trick Shots
 }
