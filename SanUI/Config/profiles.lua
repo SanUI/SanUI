@@ -16,19 +16,23 @@ S["profiles"] = {
  },
   ["Dovi"] = {
 	modes = {"DoviBM" },
-	AddonMenu = {DBM=1,  Hack=2, MDT=3},
+	AddonMenu = {BigWigs=1,  Hack=2, MDT=3},
  },
  ["Jhess"] = {
 	modes = {"JhessDisc","JhessHoly","JhessShadow"},
-	AddonMenu = {DBM=1, WorldFrame=2},
+	AddonMenu = {BigWigs=1, WorldFrame=2},
  },
  ["Lolgas"] = {
 	modes = { "LolgasTank" },
 	AddonMenu = {BigWigs=1,  Hack=2, MDT=3},
  },
+ ["Tiamar"] = {
+	modes = {"AmberTank" },
+	AddonMenu = {BigWigs=1, Hack=2, MDT=3},
+ },
  ["DEFAULT"] = {
  	modes = {"Heal","Tank", "Damage" },
-	AddonMenu = {DBM=1,  WorldFrame=2},
+	AddonMenu = {BigWigs=1, Hack=2, MDT=3},
  },
 }
 
@@ -93,6 +97,16 @@ S["Modes"] = {
 	["SanBear"] = {
 		["raidframes"] = "SanChicken",
 		["SimpleAuraFilter"] = "SanBear",
+		["castbar"] = "SanBear",
+		["powerbar"] = "SanBear",
+		["gcd"] = "SanBear",
+		["bossbars"] = "SanChicken",
+		["ActionButtons"] = "SanBear",
+		["DBM"] = "SanBear",
+	},
+	["AmberTank"] = {
+		["raidframes"] = "AmberTank",
+		["SimpleAuraFilter"] = "AmberTank",
 		["castbar"] = "SanBear",
 		["powerbar"] = "SanBear",
 		["gcd"] = "SanBear",

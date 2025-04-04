@@ -224,10 +224,27 @@ S.switchRaidFrames = function(profile)
 				changeRaidButtons(23,{18562})
 			end
 		end
+		dealWith40:GetScript("OnEvent")()
+	elseif profile == "AmberTank" then
+		S.position_tooltip = S.position_tooltip_default
+
+		SetAttributeByProxy(frame,"columnAnchorPoint","TOP")
+		frame:SetPoint("TOP",UIParent,"CENTER",0,-240)
+		frame:SetAttribute("maxColumns", 8)
+		SetAttributeByProxy(frame,"unitsPerColumn", 5)
+		SetAttributeByProxy(frame,"point","LEFT")
+
+		changeRaid = function(numraid) --executed when raid roster etc changes, supposed to deal with raid size 40
+			if numraid > 25 then
+				frame:SetAttribute("initial-height", smallheight)
+				changeRaidButtons(smallheight)
+			elseif  numraid < 26 then
+				frame:SetAttribute("initial-height", height)
+				changeRaidButtons(height)
+			end
+		end
 
 		dealWith40:GetScript("OnEvent")()
-
-		--S.swiftmend_shown = false
 	end
 end
 
