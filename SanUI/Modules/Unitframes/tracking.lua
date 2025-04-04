@@ -692,10 +692,12 @@ S["UnitFrames"].RaidDebuffs = {
 	[468119] = List(), -- Resonant Echoes
 	[467044] = List(), -- Faulty Zap
 	-- Stix Bunkjunker
-	[461536] = List(), -- Rolling Rubbish
-	[1217954] = List(), -- Meltdown
-	[465346] = List(), -- Sorted
-	[466748] = List(), -- Infected Bite
+	--[461536] = List(), -- Rolling Rubbish
+	--[1217954] = List(), -- Meltdown
+	--[465346] = List(), -- Sorted
+	--[466748] = List(), -- Infected Bite
+	[1218708] = List(5), -- Hypercharged
+	--[472893] = List(), -- Incineration
 	-- Sprocketmonger Lockenstock
 	--[1218342] = List(), -- Unstable Shrapnel
 	[465917] = List(), -- Gravi-Gunk
