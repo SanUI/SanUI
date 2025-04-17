@@ -154,11 +154,11 @@ local function UpdateBuffText(text, nat, current_time)
     local data = text.data
 
     if not data then
-        local instanceId = next(text.candidates)
+        local instanceId, cdata = next(text.candidates)
         if instanceId then
-            data = text.candidates[instanceId]
-            text.data = data
+            text.data = cdata
             text.candidates[instanceId] = nil
+            data = text.data
         end
     end
 
@@ -336,10 +336,11 @@ local function UpdateBuffIcon(icon, nat)
     local data = icon.data
 
     if not data then
-        local instanceId, data = next(icon.candidates)
+        local instanceId, cdata = next(icon.candidates)
         if instanceId then
-            icon.data = data
+            icon.data = cdata
             icon.candidates[instanceId] = nil
+            data = icon.data
         end
     end
 
@@ -547,6 +548,16 @@ local log = function(frame, updateInfo)
 end
 --]]
 
+local toCheck = { ["Ironbark"] = true, ["Blistering Scales"] = true }
+
+--[[
+local allUpdateIcons = {}
+local allUpdateTexts = {}
+--]]
+local updateIcons = {}
+local updateTexts = {}
+
+
 local Update = function(self, event, unit, updateInfo)
 	if self.unit ~= unit then
 		return
@@ -581,6 +592,9 @@ local Update = function(self, event, unit, updateInfo)
         for i = 2, #slots do -- #1 return is continuationToken, we don't care about it
             local data = C_UnitAuras.GetAuraDataBySlot(unit, slots[i]) or {}
 
+            if data.name and toCheck[data.name] then
+                print("FullUpdate: ".. data.name .." from "..data.sourceUnit)
+            end
             local icon = nat.Icons[data.spellId]
             if  icon and (icon.anyCaster or data.sourceUnit == "player") then
                 showing_icons[data.auraInstanceID] = icon
@@ -630,11 +644,34 @@ local Update = function(self, event, unit, updateInfo)
             UpdateBuffText(text, nat, nat.lastUpdate)
         end
     else
-        local updateIcons = {}
-        local updateTexts = {}
+        --[[
+        local updateIcons = allUpdateIcons[unit]
+        local updateTexts = allUpdateTexts[unit]
+
+        if not updateIcons then
+            allUpdateIcons[unit] = {}
+            updateIcons = allUpdateIcons[unit]
+        else
+            wipe(updateIcons)
+        end
+
+        if not updateTexts then
+            allUpdateTexts[unit] = {}
+            updateTexts = allUpdateTexts[unit]
+        else
+            wipe(updateTexts)
+        end
+        --]]
+
+        wipe(updateIcons)
+        wipe(updateTexts)
+
         local rdsNeedUpdate = false
 
         for _, data in ipairs(updateInfo.addedAuras or {}) do
+            if toCheck[data.name] then
+                print("Added: ".. data.name .." from "..data.sourceUnit)
+            end
             if data.isHelpful then
                 local icon = nat.Icons[data.spellId]
                 if  icon and (icon.anyCaster or data.sourceUnit == "player") then
@@ -675,6 +712,9 @@ local Update = function(self, event, unit, updateInfo)
             local text = showing_texts[updatedId]
 
             if icon then
+                if icon.data and toCheck[icon.data.name] then
+                    print("Updated: ".. icon.data.name .." from ".. icon.data.sourceUnit)
+                end
                 if icon.data and icon.data.auraInstanceID == updatedId then
                     icon.data = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                     updateIcons[icon] = true
@@ -682,6 +722,9 @@ local Update = function(self, event, unit, updateInfo)
                     icon.candidates[updatedId] = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                 end
             elseif text then
+                if toCheck[text.data.name] then
+                    print("Updated: ".. text.data.name .." from "..text.data.sourceUnit)
+                end
                 if text.data and text.data.auraInstanceID == updatedId then
                     text.data = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                     updateTexts[text] = true
@@ -716,6 +759,9 @@ local Update = function(self, event, unit, updateInfo)
             local text = showing_texts[removedId]
 
             if icon then
+                if icon.data and toCheck[icon.data.name] then
+                    print("Removed: ".. icon.data.name .." from ".. icon.data.sourceUnit)
+                end
                 --tinsert(SanUIdb.nat2log, {"Removing Icon "..tostring(removedId) })
                 showing_icons[removedId] = nil
                 if icon.data and icon.data.auraInstanceID == removedId then
@@ -726,6 +772,9 @@ local Update = function(self, event, unit, updateInfo)
                     showing_icons[removedId] = nil
                 end
             elseif text then
+                if toCheck[text.data.name] then
+                    print("Removed: ".. text.data.name .." from "..text.data.sourceUnit)
+                end
                 --tinsert(SanUIdb.nat2log, {"Removing Text "..tostring(removedId) })
                 showing_texts[removedId] = nil
                 if text.data and text.data.auraInstanceID == removedId then
