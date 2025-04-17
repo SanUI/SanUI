@@ -255,11 +255,11 @@ local function UpdateRaidDebuffs(notraiddebuffs)
 
 	for index = 1,2 do
 		local f = notraiddebuffs[index]
-		local data = notraiddebuffs.candidates[notraiddebuffs.showing[index]]
+		local data = notraiddebuffs.candidates[showing[index]]
 
 		if (not data) then
             f:Hide()
-            notraiddebuffs.showing[index] = nil
+            showing[index] = nil
         else
             local applications = data.applications or 0
             local duration = data.duration
