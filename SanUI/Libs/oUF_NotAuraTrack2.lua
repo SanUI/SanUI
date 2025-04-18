@@ -722,7 +722,7 @@ local Update = function(self, event, unit, updateInfo)
                     icon.candidates[updatedId] = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                 end
             elseif text then
-                if toCheck[text.data.name] then
+                if text.data and toCheck[text.data.name] then
                     print("Updated: ".. text.data.name .." from "..text.data.sourceUnit)
                 end
                 if text.data and text.data.auraInstanceID == updatedId then
@@ -772,7 +772,7 @@ local Update = function(self, event, unit, updateInfo)
                     showing_icons[removedId] = nil
                 end
             elseif text then
-                if toCheck[text.data.name] then
+                if text.data and toCheck[text.data.name] then
                     print("Removed: ".. text.data.name .." from "..text.data.sourceUnit)
                 end
                 --tinsert(SanUIdb.nat2log, {"Removing Text "..tostring(removedId) })
