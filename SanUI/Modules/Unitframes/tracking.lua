@@ -23,7 +23,7 @@ end
 S["UnitFrames"].RaidBuffsTracking["Druid"] = {
 	-- Insurance! 11.1 setbonus
 	{
-	spellId = 1215502,
+	spellId = 1215515,
 	pos = {"CENTER", nil, "CENTER", -Scale(14), 0},
 	color = {1, 0, 1},
 	anyCaster = false,

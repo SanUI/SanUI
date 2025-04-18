@@ -311,30 +311,6 @@ local function Shared(self, unit)
 		icon:Hide()
 	end
 
-	local rej_icon = auras.Icons[774]
-	if rej_icon and not self.unit:find("pet") then
-		--rej_icon:CreateBackdrop("Transparent")
-		---@class SanUIRaidFramesRejFrame: Frame
-		local b = CreateFrame("Frame", nil, auras)
-		b:SetAllPoints(rej_icon)
-		local t = b:CreateTexture(nil, "OVERLAY")
-		t:SetAllPoints(b)
-		t:SetTexture(normTex)
-		t:SetVertexColor(.5,.5,.5)
-
-		rej_icon.Backdrop = b
-		b.tex = t
-		b:SetFrameLevel(rej_icon:GetFrameLevel()-1)
-
---[[
-		if auras.Icons[8936] then
-			b:SetParent(auras.Icons[8936])
-			
-		else
-			b:SetParent(self.Health)
-		end
-		--]]
-	end
 
 	---@class SanUIRaidFramesTurtleIcon: Frame
 	local turtle_icon = CreateFrame("Frame", nil, auras)
@@ -397,7 +373,30 @@ local function Shared(self, unit)
 	-- special: Showing rejuvenation (774) AND 4pc setbonus 11.1 (1215502), so put
 	-- reju's icon above the setbonus
 	if auras.Icons[774] and auras.Icons[1215502] then
-		auras.Icons[774]:SetFrameLevel(auras.Icons[1215502]:GetFrameLevel()+1)
+		local inslvl = auras.Icons[1215502]:GetFrameLevel()
+		auras.Icons[1215502]:SetFrameLevel(inslvl+1)
+		auras.Icons[774]:SetFrameLevel(inslvl+2)
+	end
+
+	local rej_icon = auras.Icons[774]
+	if rej_icon and not self.unit:find("pet") then
+		---@class SanUIRaidFramesRejFrame: Frame
+		local b = CreateFrame("Frame", nil, auras)
+		b:SetAllPoints(rej_icon)
+		local t = b:CreateTexture(nil, "OVERLAY")
+		t:SetAllPoints(b)
+		t:SetTexture(normTex)
+		t:SetVertexColor(.5,.5,.5)
+
+		rej_icon.Backdrop = b
+		b.tex = t
+		local rejlvl = rej_icon:GetFrameLevel()
+		local blvl = 0
+		if rejlvl > 2 then
+			blvl = rejlvl - 2
+		end
+
+		b:SetFrameLevel(blvl)
 	end
 	-- oUF_NotRaidDebuffs
 	local raiddebuffs = S["UnitFrames"].RaidDebuffs
