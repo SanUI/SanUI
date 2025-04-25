@@ -127,7 +127,7 @@ S["UnitFrames"].TextAuras["Druid"] = S["UnitFrames"].TextAuras["Druid"] or {}
 table.insert(
 	S["UnitFrames"].TextAuras["Druid"],
 	{
-		spellId = {33763, 33778, 43421, 188550, 290754, 186371},
+		spellId = {33763, 188550},
 		pos = {"TOP",0,1},
 		textsize = 10,
 		formatstr = "|cFF00FF00%u|r",

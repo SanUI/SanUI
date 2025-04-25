@@ -372,9 +372,9 @@ local function Shared(self, unit)
 
 	-- special: Showing rejuvenation (774) AND 4pc setbonus 11.1 (1215502), so put
 	-- reju's icon above the setbonus
-	if auras.Icons[774] and auras.Icons[1215502] then
-		local inslvl = auras.Icons[1215502]:GetFrameLevel()
-		auras.Icons[1215502]:SetFrameLevel(inslvl+1)
+	if auras.Icons[774] and auras.Icons[1215515] then
+		local inslvl = auras.Icons[1215515]:GetFrameLevel()
+		auras.Icons[1215515]:SetFrameLevel(inslvl+1)
 		auras.Icons[774]:SetFrameLevel(inslvl+2)
 	end
 
@@ -584,10 +584,12 @@ oUF:Factory(function(self)
 
 	-- Special Stuff for some Weak Auras thingies
 	S.setRaidAnchorFrameHeight = function()
-		if not S.RaidAnchorFrame then
+		local f  = S.RaidAnchorFrame
+
+		if not f then
 		    S.RaidAnchorFrame = CreateFrame("Frame", "SanUIRaidAnchorFrame", UIParent) 
 		    --S.CreateBackdrop(S.RaidAnchorFrame)
-			local f  = S.RaidAnchorFrame
+			f = S.RaidAnchorFrame
 			f:ClearAllPoints()
 			f:SetPoint("TOPLEFT", SanUIRaid, "TOPLEFT", -3, 0)
 			f:SetPoint("TOPRIGHT", SanUIRaid, "TOPRIGHT", 3, 0)
