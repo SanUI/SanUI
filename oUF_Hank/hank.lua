@@ -453,6 +453,7 @@ oUF_Hank.PostCreateButton = function(icons, icon)
 	icon.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	icon.Cooldown:SetReverse(true)
 	icon.Cooldown.noCooldownCount = true
+	icon.Cooldown:SetHideCountdownNumbers(true)
 	icon:HookScript("OnEnter", function() oUF_Hank.OnEnterAura(icons:GetParent(), icon) end)
 	icon:HookScript("OnLeave", function() oUF_Hank.OnLeaveAura(icons:GetParent()) end)
 	-- Cancel player buffs on right click
