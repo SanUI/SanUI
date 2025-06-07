@@ -289,6 +289,7 @@ local function Shared(self, unit)
 			cd:SetAllPoints(icon)
 			cd.noCooldownCount = icon.noCooldownCount or false -- needed for tullaCC to not show cooldown numbers
 			cd:SetReverse(true)
+			cd:SetHideCountdownNumbers(true) -- apparently needed as of patch 11.1.5
 			icon.cd = cd
 		end
 
@@ -332,6 +333,7 @@ local function Shared(self, unit)
 	local cd = CreateFrame("Cooldown", nil, turtle_icon,"CooldownFrameTemplate")
 	cd:SetAllPoints(turtle_icon)
 	cd.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
+	cd:SetHideCountdownNumbers(true) -- apparently needed as of patch 11.1.5
 	cd:SetReverse(true)
 	turtle_icon.cd = cd
 
@@ -430,6 +432,7 @@ local function Shared(self, unit)
 		rd.cd:SetAllPoints(rd.icon)
 		rd.cd.noOCC = true -- remove this line if you want cooldown number on it
 		rd.cd.noCooldownCount = true -- needed for tullaCC to not show cooldown numbers
+		rd.cd:SetHideCountdownNumbers(true) -- apparently needed as of patch 11.1.5
 		rd.cd:SetReverse(true)
 
 		rd.count = rd:CreateFontString(nil, "OVERLAY")

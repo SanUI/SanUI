@@ -702,6 +702,7 @@ S["UnitFrames"].RaidDebuffs = {
 	--[1218342] = List(), -- Unstable Shrapnel
 	[465917] = List(), -- Gravi-Gunk
 	[471308] = List(), -- Blisterizer Mk. II
+	[1214910] = List(), -- Party Pyro Pack
 	-- The One-Armed Bandit
 	[471927] = List(), -- Withering Flames
 	[460420] = List(), -- Crushed!
@@ -709,6 +710,9 @@ S["UnitFrames"].RaidDebuffs = {
 	[4664769] = List(), -- Frostshatter Boots
 	[466509] = List(), -- Stormfury Finger Gun
 	[1215488] = List(), -- Disintegration Beam (Actually getting beamed)
+	[469043] = List(), -- Searing Shrapnel
+	[469490] = List(), -- Double Whammy Shot
+	[466545] = List(), -- Spray and Pray
 	-- Chrome King Gallywix
 	[466154] = List(4), -- Blast Burns
 	[466834] = List(6), -- Shock Barrage
