@@ -83,6 +83,7 @@ function Cooldown:Initialize()
 
     self:HookScript('OnShow', Cooldown.OnVisibilityUpdated)
     self:HookScript('OnHide', Cooldown.OnVisibilityUpdated)
+    self:SetHideCountdownNumbers(true)
 
     -- this is a hack to make sure that text for charge cooldowns can appear
     -- above the charge cooldown itself, as charge cooldowns have a TOOLTIP
