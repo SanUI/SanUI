@@ -719,4 +719,5 @@ S["UnitFrames"].RaidDebuffs = {
 	[469362] = List(6), -- Charged Giga Bomb (Carrying)
 	[1220761] = List(6), -- Mechengineer's Canisters
 	[1220290] = List(), -- Trick Shots
+	[474130] = List(6), -- Mechmastermind's Canisters
 }
