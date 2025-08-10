@@ -552,7 +552,7 @@ local Update = function(self, event, unit, updateInfo)
             local data = C_UnitAuras.GetAuraDataBySlot(unit, slots[i]) or {}
 
             if data.name and toCheck[data.name] then
-                print("FullUpdate: ".. data.name .." from "..data.sourceUnit)
+                print(tostring(nat.lastUpdate).." - FullUpdate: ".. data.name)
             end
             local icon = nat.Icons[data.spellId]
             if  icon and (icon.anyCaster or data.sourceUnit == "player") then
@@ -602,7 +602,7 @@ local Update = function(self, event, unit, updateInfo)
 
         for _, data in ipairs(updateInfo.addedAuras or {}) do
             if toCheck[data.name] then
-                print("Added: ".. data.name .." from "..data.sourceUnit)
+                print(tostring(nat.lastUpdate).." - Added: ".. data.name)
             end
             if data.isHelpful then
                 local icon = nat.Icons[data.spellId]
@@ -632,11 +632,11 @@ local Update = function(self, event, unit, updateInfo)
         end
 
         for _, updatedId in ipairs(updateInfo.updatedAuraInstanceIDs or {}) do
-            local icon = showing_icons[updatedId]   
+            local icon = showing_icons[updatedId]
 
             if icon then
                 if icon.data and toCheck[icon.data.name] then
-                    print("Updated: ".. icon.data.name .." from ".. icon.data.sourceUnit)
+                    print(tostring(nat.lastUpdate).." - Updated: ".. icon.data.name)
                 end
                 icon.data = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, updatedId)
                 updateIcons[icon] = true
@@ -677,7 +677,7 @@ local Update = function(self, event, unit, updateInfo)
 
             if icon then
                 if icon.data and toCheck[icon.data.name] then
-                    print("Removed: ".. icon.data.name .." from ".. icon.data.sourceUnit)
+                    print(tostring(nat.lastUpdate).." - Removed: ".. icon.data.name)
                 end
                 showing_icons[removedId] = nil
                 icon.data = nil
