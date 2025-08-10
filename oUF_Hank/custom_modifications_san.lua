@@ -420,13 +420,16 @@ sharedStyle = function(self, unit, isSingle)
 		S.CreateBackdrop(castbar.button)
 
 		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+		
 		castbar.icon:SetPoint("TOPLEFT", castbar.button, Scale(2), Scale(-2))
 		castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, Scale(-2), Scale(2))
 		castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
 
 		if unit == "player" or unit:find("boss") then
+			castbar.button:ClearAllPoints()
 			castbar.button:SetPoint("TOPRIGHT",self.Castbar.bg,"TOPLEFT",-Scale(2),0)
 		elseif unit == "target" then
+			castbar.button:ClearAllPoints()
 			castbar.button:SetPoint("LEFT",self.Castbar.bg,"RIGHT",Scale(2),0)
 		end
 
