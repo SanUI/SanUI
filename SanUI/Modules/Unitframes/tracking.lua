@@ -607,6 +607,102 @@ S["UnitFrames"].RaidDebuffs = {
 	[301712] = List(), -- Pounce
 	[299475] = List(), -- B.O.R.K
 	[293670] = List(), -- Chain Blade
+	----------------------------------------------------------
+	--------------- The War Within (Season 3) ----------------
+	----------------------------------------------------------
+	-- Eco-Dome Al'dani
+		[1217439] = List(), -- Toxic Regurgitation
+		[1227152] = List(), -- Warp Strike
+		[1219535] = List(), -- Rift Claws
+		[1220390] = List(), -- Warp Strike
+		[1236126] = List(), -- Binding Javelin
+		[1225221] = List(), -- Dread of the Unknown
+		[1217446] = List(), -- Digestive Spittle
+		[1220671] = List(), -- Binding Javelin
+		[1231494] = List(), -- Overgorged Burst
+		[1224865] = List(), -- Fatebound
+		[1231224] = List(), -- Arcane Slash
+		[1221190] = List(), -- Gluttonous Miasma
+		[1221483] = List(), -- Arcing Energy
+		[1222202] = List(), -- Arcane Burn
+	-- Halls of Atonement
+		[335338] = List(), -- Ritual of Woe
+		[326891] = List(), -- Anguish
+		[329321] = List(), -- Jagged Swipe 1
+		[344993] = List(), -- Jagged Swipe 2
+		[319603] = List(), -- Curse of Stone
+		[319611] = List(), -- Turned to Stone
+		[325876] = List(), -- Curse of Obliteration
+		[326632] = List(), -- Stony Veins
+		[323650] = List(), -- Haunting Fixation
+		[326874] = List(), -- Ankle Bites
+		[340446] = List(), -- Mark of Envy
+	-- Tazavesh, the Veiled Market
+		[356943] = List(), -- Lockdown
+		[350804] = List(), -- Collapsing Energy
+		[350885] = List(), -- Hyperlight Jolt
+		[351101] = List(), -- Energy Fragmentation
+		[346828] = List(), -- Sanitizing Field
+		[355641] = List(), -- Scintillate
+		[355451] = List(), -- Undertow
+		[355581] = List(), -- Crackle
+		[349999] = List(), -- Anima Detonation
+		[346961] = List(), -- Purging Field
+		[351956] = List(), -- High-Value Target
+		[346297] = List(), -- Unstable Explosion
+		[347728] = List(), -- Flock!
+		[356408] = List(), -- Ground Stomp
+		[347744] = List(), -- Quickblade
+		[347481] = List(), -- Shuri
+		[355915] = List(), -- Glyph of Restraint
+		[350101] = List(), -- Chains of Damnation
+		[350134] = List(), -- Infinite Breath
+		[350013] = List(), -- Gluttonous Feast
+		[355465] = List(), -- Boulder Throw
+		[346116] = List(), -- Shearing Swings
+		[356011] = List(), -- Beam Splicer
+	---------------------------------------------------------
+	------------------- Manaforge Omega ---------------------
+	---------------------------------------------------------
+	-- Plexus Sentinel
+		[1219459] = List(), -- Manifest Matrices
+		[1219607] = List(), -- Eradicating Salvo 1
+		[1219531] = List(), -- Eradicating Salvo 2
+		[1218625] = List(), -- Displacement Matrix
+	-- Loom'ithar
+		[1226311] = List(5), -- Infusion Tether
+		[1237212] = List(4), -- Piercing Strand
+		[1226721] = List(6), -- Silken Snare
+		[1247045] = List(), -- Hyper Infusion
+		[1237307] = List(), -- Lair Weaving
+	-- Soulbinder Naazindhri
+		[1227276] = List(), -- Soulfray Annihilation
+		[1226827] = List(), -- Soulrend Orb
+		[1227052] = List(), -- Void Burst
+		[1227048] = List(), -- Voidblade Ambush
+	-- Forgeweaver Araz
+		[1234324] = List(), -- Photon Blast
+		[1228214] = List(), -- Astral Harvest
+		[1243901] = List(), -- Void Harvest
+		[1240705] = List(6), -- Astral Burn
+	-- The Soul Hunters
+		[1227847] = List(), -- The Hunt
+		[1241946] = List(), -- Frailty
+		[1222232] = List(), -- Devourer's Ire
+		[1233105] = List(), -- Dark Residue
+	-- Fractillus
+		[1233411] = List(), -- Crystalline Shockwave
+		[1227378] = List(), -- Crystal Encasement
+	-- Nexus-King Salhadaar
+		[1227549] = List(), -- Banishment
+		[1226362] = List(), -- Twilight Scar
+		[1228056] = List(), -- Reap
+	-- Dimensius, the All-Devouring
+		[1239270] = List(), -- Voidwarding
+		[1250055] = List(), -- Voidgrasp
+		[1243699] = List(), -- Spatial Fragment
+		[1249425] = List(), -- Mass Destruction
+--[[
 ---------------------------------------------------------
 ------------------- Nerub'ar Palace ---------------------
 ---------------------------------------------------------
@@ -720,4 +816,5 @@ S["UnitFrames"].RaidDebuffs = {
 	[1220761] = List(6), -- Mechengineer's Canisters
 	[1220290] = List(), -- Trick Shots
 	[474130] = List(6), -- Mechmastermind's Canisters
+--]]
 }
