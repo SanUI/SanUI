@@ -626,6 +626,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[1221190] = List(), -- Gluttonous Miasma
 		[1221483] = List(), -- Arcing Energy
 		[1222202] = List(), -- Arcane Burn
+		[1226444] = List(), -- Wounded Fate
 	-- Halls of Atonement
 		[335338] = List(), -- Ritual of Woe
 		[326891] = List(), -- Anguish
@@ -662,6 +663,8 @@ S["UnitFrames"].RaidDebuffs = {
 		[355465] = List(), -- Boulder Throw
 		[346116] = List(), -- Shearing Swings
 		[356011] = List(), -- Beam Splicer
+		[1248209] = List(), -- Phase Slash
+		[357827] = List(), -- Frantic Rip
 	---------------------------------------------------------
 	------------------- Manaforge Omega ---------------------
 	---------------------------------------------------------
@@ -670,6 +673,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[1219607] = List(), -- Eradicating Salvo 1
 		[1219531] = List(), -- Eradicating Salvo 2
 		[1218625] = List(), -- Displacement Matrix
+		[1229762] = List(), -- Eradicating Salvo x
 	-- Loom'ithar
 		[1226311] = List(5), -- Infusion Tether
 		[1237212] = List(4), -- Piercing Strand
@@ -685,12 +689,13 @@ S["UnitFrames"].RaidDebuffs = {
 		[1234324] = List(), -- Photon Blast
 		[1228214] = List(), -- Astral Harvest
 		[1243901] = List(), -- Void Harvest
-		[1240705] = List(6), -- Astral Burn
+		--[1240705] = List(6), -- Astral Burn
 	-- The Soul Hunters
 		[1227847] = List(), -- The Hunt
 		[1241946] = List(), -- Frailty
 		[1222232] = List(), -- Devourer's Ire
 		[1233105] = List(), -- Dark Residue
+		[1222310] = List(), -- Unending Hunger
 	-- Fractillus
 		[1233411] = List(), -- Crystalline Shockwave
 		[1227378] = List(), -- Crystal Encasement
@@ -703,6 +708,7 @@ S["UnitFrames"].RaidDebuffs = {
 		[1250055] = List(), -- Voidgrasp
 		[1243699] = List(), -- Spatial Fragment
 		[1249425] = List(), -- Mass Destruction
+		[1243577] = List(), -- Reverse Gravity
 --[[
 ---------------------------------------------------------
 ------------------- Nerub'ar Palace ---------------------
