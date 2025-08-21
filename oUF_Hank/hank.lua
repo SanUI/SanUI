@@ -593,6 +593,7 @@ oUF_Hank.sharedStyle = function(self, unit, isSingle)
 	self:SetScript("OnEnter", UnitFrame_OnEnter)
 	self:SetScript("OnLeave", UnitFrame_OnLeave)
 	self:RegisterForClicks("AnyDown")
+	self:SetFrameStrata("MEDIUM")
 
 	self.colors = cfg.colors
 
