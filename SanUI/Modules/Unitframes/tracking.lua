@@ -243,6 +243,7 @@ local function List(priority)
 end
 
 S["UnitFrames"].RaidDebuffs = {
+	[1239997] = List(), -- Oath-Bound (Trinket Effect)
 	[440313] = List(), -- Void Rift (Xal'atath's Bargain: Devour)
 	----------------------------------------------------------
 	---------------- The War Within Dungeons -----------------

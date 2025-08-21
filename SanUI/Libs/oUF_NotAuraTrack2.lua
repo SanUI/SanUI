@@ -84,6 +84,11 @@ local DispelColor = {
 	none    = C.colors.BorderColor,
 }
 
+local DispelColorSpecial = { 
+	[C_Spell.GetSpellName(1239997)] = { 1, 1, 0 }  -- Oath-Bound (Trinket Effect)
+}
+ORD.DispelColorSpecial = DispelColorSpecial
+
 local function add_debuff(spell, priority, stackThreshold)
 	if type(spell) == 'number' then
 		spell = C_Spell.GetSpellName(spell)
@@ -281,7 +286,7 @@ local function UpdateRaidDebuffs(notraiddebuffs)
                     end
                 end
 
-                local c = DispelColor[data.dispelName] or DispelColor.none
+                local c = DispelColor[data.dispelName] or DispelColorSpecial[data.name] or DispelColor.none
                 f.SetBackdropBorderColor(c)
 
                 f:Show()
