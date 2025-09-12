@@ -225,8 +225,13 @@ sharedStyle = function(self, unit, isSingle)
 	for _, spell in pairs(S["UnitFrames"].RaidBuffsTracking[S.MyClass] or {}) do
 		---@class SanUIFocusAurasIcon: Frame
 		local icon = CreateFrame("Frame", nil, auras)
-		spell.pos[2] = auras
-		icon:SetPoint(unpack(spell.pos))
+		local pos = {}
+		for k,v in pairs(spell.pos) do pos[k]=v end
+		pos[2] = auras
+		if spell.spellId == 774 or spell.spellId == 155777 then
+			pos[5] = pos[5] + Scale(9)
+		end
+		icon:SetPoint(unpack(pos))
 
 		icon.spellId = spell.spellId
 		icon.anyCaster = spell.anyCaster
@@ -241,6 +246,7 @@ sharedStyle = function(self, unit, isSingle)
 			local cd = CreateFrame("Cooldown", nil, icon,"CooldownFrameTemplate")
 			cd:SetAllPoints(icon)
 			cd.noCooldownCount = icon.noCooldownCount or false -- needed for tullaCC to not show cooldown numbers
+			cd:SetHideCountdownNumbers(true)
 			cd:SetReverse(true)
 			icon.cd = cd
 		end
