@@ -679,17 +679,20 @@ S["UnitFrames"].RaidDebuffs = {
 		[1237212] = List(4), -- Piercing Strand
 		[1226721] = List(6), -- Silken Snare
 		[1247045] = List(), -- Hyper Infusion
-		[1237307] = List(), -- Lair Weaving
+		--[1237307] = List(), -- Lair Weaving
 	-- Soulbinder Naazindhri
 		[1227276] = List(), -- Soulfray Annihilation
 		[1226827] = List(), -- Soulrend Orb
 		[1227052] = List(), -- Void Burst
 		[1227048] = List(), -- Voidblade Ambush
+		[1250008] = List(), -- Shatterpulse
 	-- Forgeweaver Araz
 		[1234324] = List(), -- Photon Blast
 		[1228214] = List(), -- Astral Harvest
 		[1243901] = List(), -- Void Harvest
 		--[1240705] = List(6), -- Astral Burn
+		[1228502] = List(), -- Overwhelming Power
+		[1228218] = List(), -- Arcane Obliteration
 	-- The Soul Hunters
 		[1227847] = List(), -- The Hunt
 		[1241946] = List(), -- Frailty
@@ -699,6 +702,7 @@ S["UnitFrames"].RaidDebuffs = {
 	-- Fractillus
 		[1233411] = List(), -- Crystalline Shockwave
 		[1227378] = List(), -- Crystal Encasement
+		[1232760] = List(), -- Crystal Lacerations
 	-- Nexus-King Salhadaar
 		[1227549] = List(), -- Banishment
 		[1226362] = List(), -- Twilight Scar
