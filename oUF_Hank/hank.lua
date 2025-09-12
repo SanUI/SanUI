@@ -207,8 +207,10 @@ oUF_Hank.UpdateHealth = function(self)
 			end
 
 			if self == oUF_player then
+				self.power:ClearAllPoints()
 				self.power:SetPoint("BOTTOMRIGHT", self.health[4 - len], "BOTTOMLEFT", -Scale(5), 0)
 			elseif self == oUF_target or self == oUF_focus then
+				self.power:ClearAllPoints()
 				self.power:SetPoint("BOTTOMLEFT", self.health[4 - len], "BOTTOMRIGHT", Scale(5), 0)
 			end
 		end
