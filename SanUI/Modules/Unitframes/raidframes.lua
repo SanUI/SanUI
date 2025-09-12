@@ -437,7 +437,7 @@ local function Shared(self, unit)
 		rd.cd:SetReverse(true)
 
 		rd.count = rd:CreateFontString(nil, "OVERLAY")
-		rd.count:SetFont(font2, 10, "THINOUTLINE")
+		rd.count:SetFont(font2, 12, "THINOUTLINE")
 		rd.count:SetPoint("BOTTOMRIGHT", rd, "BOTTOMRIGHT", 0, S.scale2)
 		rd.count:SetTextColor(1, .9, 0)
 
