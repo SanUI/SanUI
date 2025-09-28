@@ -76,7 +76,7 @@ S.CreateAnonymousBackdrop= function(frame, BackgroundTemplate, BackgroundTexture
 	local bgalpha = (BackgroundTemplate == "Transparent" and colors.BackdropTransparency) or (1)
 	backdrop:SetBackdropColor(colors.BackdropColor[1], colors.BackdropColor[2], colors.BackdropColor[3], bgalpha)
 
-	local BorderSize = Scale(1)
+	local BorderSize = Scale(1.1)
 
 	local bordertop = backdrop:CreateTexture(nil, "BORDER", nil, 1)
 	bordertop:SetSize(BorderSize, BorderSize)
