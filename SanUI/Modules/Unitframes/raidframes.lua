@@ -462,6 +462,11 @@ local function Shared(self, unit)
 	end
 
 	auras.NotRaidDebuffs = notraiddebuffs
+	notraiddebuffs.blackList = {
+		[1224731] = true,
+		[1224734] = true,
+		[1224737] = true
+	}
 
 	self.NotAuraTrack = auras
 

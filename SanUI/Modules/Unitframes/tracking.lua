@@ -694,11 +694,12 @@ S["UnitFrames"].RaidDebuffs = {
 		[1228502] = List(), -- Overwhelming Power
 		[1228218] = List(), -- Arcane Obliteration
 	-- The Soul Hunters
-		[1227847] = List(), -- The Hunt
-		[1241946] = List(), -- Frailty
+		--[1227847] = List(), -- The Hunt
+		--[1241946] = List(), -- Frailty
 		[1222232] = List(), -- Devourer's Ire
 		[1233105] = List(), -- Dark Residue
-		[1222310] = List(), -- Unending Hunger
+		--[1222310] = List(), -- Unending Hunger
+		[1242284] = List(), -- Soulcrush
 	-- Fractillus
 		[1233411] = List(), -- Crystalline Shockwave
 		[1227378] = List(), -- Crystal Encasement
