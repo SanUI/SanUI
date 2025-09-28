@@ -184,7 +184,6 @@ Off Screen]=] ] = [=[提醒效果
 	L["Aura: '%s'"] = "光環: '%s'"
 	L["Auto-Clone (Show All Matches)"] = "自動複製 (顯示所有符合的)"
 	L["Automatic length"] = "自動長度"
-	L["Available Voices are system specific"] = "可用語音為系統指定"
 	L["Backdrop Color"] = "背景顏色"
 	L["Backdrop in Front"] = "背景在前面"
 	L["Backdrop Style"] = "背景類型"
@@ -267,7 +266,7 @@ Off Screen]=] ] = [=[提醒效果
 	L["Custom Init"] = "自訂初始化"
 	L["Custom Load"] = "自訂載入"
 	L["Custom Options"] = "自訂選項"
-	L["Custom Text Update Throttle"] = "自定義文字更新限制"
+	L["Custom Text Update Throttle"] = "自訂文字更新限制"
 	L["Custom Trigger"] = "自訂觸發"
 	L["Custom trigger event tooltip"] = [=[選擇自訂觸發要檢查的事件。
 可用逗號分隔多個事件。
@@ -280,7 +279,7 @@ UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
 
 |cFF4444FF例如:|r
 UNIT_POWER, UNIT_AURA PLAYER_TARGET_CHANGED]=]
-	L["Custom trigger Update Throttle"] = "自定義觸發器更新限制"
+	L["Custom trigger Update Throttle"] = "自訂觸發器更新限制"
 	L["Custom Trigger: Ignore Lua Errors on OPTIONS event"] = "自訂觸發: 忽略 OPTIONS 事件的 Lua 錯誤"
 	L["Custom Trigger: Send fake events instead of STATUS event"] = "自訂觸發: 發送假的事件而不是 STATUS 事件"
 	L["Custom Unload"] = "自訂取消載入"
@@ -787,6 +786,7 @@ every 3 events starting from 2nd and ending at 11th: 2-11/3]=] ] = [=[事件發�
 	L["Stop Motion %s"] = "停止動畫 %s"
 	L["Stop Motion Settings"] = "定格設定"
 	L["Stop Sound"] = "停止音效"
+	L["Stretched by Foreground"] = "由前景圖層拉伸"
 	L["Sub Elements"] = "子元素"
 	L["Sub Option %i"] = "子選項 %i"
 	L["Subevent"] = "子事件"
@@ -881,8 +881,8 @@ Upgrade your version of WeakAuras or wait for next release before installing thi
 	L["Url: %s"] = "網址：%s"
 	L["Use Display Info Id"] = "使用顯示資訊 ID"
 	L["Use SetTransform"] = "使用 SetTransform"
-	L["Used in Auras:"] = "使用的提醒效果:"
 	L["Used in auras:"] = "使用的提醒效果:"
+	L["Used in Auras:"] = "使用的提醒效果:"
 	L["Uses Texture Coordinates to rotate the texture."] = "使用材質坐標來旋轉材質。"
 	L["Uses UnitIsVisible() to check if game client has loaded a object for this unit. This distance is around 100 yards. This is polled every second."] = "使用 UnitIsVisible() 來檢查遊戲是否已經載入該單位的物件，距離為 100碼，每秒都會檢查一次。"
 	L["Value"] = "數值"
@@ -897,7 +897,7 @@ Upgrade your version of WeakAuras or wait for next release before installing thi
 	L["Vertical Bar"] = "垂直進度條"
 	L["View"] = "檢視"
 	L["View custom code"] = "檢視自訂程式碼"
-	L["Voice"] = "語音"
+	L["Voice Settings"] = "聲音設定"
 	L["We thank"] = "我們感謝"
 	L["WeakAuras %s on WoW %s"] = "WeakAuras %s 在 WoW %s"
 	L["What do you want to do?"] = "你想要怎麼做?"

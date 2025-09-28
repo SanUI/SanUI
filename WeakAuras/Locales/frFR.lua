@@ -202,6 +202,8 @@ L["Bar enabled in DBM settings"] = [=[Barre activée dans les paramètres de DBM
 
 ]=]
 L["Bar Texture"] = "Texture de la barre"
+--[[Translation missing --]]
+L["Bar Type"] = "Bar Type"
 L["Baron Geddon"] = "Baron Geddon"
 L["Battle for Azeroth"] = "Battle for Azeroth"
 L["Battle.net Whisper"] = "Message Battle.net"
@@ -259,6 +261,8 @@ L["Bottom Right"] = "Bas Droite"
 L["Bottom to Top"] = "De Bas en Haut"
 L["Bounce"] = "Rebond"
 L["Bounce with Decay"] = "Rebond décroissant"
+--[[Translation missing --]]
+L["Break"] = "Break"
 --[[Translation missing --]]
 L["BreakUpLargeNumbers (Blizzard)"] = "BreakUpLargeNumbers (Blizzard)"
 --[[Translation missing --]]
@@ -539,6 +543,8 @@ L["Drain"] = "Drain"
 L["Dropdown Menu"] = "Menu Déroulant"
 --[[Translation missing --]]
 L["Dumping table"] = "Dumping table"
+--[[Translation missing --]]
+L["Dungeon (Celestial)"] = "Dungeon (Celestial)"
 L["Dungeon (Heroic)"] = "Donjon (Héroïque)"
 L["Dungeon (Mythic)"] = "Donjon (Mythique)"
 --[[Translation missing --]]
@@ -643,7 +649,7 @@ L["Error Frame"] = "Fenêtre d'erreur"
 --[[Translation missing --]]
 L["ERROR in '%s' unknown or incompatible sub element type '%s'"] = "ERROR in '%s' unknown or incompatible sub element type '%s'"
 --[[Translation missing --]]
-L["Error in aura '%s'"] = "Error in aura '%s'"
+L["Error in Aura '%s'"] = "Error in Aura '%s'"
 L["Error not receiving display information from %s"] = "Erreur de non-réception d'informations d'affichage de %s"
 --[[Translation missing --]]
 L["Essence"] = "Essence"
@@ -880,9 +886,9 @@ L["Icon Function"] = "Icon Function"
 --[[Translation missing --]]
 L["Icon Function (fallback state)"] = "Icon Function (fallback state)"
 --[[Translation missing --]]
-L["Id"] = "Id"
---[[Translation missing --]]
 L["ID"] = "ID"
+--[[Translation missing --]]
+L["Id"] = "Id"
 --[[Translation missing --]]
 L["If you require additional assistance, please open a ticket on GitHub or visit our Discord at https://discord.gg/weakauras!"] = "If you require additional assistance, please open a ticket on GitHub or visit our Discord at https://discord.gg/weakauras!"
 L["Ignore Dead"] = "Ignorer la mort"
@@ -926,9 +932,9 @@ L["Install the addons BugSack and BugGrabber for detailed error logs."] = "Insta
 L["Instance"] = "Instance"
 L["Instance Difficulty"] = "Difficulté de l'Instance"
 --[[Translation missing --]]
-L["Instance Id"] = "Instance Id"
---[[Translation missing --]]
 L["Instance ID"] = "Instance ID"
+--[[Translation missing --]]
+L["Instance Id"] = "Instance Id"
 --[[Translation missing --]]
 L["Instance Info"] = "Instance Info"
 --[[Translation missing --]]
@@ -1051,6 +1057,8 @@ L["Loot Specialization"] = "Loot Specialization"
 L["Loot Specialization Id"] = "Loot Specialization Id"
 --[[Translation missing --]]
 L["Loot Specialization Name"] = "Loot Specialization Name"
+--[[Translation missing --]]
+L["Lorewalking"] = "Lorewalking"
 L["Lost"] = "Perdu"
 L["Low Damage"] = "Dégâts faibles"
 L["Lower Than Tank"] = "Plus bas que le tank"
@@ -1059,7 +1067,7 @@ L["Lowest Spell Id"] = "Lowest Spell Id"
 --[[Translation missing --]]
 L["Lua error"] = "Lua error"
 --[[Translation missing --]]
-L["Lua error in aura '%s': %s"] = "Lua error in aura '%s': %s"
+L["Lua error in Aura '%s': %s"] = "Lua error in Aura '%s': %s"
 --[[Translation missing --]]
 L["Lucifron"] = "Lucifron"
 --[[Translation missing --]]
@@ -1323,6 +1331,8 @@ L["Other Addons"] = "Autre Addons"
 L["Other Events"] = "Autre Événements"
 L["Ouro"] = "Ouro"
 L["Outline"] = "Contour"
+--[[Translation missing --]]
+L["Over Energize"] = "Over Energize"
 L["Overhealing"] = "Soin en excès"
 L["Overkill"] = "Dégâts en excès"
 L["Overlay %s"] = "Superposer %s"
@@ -1421,11 +1431,13 @@ L["Progress"] = "Progrès"
 L["Progress Source"] = "Progress Source"
 L["Progress Total"] = "Progrès Total"
 L["Progress Value"] = "Valeur de progression"
+--[[Translation missing --]]
+L["Pull"] = "Pull"
 L["Pulse"] = "Pulsation"
 L["PvP Flagged"] = "JcJ activé"
-L["PvP Talent selected"] = "Talent JcJ sélectionné"
 --[[Translation missing --]]
 L["PvP Talent Selected"] = "PvP Talent Selected"
+L["PvP Talent selected"] = "Talent JcJ sélectionné"
 --[[Translation missing --]]
 L["Quality Id"] = "Quality Id"
 --[[Translation missing --]]
@@ -1583,6 +1595,8 @@ L[ [=[Secure frame detected. Find more information:
 https://github.com/WeakAuras/WeakAuras2/wiki/Protected-Frames]=] ] = [=[Secure frame detected. Find more information:
 https://github.com/WeakAuras/WeakAuras2/wiki/Protected-Frames]=]
 L["Select Frame"] = "Sélectionner le cadre"
+--[[Translation missing --]]
+L["Select the type of timer to filter"] = "Select the type of timer to filter"
 --[[Translation missing --]]
 L["Selection Mode"] = "Selection Mode"
 L["Separator"] = "Séparateur"
@@ -1918,6 +1932,8 @@ L["Time since stack lost"] = "Time since stack lost"
 L["Timed"] = "Temporisé"
 --[[Translation missing --]]
 L["Timed Progress"] = "Timed Progress"
+--[[Translation missing --]]
+L["Timer"] = "Timer"
 --[[Translation missing --]]
 L["Timer Id"] = "Timer Id"
 L["Toggle"] = "Basculer"

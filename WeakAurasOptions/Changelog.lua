@@ -10,36 +10,57 @@ local AddonName = ...
 ---@class OptionsPrivate
 local OptionsPrivate = select(2, ...)
 OptionsPrivate.changelog = {
-  versionString = '5.20.1',
-  dateString = '2025-08-05',
-  fullChangeLogUrl = 'https://github.com/WeakAuras/WeakAuras2/compare/5.20.0...5.20.1',
+  versionString = '5.20.4',
+  dateString = '2025-09-08',
+  fullChangeLogUrl = 'https://github.com/WeakAuras/WeakAuras2/compare/5.20.1...5.20.4',
   highlightText = [==[
-new game patch, new weakauras version
+- Re-tag, no changes]==],  commitText = [==[InfusOnWoW (11):
 
-- load status indicator (the little power icon) now changes shape depending on load status in addition to color
-- item count trigger no longer claims to check the reagent bank, since that doesn't exist anymore
-- custom code meant to run on every frame now has a builtin throttle option, so no more need for if GetTime() > (aura_env.last + 1) boilerplate :)]==],  commitText = [==[InfusOnWoW (2):
+- SubRegion Model: Reintroduce clipped by foreground mode
+- Remove workaround for SetTexture not adjusting to different wrapModes
+- Revert "Fix KR/TW/CN large number formatting for >= 100.000.000"
+- Fix TSU custom variable warning about formatter
+- Tweak wording for lua errors
+- Priest Template Remove removed ability
+- Totem Trigger: Fix "inverse" option not being visible
+- Custom Text: Tweak rules for text replacement %cfoo ~= %c now
+- MOP: Workaround broken GetInstanceInfo in Tol'Viron Areana
+- Fix typo in variable name
+- Ticks: Fix color sometimes applying to the wrong tick
 
-- Tweak loaded/standby/unloaded icons
-- Bufftrigger: Fix Unit Caste condition
+Matt Weber (1):
 
-Stanzilla (2):
+- Add optional length limit to `WA_ClassColorName`
+
+Pewtro (2):
+
+- Re-export the .blp files
+- Add Celestial Dungeon load option instance type
+
+Stanzilla (3):
 
 - Update WeakAurasModelPaths from wago.tools
 - Update WeakAurasModelPaths from wago.tools
+- Update WeakAurasModelPaths from wago.tools
 
-emptyrivers (4):
+dependabot[bot] (3):
 
-- drop reagent bank option
-- toc bump
-- lazily get rid of STATICPOPUPS_NUMDIALOGS
-- protect weakauras against unaligned ai
+- Bump cbrgm/mastodon-github-action from 2.1.14 to 2.1.19
+- Bump actions/checkout from 4 to 5
+- Bump actions/setup-python from 5 to 6
 
-mrbuds (3):
+emptyrivers (2):
 
-- Add throttle option for everyframe custom triggers
-- Add throttle option for everyframe custom text
-- Make profiling of BuffTrigger2 more granular
+- include overEnergize in combat log state
+- some more difficulty ids
+
+mrbuds (5):
+
+- Fix Mists encounterID tooltip
+- Fix currency trigger default on 12.2.0 fixes #6008
+- Text To Speech: use global game voice settings, and use the tts queue system
+- BossMod Trigger: add multiselect filter for break & pull timer
+- Fix moving profiling window #noticket
 
 ]==]
 }
