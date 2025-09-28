@@ -43,9 +43,8 @@ end
 local setSmoothScroll
 
 do
-	local SCROLL_DURATION = 0.2
+	local SCROLL_DURATION = 0.15
 	local POST_SCROLL_DELAY = 0.1
-	local THRESHOLD = 1/120
 
 	local activeFrames = {}
 
@@ -67,33 +66,26 @@ do
 		return c * (t ^ 3 + 1) + b
 	end
 
-	local elapsed = 0
-	local function onUpdate(_, e)
-		elapsed = elapsed + e
-		if elapsed >= THRESHOLD then
-			for frame, data in next, activeFrames do
-				data[2] = data[2] + elapsed
-				data[1](smoothFunc(clamp(data[2]), data[3], data[4]))
+	local function onUpdate(_, elapsed)
+		for frame, data in next, activeFrames do
+			data[2] = data[2] + elapsed
+			data[1](smoothFunc(clamp(data[2]), data[3], data[4]))
 
-				if data[2] >= SCROLL_DURATION + POST_SCROLL_DELAY then
-					if data[5] then
-						data[5]()
-					end
-
-					activeFrames[frame] = nil
+			if data[2] >= SCROLL_DURATION + POST_SCROLL_DELAY then
+				if data[5] then
+					data[5]()
 				end
-			end
 
-			if not next(activeFrames) then
-				smoother:SetScript("OnUpdate", nil)
+				activeFrames[frame] = nil
 			end
+		end
 
-			elapsed = 0
+		if not next(activeFrames) then
+			smoother:SetScript("OnUpdate", nil)
 		end
 	end
 
 	function setSmoothScroll(frame, func, change, callback)
-		elapsed = THRESHOLD
 		-- func, time, start, change, callback
 		activeFrames[frame] = {func, 0, frame:GetVerticalScroll(), change, callback}
 
@@ -181,7 +173,7 @@ local function chatFrame_HideHook(self)
 	end
 end
 
-local function chatFrame_RemoveMessagesByPredicateHook(self)
+local function chatFrame_RefreshMessagesInPlace(self)
 	local slidingFrame = E:GetSlidingFrameForChatFrame(self)
 	if slidingFrame then
 		slidingFrame.isLayoutDirty = true
@@ -343,7 +335,8 @@ function object_proto:CaptureChatFrame(chatFrame)
 		end)
 
 		-- redraw the frame if visible
-		hooksecurefunc(chatFrame, "RemoveMessagesByPredicate", chatFrame_RemoveMessagesByPredicateHook)
+		hooksecurefunc(chatFrame, "RemoveMessagesByPredicate", chatFrame_RefreshMessagesInPlace)
+		hooksecurefunc(chatFrame, "TransformMessages", chatFrame_RefreshMessagesInPlace)
 
 		chatFrame:HookScript("OnHyperlinkEnter", chatFrame_OnHyperlinkEnterHook)
 		chatFrame:HookScript("OnHyperlinkLeave", chatFrame_OnHyperlinkLeaveHook)
@@ -680,17 +673,17 @@ function object_proto:RefreshBackfill(startIndex, maxLines, maxPixels, fadeIn)
 
 		messageLine:SetMessage(messageID, messageInfo.timestamp, messageInfo.message, messageInfo.r, messageInfo.g, messageInfo.b)
 
-		if fadeIn then
-			messageLine:SetAlpha(0)
-			messageLine:FadeIn()
-		else
-			messageLine:SetAlpha(1)
-		end
-
 		if checkLines then
 			isFull = lineIndex == maxLines
 		else
 			isFull = messageLine:GetBottom() - 1 <= maxPixels
+		end
+
+		if isFull and fadeIn then
+			messageLine:SetAlpha(0)
+			messageLine:FadeIn()
+		else
+			messageLine:SetAlpha(1)
 		end
 	end
 
@@ -767,6 +760,10 @@ function object_proto:UpdateFading()
 end
 
 function object_proto:ShouldShowMessage(delta)
+	if not C.db.profile.chat.fade.enabled then
+		return true
+	end
+
 	delta = delta - C.db.profile.chat.fade.out_delay
 	if delta >= CHAT_FADE_OUT_DURATION then
 		return false

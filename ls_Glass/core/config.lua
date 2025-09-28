@@ -241,6 +241,7 @@ local function createChatFrameConfig(id, order)
 						C.db.profile.chat[id].font[info[#info]] = value
 
 						E:UpdateMessageFont(id)
+						E:ForMessageLinePool(id, "UpdateWidth")
 						E:ForMessageLinePool(id, "UpdateHeight")
 					end
 				end,
@@ -445,6 +446,31 @@ function E:CreateConfig()
 										C.db.profile.edit.offset = value
 
 										E:UpdateEditBoxPosition()
+									end
+								end,
+							},
+							multiline = {
+								order = 4,
+								type = "toggle",
+								name = L["MULTILINE"],
+								set = function(_, value)
+									if C.db.profile.edit.multiline ~= value then
+										C.db.profile.edit.multiline = value
+
+										E:UpdateEditBoxMultiLine()
+									end
+								end,
+							},
+							alt = {
+								order = 5,
+								type = "toggle",
+								name = L["ALT_FOR_CURSOR_MOVEMENT"],
+								width = 1.25,
+								set = function(_, value)
+									if C.db.profile.edit.alt ~= value then
+										C.db.profile.edit.alt = value
+
+										E:UpdateEditBoxAltArrowKeyMode()
 									end
 								end,
 							},
